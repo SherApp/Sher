@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Okta.AspNetCore;
 
 namespace Sher.Api
 {
@@ -26,6 +27,19 @@ namespace Sher.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+                    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+                    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+                })
+                .AddOktaWebApi(new OktaWebApiOptions
+                {
+                    OktaDomain = Configuration["Okta:OktaDomain"],
+                });
+
+            services.AddAuthorization();
+            
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Sher.Api", Version = "v1"}); });
         }
@@ -41,6 +55,8 @@ namespace Sher.Api
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
