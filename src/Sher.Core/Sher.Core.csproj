@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="9.0.0" />
       <PackageReference Include="NSpecification" Version="1.3.0" />
     </ItemGroup>
 
