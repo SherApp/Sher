@@ -4,13 +4,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9034F7E1-3E7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C1BC43DF-25B7-426F-985F-EC8056ED1178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Infrastructure", "Sher.Infrastructure\Sher.Infrastructure.csproj", "{6FF5EB2D-D396-4E7A-81E0-EC9AE8283239}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Infrastructure", "src\Sher.Infrastructure\Sher.Infrastructure.csproj", "{6FF5EB2D-D396-4E7A-81E0-EC9AE8283239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Application", "Sher.Application\Sher.Application.csproj", "{B8B96702-0EEB-4B43-BE1F-549C2BFF883E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Application", "src\Sher.Application\Sher.Application.csproj", "{B8B96702-0EEB-4B43-BE1F-549C2BFF883E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Core", "Sher.Core\Sher.Core.csproj", "{DA375E7F-D95C-42C6-B23C-8A5667BD0880}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Core", "src\Sher.Core\Sher.Core.csproj", "{DA375E7F-D95C-42C6-B23C-8A5667BD0880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Api", "Sher.Api\Sher.Api.csproj", "{EA28A230-D127-4880-A18E-8C7C48C1F8F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Api", "src\Sher.Api\Sher.Api.csproj", "{EA28A230-D127-4880-A18E-8C7C48C1F8F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
