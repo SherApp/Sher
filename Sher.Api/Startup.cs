@@ -29,6 +29,8 @@ namespace Sher.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext(Configuration.GetConnectionString("Default"));
+
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
