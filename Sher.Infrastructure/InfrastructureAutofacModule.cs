@@ -12,7 +12,7 @@ namespace Sher.Infrastructure
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
-            builder.RegisterMediatR(typeof(Class1).Assembly);
+            builder.RegisterMediatR(typeof(IRepository<>).Assembly);
             base.Load(builder);
         }
     }

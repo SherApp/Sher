@@ -17,4 +17,8 @@
       <ProjectReference Include="..\Sher.Infrastructure\Sher.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Controllers" />
+    </ItemGroup>
+
 </Project>
