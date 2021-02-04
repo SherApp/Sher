@@ -1,5 +1,7 @@
 using Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using Sher.Core.Interfaces;
+using Sher.Infrastructure.Data.Repositories;
 
 namespace Sher.Infrastructure
 {
@@ -7,6 +9,9 @@ namespace Sher.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>))
+                .InstancePerLifetimeScope();
+
             builder.RegisterMediatR(typeof(Class1).Assembly);
             base.Load(builder);
         }
