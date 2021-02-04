@@ -1,7 +1,9 @@
 using Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using Sher.Application.Interfaces;
 using Sher.Core.Interfaces;
 using Sher.Infrastructure.Data.Repositories;
+using Module = Autofac.Module;
 
 namespace Sher.Infrastructure
 {
@@ -11,6 +13,10 @@ namespace Sher.Infrastructure
         {
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
+
+            builder.RegisterAssemblyTypes(typeof(IFileService).Assembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces();
 
             builder.RegisterMediatR(typeof(IRepository<>).Assembly);
             base.Load(builder);
