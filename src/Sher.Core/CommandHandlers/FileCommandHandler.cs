@@ -7,7 +7,7 @@ using Sher.Core.Interfaces;
 
 namespace Sher.Core.CommandHandlers
 {
-    public class FileCommandHandler : AsyncRequestHandler<FileUploadCommand>
+    public class FileCommandHandler : INotificationHandler<FileUploadCommand>
     {
         private readonly IRepository<File> _repository;
 
@@ -16,7 +16,7 @@ namespace Sher.Core.CommandHandlers
             _repository = repository;
         }
         
-        protected override async Task Handle(FileUploadCommand request, CancellationToken cancellationToken)
+        public async Task Handle(FileUploadCommand request, CancellationToken cancellationToken)
         {
             var file = new File(request.Id, request.FileName, request.OriginalFileName);
             await _repository.AddAsync(file);
