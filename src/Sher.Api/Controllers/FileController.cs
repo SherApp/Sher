@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,9 @@ namespace Sher.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadFile([FromForm] UploadFileRequestModel model)
+        public async Task<IActionResult> UploadFile([FromForm] UploadFileRequestModel model)
         {
-            _fileService.UploadFile(_mapper.Map<UploadFileModel>(model));
+            await _fileService.UploadFile(_mapper.Map<UploadFileModel>(model));
             return Ok();
         }
     }

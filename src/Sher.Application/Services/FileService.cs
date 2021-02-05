@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MediatR;
 using Sher.Application.Interfaces;
 using Sher.Application.Models;
@@ -14,9 +15,9 @@ namespace Sher.Application.Services
             _mediator = mediator;
         }
         
-        public void UploadFile(UploadFileModel uploadFileModel)
+        public async Task UploadFile(UploadFileModel uploadFileModel)
         {
-            _mediator.Publish(new FileUploadCommand(uploadFileModel.Id, uploadFileModel.Id.ToString(),
+            await _mediator.Send(new FileUploadCommand(uploadFileModel.Id, uploadFileModel.Id.ToString(),
                 uploadFileModel.File.FileName, uploadFileModel.File.Stream));
         }
     }

@@ -23,4 +23,8 @@
       <ProjectReference Include="..\Sher.Infrastructure\Sher.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\u" />
+    </ItemGroup>
+
 </Project>
