@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
 using Sher.Infrastructure;
+using Sher.SharedKernel.Options;
 
 namespace Sher.Api
 {
@@ -32,6 +33,8 @@ namespace Sher.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext(Configuration.GetConnectionString("Default"));
+
+            services.Configure<FilePersistenceServiceOptions>(Configuration.GetSection("FilePersistenceServiceOptions"));
 
             services.AddAuthentication(options =>
                 {
@@ -65,6 +68,7 @@ namespace Sher.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sher.Api v1"));
+                app.UseStaticFiles();
             }
 
             app.UseRouting();
