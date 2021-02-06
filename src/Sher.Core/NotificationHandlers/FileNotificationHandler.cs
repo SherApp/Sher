@@ -19,6 +19,9 @@ namespace Sher.Core.NotificationHandlers
         public async Task Handle(FileProcessedNotification<FileProcessingContext> notification, CancellationToken cancellationToken)
         {
             var file = await _repository.GetByIdAsync(notification.Context.Id);
+            file.MarkAsProcessed();
+
+            await _repository.UpdateAsync(file);
         }
     }
 }
