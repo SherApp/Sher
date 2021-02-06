@@ -1,5 +1,4 @@
 using MediatR;
-using Sher.Core.Interfaces;
 
 namespace Sher.Core.Notifications
 {

@@ -5,7 +5,6 @@ using Sher.Application.Interfaces;
 using Sher.Core.Interfaces;
 using Sher.Infrastructure.Data;
 using Sher.Infrastructure.Data.Repositories;
-using Sher.Infrastructure.FileProcessing;
 using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 

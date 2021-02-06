@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Sher.Core.Commands;
 using Sher.Core.Interfaces;
 using File = Sher.Core.Entities.FileAggregate.File;
