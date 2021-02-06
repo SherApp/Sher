@@ -4,6 +4,7 @@ using Sher.Application.Interfaces;
 using Sher.Core.Interfaces;
 using Sher.Infrastructure.Data;
 using Sher.Infrastructure.Data.Repositories;
+using Sher.Infrastructure.FileProcessing;
 using Module = Autofac.Module;
 
 namespace Sher.Infrastructure
@@ -18,6 +19,10 @@ namespace Sher.Infrastructure
             builder.RegisterAssemblyTypes(typeof(IFileService).Assembly, typeof(AppDbContext).Assembly)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();
+
+            builder.RegisterType<FileProcessingQueue>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
 
             builder.RegisterMediatR(typeof(IRepository<>).Assembly);
             base.Load(builder);

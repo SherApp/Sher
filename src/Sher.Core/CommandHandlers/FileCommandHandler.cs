@@ -1,33 +1,39 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Sher.Core.Commands;
 using Sher.Core.Entities.FileAggregate;
 using Sher.Core.Interfaces;
 
 namespace Sher.Core.CommandHandlers
 {
-    public class FileCommandHandler : IRequestHandler<FileUploadCommand>
+    public class FileCommandHandler : AsyncRequestHandler<FileUploadCommand>
     {
-        private readonly IRepository<File> _repository;
-        private readonly IFilePersistenceService _filePersistenceService;
+        private readonly IServiceScopeFactory _serviceProvider;
+        private readonly IFileProcessingQueue _fileProcessingQueue;
 
         public FileCommandHandler(
-            IRepository<File> repository,
-            IFilePersistenceService filePersistenceService)
+            IServiceScopeFactory serviceProvider,
+            IFileProcessingQueue fileProcessingQueue)
         {
-            _repository = repository;
-            _filePersistenceService = filePersistenceService;
+            _serviceProvider = serviceProvider;
+            _fileProcessingQueue = fileProcessingQueue;
         }
         
-        public async Task<Unit> Handle(FileUploadCommand request, CancellationToken cancellationToken)
+        protected override Task Handle(FileUploadCommand request, CancellationToken cancellationToken)
         {
-            await _filePersistenceService.PersistFileAsync(request.FileStream, request.FileName);
+            _fileProcessingQueue.QueueFile(request.FileStream, request.FileName, async _ =>
+            {
+                var file = new File(request.Id, request.FileName, request.OriginalFileName);
 
-            var file = new File(request.Id, request.FileName, request.OriginalFileName);
-            await _repository.AddAsync(file);
+                using var scope = _serviceProvider.CreateScope();
+                var repository = scope.ServiceProvider.GetRequiredService<IRepository<File>>();
+                await repository.AddAsync(file);
+            });
 
-            return default;
+            return Task.CompletedTask;
         }
     }
 }

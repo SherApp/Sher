@@ -1,10 +1,11 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Sher.Core.Interfaces;
 using Sher.SharedKernel.Options;
 
-namespace Sher.Infrastructure.Services
+namespace Sher.Infrastructure.FileProcessing
 {
     public class FilePersistenceService : IFilePersistenceService
     {
