@@ -8,26 +8,26 @@ using Sher.Core.Interfaces;
 
 namespace Sher.Infrastructure.FileProcessing
 {
-    public interface IFileQueue : IFileProcessingQueue
+    public interface IFileQueue<TContext> : IFileProcessingQueue<TContext>
     {
-        public Task<FileProcessingItem> DequeueFileAsync(CancellationToken cancellationToken);
+        public Task<FileProcessingItem<TContext>> DequeueFileAsync(CancellationToken cancellationToken);
     }
 
-    public class FileProcessingQueue : IFileQueue
+    public class FileProcessingQueue<TContext> : IFileQueue<TContext>
     {
-        private readonly ConcurrentQueue<FileProcessingItem> _queue = new();
+        private readonly ConcurrentQueue<FileProcessingItem<TContext>> _queue = new();
         private readonly SemaphoreSlim _signal = new(0);
 
-        public void QueueFile(Stream stream, string fileName, Func<IServiceScope, Task> onProcessed = default)
+        public void QueueFile(Stream stream, string fileName, TContext context)
         {
             var copiedStream = new MemoryStream();
             stream.CopyTo(copiedStream);
 
-            _queue.Enqueue(new FileProcessingItem(copiedStream, fileName, onProcessed));
+            _queue.Enqueue(new FileProcessingItem<TContext>(copiedStream, fileName, context));
             _signal.Release();
         }
 
-        public async Task<FileProcessingItem> DequeueFileAsync(CancellationToken cancellationToken)
+        public async Task<FileProcessingItem<TContext>> DequeueFileAsync(CancellationToken cancellationToken)
         {
             await _signal.WaitAsync(cancellationToken);
 

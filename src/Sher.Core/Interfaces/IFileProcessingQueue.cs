@@ -5,8 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Sher.Core.Interfaces
 {
-    public interface IFileProcessingQueue
+    public interface IFileProcessingQueue<in TContext>
     {
-        void QueueFile(Stream stream, string fileName, Func<IServiceScope, Task> onSuccess);
+        void QueueFile(Stream stream, string fileName, TContext context);
     }
 }

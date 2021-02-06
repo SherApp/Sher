@@ -15,7 +15,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
+using Sher.Core;
+using Sher.Core.Interfaces;
 using Sher.Infrastructure;
+using Sher.Infrastructure.FileProcessing;
 using Sher.SharedKernel.Options;
 
 namespace Sher.Api
@@ -58,6 +61,7 @@ namespace Sher.Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new InfrastructureAutofacModule(Assembly.GetExecutingAssembly()));
+            builder.RegisterModule(new FileProcessingModule<FileProcessingContext>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

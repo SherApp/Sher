@@ -10,24 +10,21 @@ namespace Sher.Core.CommandHandlers
 {
     public class FileCommandHandler : AsyncRequestHandler<FileUploadCommand>
     {
-        private readonly IFileProcessingQueue _fileProcessingQueue;
+        private readonly IFileProcessingQueue<FileProcessingContext> _fileProcessingQueue;
+        private readonly IRepository<File> _fileRepository;
 
-        public FileCommandHandler(IFileProcessingQueue fileProcessingQueue)
+        public FileCommandHandler(IFileProcessingQueue<FileProcessingContext> fileProcessingQueue, IRepository<File> fileRepository)
         {
             _fileProcessingQueue = fileProcessingQueue;
+            _fileRepository = fileRepository;
         }
         
-        protected override Task Handle(FileUploadCommand request, CancellationToken cancellationToken)
+        protected override async Task Handle(FileUploadCommand request, CancellationToken cancellationToken)
         {
-            _fileProcessingQueue.QueueFile(request.FileStream, request.Slug, async scope =>
-            {
-                var file = new File(request.Id, request.Slug, request.OriginalFileName);
+            var file = new File(request.Id, request.Slug, request.OriginalFileName);
+            //await _fileRepository.AddAsync(file);
 
-                var repository = scope.ServiceProvider.GetRequiredService<IRepository<File>>();
-                await repository.AddAsync(file);
-            });
-
-            return Task.CompletedTask;
+            _fileProcessingQueue.QueueFile(request.FileStream, request.Slug, new FileProcessingContext { Id = request.Id });
         }
     }
 }

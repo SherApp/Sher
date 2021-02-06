@@ -21,4 +21,8 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.1.0" />
+    </ItemGroup>
+
 </Project>

@@ -25,13 +25,9 @@ namespace Sher.Infrastructure
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(typeof(IFileService).Assembly, typeof(AppDbContext).Assembly, typeof(FileProcessingService).Assembly)
+            builder.RegisterAssemblyTypes(typeof(IFileService).Assembly, typeof(AppDbContext).Assembly)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();
-
-            builder.RegisterType<FileProcessingQueue>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
 
             builder.RegisterAutoMapper(_callingAssembly, typeof(IFileService).Assembly);
 

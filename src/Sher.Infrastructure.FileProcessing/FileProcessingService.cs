@@ -1,19 +1,21 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sher.Core.Interfaces;
+using Sher.Core.Notifications;
 
 namespace Sher.Infrastructure.FileProcessing
 {
-    public class FileProcessingService : BackgroundService
+    public class FileProcessingService<TContext> : BackgroundService
     {
-        private readonly IFileQueue _queue;
+        private readonly IFileQueue<TContext> _queue;
         private readonly IFilePersistenceService _filePersistenceService;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public FileProcessingService(IFileQueue queue, IFilePersistenceService filePersistenceService, IServiceScopeFactory serviceScopeFactory)
+        public FileProcessingService(IFileQueue<TContext> queue, IFilePersistenceService filePersistenceService, IServiceScopeFactory serviceScopeFactory)
         {
             _queue = queue;
             _filePersistenceService = filePersistenceService;
@@ -29,9 +31,12 @@ namespace Sher.Infrastructure.FileProcessing
                 // TODO: Create a file processing pipeline (eg. compress images)
 
                 await _filePersistenceService.PersistFileAsync(file.Stream, file.FileName);
-                
-                using (var _ = _serviceScopeFactory.CreateScope())
-                    await file.OnProcessed(_);
+
+                using (var scope = _serviceScopeFactory.CreateScope())
+                {
+                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                    await mediator.Publish(new FileProcessedNotification<TContext>(file.Context), stoppingToken);
+                }
 
                 await file.Stream.DisposeAsync();
             }
