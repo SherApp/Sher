@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sher.Core.Commands;
+using Sher.Application.Commands;
+using Sher.Core;
 using Sher.Core.Interfaces;
 using File = Sher.Core.Entities.FileAggregate.File;
 
-namespace Sher.Core.CommandHandlers
+namespace Sher.Application.CommandHandlers
 {
     public class FileCommandHandler : AsyncRequestHandler<FileUploadCommand>
     {

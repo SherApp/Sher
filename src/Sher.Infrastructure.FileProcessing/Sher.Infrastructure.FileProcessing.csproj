@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Sher.Application\Sher.Application.csproj" />
       <ProjectReference Include="..\Sher.Core\Sher.Core.csproj" />
       <ProjectReference Include="..\Sher.SharedKernel\Sher.SharedKernel.csproj" />
     </ItemGroup>

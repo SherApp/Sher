@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Sher.Application.Commands;
 using Sher.Application.Interfaces;
 using Sher.Application.Models;
-using Sher.Core.Commands;
 
 namespace Sher.Application.Services
 {

@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Sher.Core.Notifications
+namespace Sher.Application.Notifications
 {
     public class FileProcessedNotification<TContext> : INotification
     {

@@ -1,7 +1,7 @@
 using System.IO;
 using AutoMapper;
+using Sher.Application.Commands;
 using Sher.Application.Models;
-using Sher.Core.Commands;
 
 namespace Sher.Application.Mapping
 {

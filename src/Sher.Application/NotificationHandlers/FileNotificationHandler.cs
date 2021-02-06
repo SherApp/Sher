@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sher.Application.Notifications;
+using Sher.Core;
 using Sher.Core.Entities.FileAggregate;
 using Sher.Core.Interfaces;
-using Sher.Core.Notifications;
 
-namespace Sher.Core.NotificationHandlers
+namespace Sher.Application.NotificationHandlers
 {
     public class FileNotificationHandler : INotificationHandler<FileProcessedNotification<FileProcessingContext>>
     {

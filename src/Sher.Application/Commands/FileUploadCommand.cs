@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using MediatR;
 
-namespace Sher.Core.Commands
+namespace Sher.Application.Commands
 {
     public record FileUploadCommand(Guid Id, string Slug, string OriginalFileName, Stream FileStream) : IRequest;
 }
