@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Sher.Core.Interfaces;
 
 namespace Sher.Infrastructure.FileProcessing
@@ -17,9 +18,12 @@ namespace Sher.Infrastructure.FileProcessing
         private readonly ConcurrentQueue<FileProcessingItem> _queue = new();
         private readonly SemaphoreSlim _signal = new(0);
 
-        public void QueueFile(Stream stream, string fileName, Action<IFileProcessingContext> onProcessed = default)
+        public void QueueFile(Stream stream, string fileName, Func<IServiceScope, Task> onProcessed = default)
         {
-            _queue.Enqueue(new FileProcessingItem(stream, fileName, onProcessed));
+            var copiedStream = new MemoryStream();
+            stream.CopyTo(copiedStream);
+
+            _queue.Enqueue(new FileProcessingItem(copiedStream, fileName, onProcessed));
             _signal.Release();
         }
 

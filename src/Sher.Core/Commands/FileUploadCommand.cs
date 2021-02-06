@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Sher.Core.Commands
 {
-    public record FileUploadCommand(Guid Id, string FileName, string OriginalFileName, Stream FileStream) : IRequest;
+    public record FileUploadCommand(Guid Id, string Slug, string OriginalFileName, Stream FileStream) : IRequest;
 }

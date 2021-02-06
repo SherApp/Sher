@@ -57,7 +57,7 @@ namespace Sher.Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule<InfrastructureAutofacModule>();
+            builder.RegisterModule(new InfrastructureAutofacModule(Assembly.GetExecutingAssembly()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

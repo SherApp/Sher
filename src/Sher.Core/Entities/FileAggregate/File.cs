@@ -4,12 +4,12 @@ namespace Sher.Core.Entities.FileAggregate
 {
     public class File : BaseEntity
     {
-        public string FileName { get; private set; }
+        public string Slug { get; private set; }
         public string OriginalFileName { get; private set; }
 
-        public File(Guid id, string fileName, string originalFileName) : base(id)
+        public File(Guid id, string slug, string originalFileName) : base(id)
         {
-            FileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
+            Slug = slug ?? throw new ArgumentNullException(nameof(slug));
             OriginalFileName = originalFileName ?? throw new ArgumentNullException(nameof(originalFileName));
         }
     }

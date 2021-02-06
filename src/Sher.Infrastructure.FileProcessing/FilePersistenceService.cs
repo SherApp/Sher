@@ -19,6 +19,12 @@ namespace Sher.Infrastructure.FileProcessing
         public async Task PersistFileAsync(Stream fileStream, string fileName)
         {
             var path = Path.Combine(_options.UploadsDirectory, fileName);
+            var directory = Path.GetDirectoryName(path);
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
 
             await using var stream = new FileStream(path, FileMode.Create);
             await fileStream.CopyToAsync(stream);
