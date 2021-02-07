@@ -7,16 +7,19 @@ using Sher.Infrastructure.Data;
 using Sher.Infrastructure.Data.Repositories;
 using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
+using Sher.Infrastructure.FileProcessing.Interfaces;
 
 namespace Sher.Infrastructure
 {
     public class InfrastructureAutofacModule : Module
     {
         private readonly Assembly _callingAssembly;
+        private readonly Assembly[] _serviceAssemblies;
 
         public InfrastructureAutofacModule(Assembly callingAssembly = null)
         {
             _callingAssembly = callingAssembly;
+            _serviceAssemblies = new[] { typeof(IFileService).Assembly, typeof(AppDbContext).Assembly, typeof(IRepository<>).Assembly, typeof(IFileQueue).Assembly };
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -24,7 +27,7 @@ namespace Sher.Infrastructure
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(typeof(IFileService).Assembly, typeof(AppDbContext).Assembly)
+            builder.RegisterAssemblyTypes(_serviceAssemblies)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();
 

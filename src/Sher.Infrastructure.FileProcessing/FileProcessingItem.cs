@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Sher.Application.Interfaces;
 using Sher.SharedKernel;
 
 namespace Sher.Infrastructure.FileProcessing

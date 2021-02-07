@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sher.Application.Notifications;
-using Sher.Core.Interfaces;
+using Sher.Infrastructure.FileProcessing.Interfaces;
 
 namespace Sher.Infrastructure.FileProcessing
 {

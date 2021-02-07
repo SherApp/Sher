@@ -2,17 +2,11 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Sher.Application.Interfaces;
-using Sher.Core.Interfaces;
+using Sher.Infrastructure.FileProcessing.Interfaces;
 using Sher.SharedKernel;
 
 namespace Sher.Infrastructure.FileProcessing
 {
-    public interface IFileQueue : IFileProcessingQueue
-    {
-        public Task<FileProcessingItem> DequeueFileAsync(CancellationToken cancellationToken);
-    }
-
     public class FileProcessingQueue : IFileQueue
     {
         private readonly ConcurrentQueue<FileProcessingItem> _queue = new();

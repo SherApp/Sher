@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Sher.Core.Interfaces
+namespace Sher.Infrastructure.FileProcessing.Interfaces
 {
     public interface IFilePersistenceService
     {

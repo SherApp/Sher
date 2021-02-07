@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using Sher.Core.Interfaces;
+using Sher.Infrastructure.FileProcessing.Interfaces;
 using Sher.SharedKernel.Options;
 
 namespace Sher.Infrastructure.FileProcessing
