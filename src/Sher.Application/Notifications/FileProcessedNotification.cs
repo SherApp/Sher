@@ -1,12 +1,13 @@
 using MediatR;
+using Sher.SharedKernel;
 
 namespace Sher.Application.Notifications
 {
-    public class FileProcessedNotification<TContext> : INotification
+    public class FileProcessedNotification : INotification
     {
-        public TContext Context { get; set; }
+        public IFileProcessingContext Context { get; set; }
 
-        public FileProcessedNotification(TContext context)
+        public FileProcessedNotification(IFileProcessingContext context)
         {
             Context = context;
         }

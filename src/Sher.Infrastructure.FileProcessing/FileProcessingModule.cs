@@ -2,14 +2,14 @@ using Autofac;
 
 namespace Sher.Infrastructure.FileProcessing
 {
-    public class FileProcessingModule<TContext> : Module
+    public class FileProcessingModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterTypes(typeof(FileProcessingService<TContext>), typeof(FilePersistenceService))
+            builder.RegisterTypes(typeof(FileProcessingService), typeof(FilePersistenceService))
                 .AsImplementedInterfaces();
 
-            builder.RegisterType<FileProcessingQueue<TContext>>()
+            builder.RegisterType<FileProcessingQueue>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

@@ -2,30 +2,32 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Sher.Application.Interfaces;
 using Sher.Core.Interfaces;
+using Sher.SharedKernel;
 
 namespace Sher.Infrastructure.FileProcessing
 {
-    public interface IFileQueue<TContext> : IFileProcessingQueue<TContext>
+    public interface IFileQueue : IFileProcessingQueue
     {
-        public Task<FileProcessingItem<TContext>> DequeueFileAsync(CancellationToken cancellationToken);
+        public Task<FileProcessingItem> DequeueFileAsync(CancellationToken cancellationToken);
     }
 
-    public class FileProcessingQueue<TContext> : IFileQueue<TContext>
+    public class FileProcessingQueue : IFileQueue
     {
-        private readonly ConcurrentQueue<FileProcessingItem<TContext>> _queue = new();
+        private readonly ConcurrentQueue<FileProcessingItem> _queue = new();
         private readonly SemaphoreSlim _signal = new(0);
 
-        public void QueueFile(Stream stream, string fileName, TContext context)
+        public void QueueFile(Stream stream, string fileName, IFileProcessingContext context)
         {
             var copiedStream = new MemoryStream();
             stream.CopyTo(copiedStream);
 
-            _queue.Enqueue(new FileProcessingItem<TContext>(copiedStream, fileName, context));
+            _queue.Enqueue(new FileProcessingItem(copiedStream, fileName, context));
             _signal.Release();
         }
 
-        public async Task<FileProcessingItem<TContext>> DequeueFileAsync(CancellationToken cancellationToken)
+        public async Task<FileProcessingItem> DequeueFileAsync(CancellationToken cancellationToken)
         {
             await _signal.WaitAsync(cancellationToken);
 

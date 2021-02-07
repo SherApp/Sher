@@ -8,13 +8,13 @@ using Sher.Core.Interfaces;
 
 namespace Sher.Infrastructure.FileProcessing
 {
-    public class FileProcessingService<TContext> : BackgroundService
+    public class FileProcessingService : BackgroundService
     {
-        private readonly IFileQueue<TContext> _queue;
+        private readonly IFileQueue _queue;
         private readonly IFilePersistenceService _filePersistenceService;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public FileProcessingService(IFileQueue<TContext> queue, IFilePersistenceService filePersistenceService, IServiceScopeFactory serviceScopeFactory)
+        public FileProcessingService(IFileQueue queue, IFilePersistenceService filePersistenceService, IServiceScopeFactory serviceScopeFactory)
         {
             _queue = queue;
             _filePersistenceService = filePersistenceService;
@@ -34,7 +34,7 @@ namespace Sher.Infrastructure.FileProcessing
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    await mediator.Publish(new FileProcessedNotification<TContext>(file.Context), stoppingToken);
+                    await mediator.Publish(new FileProcessedNotification(file.Context), stoppingToken);
                 }
 
                 await file.Stream.DisposeAsync();

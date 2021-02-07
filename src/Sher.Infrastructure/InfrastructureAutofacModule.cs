@@ -30,7 +30,7 @@ namespace Sher.Infrastructure
 
             builder.RegisterAutoMapper(_callingAssembly, typeof(IFileService).Assembly);
 
-            builder.RegisterMediatR(typeof(IRepository<>).Assembly);
+            builder.RegisterMediatR(typeof(IFileService).Assembly);
             base.Load(builder);
         }
     }
