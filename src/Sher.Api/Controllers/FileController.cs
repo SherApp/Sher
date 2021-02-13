@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sher.Api.Models;
 using Sher.Application.Interfaces;
@@ -7,6 +8,7 @@ using Sher.Application.Models;
 
 namespace Sher.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class FileController : ControllerBase
