@@ -25,6 +25,7 @@ namespace Sher.Infrastructure.FileProcessing
                 Directory.CreateDirectory(directory);
             }
 
+            fileStream.Position = 0;
             await using var stream = new FileStream(path, FileMode.Create);
             await fileStream.CopyToAsync(stream);
         }
