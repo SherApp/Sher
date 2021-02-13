@@ -28,6 +28,15 @@ namespace Sher.Api
         {
             services.AddDbContext(Configuration.GetConnectionString("Default"));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Dev", builder =>
+                    builder.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:3000"));
+            });
+
             services.Configure<FilePersistenceServiceOptions>(Configuration.GetSection("FilePersistenceServiceOptions"));
 
             services.AddAuthentication(options =>
@@ -64,6 +73,7 @@ namespace Sher.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sher.Api v1"));
                 app.UseStaticFiles();
+                app.UseCors("Dev");
             }
 
             app.UseRouting();
