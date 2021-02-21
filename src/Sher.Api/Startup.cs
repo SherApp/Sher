@@ -30,11 +30,10 @@ namespace Sher.Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy("Dev", builder =>
+                options.AddDefaultPolicy(builder =>
                     builder.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
-                        .WithOrigins("http://localhost:3000"));
+                        .WithOrigins(Configuration["CORS:Origin"] ?? "http://localhost:3000"));
             });
 
             services.Configure<FilePersistenceServiceOptions>(Configuration.GetSection("FilePersistenceServiceOptions"));
@@ -72,11 +71,12 @@ namespace Sher.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sher.Api v1"));
-                app.UseStaticFiles();
-                app.UseCors("Dev");
+                app.UseStaticFiles(new StaticFileOptions { ServeUnknownFileTypes = true });
             }
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
 
