@@ -1,0 +1,29 @@
+version: "3.3"
+services:
+  api:
+    env_file:
+      - api.env
+    environment:
+      - FilePersistenceServiceOptions__UploadsDirectory=/static/u
+    container_name: sher
+    build: .
+    ports:
+      - "9090:80"
+    depends_on:
+      - db
+    volumes:
+      - static:/static
+  db:
+    env_file:
+      - db.env
+    container_name: postgres
+    image: postgres
+  nginx:
+    image: nginx
+    volumes:
+      - static:/usr/share/nginx/html
+    ports:
+      - "9091:80"
+
+volumes:
+  static:
