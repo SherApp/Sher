@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Add SSH Credentials
-        uses: shimatoro/ssh-key-action@v2
+      - name: Setup SSH
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.1.
         with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-host: ${{ secrets.DEPLOY_TARGETS }}
     
       - name: Deploy
         uses: JorgenVatle/docker-compose-deploy@v1.0
