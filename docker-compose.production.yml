@@ -3,6 +3,9 @@ services:
   api:
     environment:
       - FilePersistenceServiceOptions__UploadsDirectory=/static/u
+      - CORS__Origin
+      - Okta__OktaDomain
+      - ConnectionStrings__Default
     container_name: sher
     build: .
     ports:
