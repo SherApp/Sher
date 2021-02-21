@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Setup SSH
-        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.1.
+        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.1.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-host: ${{ secrets.DEPLOY_TARGETS }}
