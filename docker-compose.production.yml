@@ -1,8 +1,6 @@
 version: "3.3"
 services:
   api:
-    env_file:
-      - api.env
     environment:
       - FilePersistenceServiceOptions__UploadsDirectory=/static/u
     container_name: sher
@@ -14,8 +12,6 @@ services:
     volumes:
       - static:/static
   db:
-    env_file:
-      - db.env
     container_name: postgres
     image: postgres
   nginx:
