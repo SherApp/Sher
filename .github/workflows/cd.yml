@@ -18,13 +18,11 @@ jobs:
           ssh-host: ${{ secrets.DEPLOY_TARGETS }}
     
       - name: Deploy
-        uses: JorgenVatle/docker-compose-deploy@v1.0
         env:
+          DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
           CORS__Origin: ${{ secrets.CORS_ORIGIN }}
           Okta__OktaDomain: ${{ secrets.OKTA_DOMAIN }}
           ConnectionStrings__Default: 'Database=sher;Username=sher;Password=${{ secrets.DB_PASSWORD }};Server=postgres'
           POSTGRES_USER: sher
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        with:
-          deploy_targets: ${{ secrets.DEPLOY_TARGETS }}
-          compose_file: 'docker-compose.production.yml'
+        run: docker-compose -f docker-compose.production.yml up -d --build
