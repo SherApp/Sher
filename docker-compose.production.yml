@@ -17,6 +17,9 @@ services:
   db:
     container_name: postgres
     image: postgres
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
   nginx:
     image: nginx
     volumes:
