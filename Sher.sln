@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.SharedKernel", "src\Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Infrastructure.FileProcessing", "src\Sher.Infrastructure.FileProcessing\Sher.Infrastructure.FileProcessing.csproj", "{6727649A-A50E-42FD-B879-3983E0814256}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.UnitTests", "Sher.UnitTests\Sher.UnitTests.csproj", "{9E940C7B-2B78-40D4-B48D-EADD49597012}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,7 @@ Global
 		{EA28A230-D127-4880-A18E-8C7C48C1F8F8} = {9034F7E1-3E74-4286-9038-1B4AE97FD540}
 		{694DD400-AFE5-4F93-8BED-385A30E6A8EE} = {9034F7E1-3E74-4286-9038-1B4AE97FD540}
 		{6727649A-A50E-42FD-B879-3983E0814256} = {9034F7E1-3E74-4286-9038-1B4AE97FD540}
+		{9E940C7B-2B78-40D4-B48D-EADD49597012} = {C1BC43DF-25B7-426F-985F-EC8056ED1178}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6FF5EB2D-D396-4E7A-81E0-EC9AE8283239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -54,5 +57,9 @@ Global
 		{6727649A-A50E-42FD-B879-3983E0814256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6727649A-A50E-42FD-B879-3983E0814256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6727649A-A50E-42FD-B879-3983E0814256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E940C7B-2B78-40D4-B48D-EADD49597012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E940C7B-2B78-40D4-B48D-EADD49597012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E940C7B-2B78-40D4-B48D-EADD49597012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E940C7B-2B78-40D4-B48D-EADD49597012}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

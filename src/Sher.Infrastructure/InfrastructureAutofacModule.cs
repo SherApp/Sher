@@ -7,6 +7,7 @@ using Sher.Infrastructure.Data;
 using Sher.Infrastructure.Data.Repositories;
 using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
+using Sher.Application;
 using Sher.Infrastructure.FileProcessing.Interfaces;
 
 namespace Sher.Infrastructure
@@ -19,7 +20,7 @@ namespace Sher.Infrastructure
         public InfrastructureAutofacModule(Assembly callingAssembly = null)
         {
             _callingAssembly = callingAssembly;
-            _serviceAssemblies = new[] { typeof(IFileService).Assembly, typeof(AppDbContext).Assembly, typeof(IRepository<>).Assembly, typeof(IFileQueue).Assembly };
+            _serviceAssemblies = new[] { typeof(FileProcessingContext).Assembly, typeof(AppDbContext).Assembly, typeof(IRepository<>).Assembly, typeof(IFileQueue).Assembly };
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -31,9 +32,9 @@ namespace Sher.Infrastructure
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();
 
-            builder.RegisterAutoMapper(_callingAssembly, typeof(IFileService).Assembly);
+            builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);
 
-            builder.RegisterMediatR(typeof(IFileService).Assembly);
+            builder.RegisterMediatR(typeof(FileProcessingContext).Assembly);
             base.Load(builder);
         }
     }
