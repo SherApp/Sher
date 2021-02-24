@@ -1,7 +1,7 @@
 using MediatR;
 using Sher.SharedKernel;
 
-namespace Sher.Application.Notifications
+namespace Sher.Application.Files.UploadFile
 {
     public class FileProcessedNotification : INotification
     {

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NSpecifications;
-using Sher.Core.Entities;
-using Sher.Core.Interfaces;
+using Sher.Core.Base;
 
 namespace Sher.Infrastructure.Data.Repositories
 {

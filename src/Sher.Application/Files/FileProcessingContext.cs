@@ -1,7 +1,7 @@
 using System;
 using Sher.SharedKernel;
 
-namespace Sher.Application
+namespace Sher.Application.Files
 {
     public class FileProcessingContext : IFileProcessingContext
     {

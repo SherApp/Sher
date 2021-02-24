@@ -3,10 +3,9 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Sher.Api.Models;
-using Sher.Application.Commands;
+using Sher.Application.Files.UploadFile;
 
-namespace Sher.Api.Controllers
+namespace Sher.Api.Files
 {
     [Authorize]
     [ApiController]
@@ -25,7 +24,7 @@ namespace Sher.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequestModel model)
         {
-            await _mediator.Send(_mapper.Map<FileUploadCommand>(model));
+            await _mediator.Send(_mapper.Map<UploadFileCommand>(model));
             return Ok();
         }
     }

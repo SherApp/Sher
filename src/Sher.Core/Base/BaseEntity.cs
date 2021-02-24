@@ -1,6 +1,6 @@
 using System;
 
-namespace Sher.Core.Entities
+namespace Sher.Core.Base
 {
     public abstract class BaseEntity
     {

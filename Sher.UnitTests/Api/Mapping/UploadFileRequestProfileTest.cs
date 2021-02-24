@@ -3,9 +3,8 @@ using System.IO;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using Sher.Api.Mapping;
-using Sher.Api.Models;
-using Sher.Application.Commands;
+using Sher.Api.Files;
+using Sher.Application.Files.UploadFile;
 using Xunit;
 
 namespace Sher.UnitTests.Api.Mapping
@@ -33,7 +32,7 @@ namespace Sher.UnitTests.Api.Mapping
             var mapper = configuration.CreateMapper();
             
             // Act
-            var cmd = mapper.Map<FileUploadCommand>(uploadFileRequestModel);
+            var cmd = mapper.Map<UploadFileCommand>(uploadFileRequestModel);
             
             // Assert
             Assert.Equal(uploadFileRequestModel.Id, cmd.Id);

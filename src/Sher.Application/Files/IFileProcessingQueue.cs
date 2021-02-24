@@ -1,7 +1,7 @@
 using System.IO;
 using Sher.SharedKernel;
 
-namespace Sher.Application.Interfaces
+namespace Sher.Application.Files
 {
     public interface IFileProcessingQueue
     {

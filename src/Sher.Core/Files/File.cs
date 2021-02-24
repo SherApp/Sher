@@ -1,6 +1,7 @@
 using System;
+using Sher.Core.Base;
 
-namespace Sher.Core.Entities.FileAggregate
+namespace Sher.Core.Files
 {
     public class File : BaseEntity
     {

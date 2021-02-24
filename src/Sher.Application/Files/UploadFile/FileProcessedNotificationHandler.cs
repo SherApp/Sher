@@ -1,17 +1,16 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sher.Application.Notifications;
-using Sher.Core.Entities.FileAggregate;
-using Sher.Core.Interfaces;
+using Sher.Core.Base;
+using Sher.Core.Files;
 
-namespace Sher.Application.NotificationHandlers
+namespace Sher.Application.Files.UploadFile
 {
-    public class FileNotificationHandler : INotificationHandler<FileProcessedNotification>
+    public class FileProcessedNotificationHandler : INotificationHandler<FileProcessedNotification>
     {
         private readonly IRepository<File> _repository;
 
-        public FileNotificationHandler(IRepository<File> repository)
+        public FileProcessedNotificationHandler(IRepository<File> repository)
         {
             _repository = repository;
         }

@@ -1,6 +1,6 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Sher.Core.Entities.FileAggregate;
+using Sher.Core.Files;
 
 namespace Sher.Infrastructure.Data
 {

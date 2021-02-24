@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Sher.Application.Interfaces;
+using Sher.Application.Files;
 
 namespace Sher.Infrastructure.FileProcessing.Interfaces
 {
