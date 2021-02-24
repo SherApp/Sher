@@ -1,12 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sher.Application.Files;
-using Sher.Application.Files.UploadFile;
 using Sher.Core.Base;
 using File = Sher.Core.Files.File;
 
-namespace Sher.Application.CommandHandlers
+namespace Sher.Application.Files.UploadFile
 {
     public class UploadFileCommandHandler : AsyncRequestHandler<UploadFileCommand>
     {
