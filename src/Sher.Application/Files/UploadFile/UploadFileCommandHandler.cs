@@ -19,10 +19,10 @@ namespace Sher.Application.Files.UploadFile
         
         protected override async Task Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            var file = new File(request.Id, request.Slug, request.OriginalFileName);
+            var file = new File(request.Id, request.OriginalFileName);
             await _fileRepository.AddAsync(file);
 
-            _fileProcessingQueue.QueueFile(request.FileStream, request.Slug, new FileProcessingContext(request.Id));
+            _fileProcessingQueue.QueueFile(request.FileStream, file.Slug, new FileProcessingContext(request.Id));
         }
     }
 }

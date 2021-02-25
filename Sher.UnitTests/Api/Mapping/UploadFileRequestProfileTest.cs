@@ -37,7 +37,6 @@ namespace Sher.UnitTests.Api.Mapping
             // Assert
             Assert.Equal(uploadFileRequestModel.Id, cmd.Id);
             Assert.Equal(stream, cmd.FileStream);
-            Assert.Equal(Path.Combine(id.ToString(), fileName), cmd.Slug);
             Assert.Equal(fileName, cmd.OriginalFileName);
         }
     }
