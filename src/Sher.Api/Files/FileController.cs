@@ -27,7 +27,7 @@ namespace Sher.Api.Files
                 model.File.FileName,
                 model.File.OpenReadStream()));
 
-            return Ok();
+            return Accepted();
         }
     }
 }
