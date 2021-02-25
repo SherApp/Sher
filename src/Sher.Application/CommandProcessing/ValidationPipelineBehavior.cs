@@ -24,9 +24,9 @@ namespace Sher.Application.CommandProcessing
                 .SelectMany(v => v.Errors)
                 .ToList();
 
-            if (!errors.Any()) next();
+            if (errors.Any()) throw new ValidationException(errors);
 
-            throw new ValidationException(errors);
+            return next();
         }
     }
 }
