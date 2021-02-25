@@ -13,7 +13,7 @@ namespace Sher.UnitTests.Core.Files
             var id = Guid.NewGuid();
             const string originalFileName = "file.jpg";
 
-            var file = new File(id, originalFileName);
+            var file = new File(id, "", originalFileName);
 
             var expectedSlug = Path.Join(id.ToString(), originalFileName);
             Assert.Equal(expectedSlug, file.Slug);

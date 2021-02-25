@@ -1,5 +1,5 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,18 +13,20 @@ namespace Sher.Api.Files
     public class FileController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
 
-        public FileController(IMediator mediator, IMapper mapper)
+        public FileController(IMediator mediator)
         {
             _mediator = mediator;
-            _mapper = mapper;
         }
 
         [HttpPost]
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequestModel model)
         {
-            await _mediator.Send(_mapper.Map<UploadFileCommand>(model));
+            await _mediator.Send(new UploadFileCommand(model.Id,
+                User.FindFirstValue(ClaimTypes.NameIdentifier),
+                model.File.FileName,
+                model.File.OpenReadStream()));
+
             return Ok();
         }
     }
