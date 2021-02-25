@@ -1,13 +1,10 @@
 using System.Reflection;
 using Autofac;
-using MediatR.Extensions.Autofac.DependencyInjection;
 using Sher.Infrastructure.Data;
 using Sher.Infrastructure.Data.Repositories;
 using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using Sher.Application;
 using Sher.Application.Files;
-using Sher.Application.Files.UploadFile;
 using Sher.Core.Base;
 using Sher.Infrastructure.FileProcessing.Interfaces;
 
@@ -35,7 +32,8 @@ namespace Sher.Infrastructure
 
             builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);
 
-            builder.RegisterMediatR(typeof(FileProcessingContext).Assembly);
+            builder.RegisterModule<MediatRModule>();
+
             base.Load(builder);
         }
     }

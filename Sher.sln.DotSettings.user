@@ -4,6 +4,7 @@
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=13d87157_002Dc997_002D49ac_002D8d36_002Df625c397863d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="FileModelMappingTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::9E940C7B-2B78-40D4-B48D-EADD49597012::net5.0::Sher.UnitTests.Api.Mapping.UploadFileRequestProfileTest.UploadFileRequestProfile_ValidUploadFileRequestModel_MapsToFileUploadCommand&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::9E940C7B-2B78-40D4-B48D-EADD49597012::net5.0::Sher.UnitTests.Api.Mapping.UploadFileRequestProfileTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::9E940C7B-2B78-40D4-B48D-EADD49597012::net5.0::Sher.UnitTests.Core.Files.FileTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
