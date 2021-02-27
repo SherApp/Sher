@@ -27,7 +27,7 @@ namespace Sher.Infrastructure
                 .InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(_serviceAssemblies)
-                .Where(t => t.Name.EndsWith("Service"))
+                .Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
 
             builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);

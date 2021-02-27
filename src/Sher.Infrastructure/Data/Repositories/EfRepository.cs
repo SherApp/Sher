@@ -11,7 +11,7 @@ namespace Sher.Infrastructure.Data.Repositories
     public class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly AppDbContext _dbContext;
-        private DbSet<T> Set => _dbContext.Set<T>();
+        protected DbSet<T> Set => _dbContext.Set<T>();
 
         public EfRepository(AppDbContext dbContext) => _dbContext = dbContext;
 

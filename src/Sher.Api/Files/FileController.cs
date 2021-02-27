@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sher.Application.Files.GetUsersFiles;
 using Sher.Application.Files.UploadFile;
 
 namespace Sher.Api.Files
@@ -28,6 +31,14 @@ namespace Sher.Api.Files
                 model.File.OpenReadStream()));
 
             return Accepted();
+        }
+        
+        [ProducesResponseType(typeof(List<FileDto>), (int) HttpStatusCode.OK)]
+        public async Task<IActionResult> GetUsersFiles()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var files = await _mediator.Send(new GetUserFilesQuery(userId));
+            return Ok(files);
         }
     }
 }
