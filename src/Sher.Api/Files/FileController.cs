@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Security.Claims;
@@ -5,6 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sher.Application.Files.DeleteFile;
 using Sher.Application.Files.GetUsersFiles;
 using Sher.Application.Files.UploadFile;
 
@@ -41,6 +43,15 @@ namespace Sher.Api.Files
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var files = await _mediator.Send(new GetUserFilesQuery(userId));
             return Ok(files);
+        }
+
+        [HttpDelete("{fileId:guid}")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteFile(Guid fileId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _mediator.Send(new DeleteFileCommand(fileId, userId));
+            return Ok();
         }
     }
 }

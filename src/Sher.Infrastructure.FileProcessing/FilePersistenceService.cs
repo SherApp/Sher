@@ -1,6 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Sher.Application.Files;
 using Sher.Infrastructure.FileProcessing.Interfaces;
 using Sher.SharedKernel.Options;
 
@@ -17,7 +18,7 @@ namespace Sher.Infrastructure.FileProcessing
 
         public async Task PersistFileAsync(Stream fileStream, string fileName)
         {
-            var path = Path.Combine(_options.UploadsDirectory, fileName);
+            var path = GetFilePath(fileName);
             var directory = Path.GetDirectoryName(path);
 
             if (!Directory.Exists(directory))
@@ -29,5 +30,18 @@ namespace Sher.Infrastructure.FileProcessing
             await using var stream = new FileStream(path, FileMode.Create);
             await fileStream.CopyToAsync(stream);
         }
+
+        public bool DeleteFile(string fileName)
+        {
+            var path = GetFilePath(fileName);
+            if (!File.Exists(path)) return false;
+            
+            File.Delete(path);
+
+            return true;
+        }
+
+        private string GetFilePath(string fileName) =>
+            Path.Combine(_options.UploadsDirectory, fileName);
     }
 }

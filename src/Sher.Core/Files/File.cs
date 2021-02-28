@@ -32,6 +32,16 @@ namespace Sher.Core.Files
         {
             Status = FileStatus.Processed;
         }
+
+        public void Delete()
+        {
+            if (IsDeleted)
+            {
+                throw new BusinessRuleViolationException("The file has already been deleted.");
+            }
+            IsDeleted = true;
+            AddDomainEvent(new FileDeletedEvent(Id, Slug));
+        }
     }
 
     public enum FileStatus

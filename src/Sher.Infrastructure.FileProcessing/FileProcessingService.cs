@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sher.Application.Files;
 using Sher.Application.Files.UploadFile;
 using Sher.Infrastructure.FileProcessing.Interfaces;
 
