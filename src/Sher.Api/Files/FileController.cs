@@ -23,6 +23,7 @@ namespace Sher.Api.Files
         }
 
         [HttpPost]
+        [ProducesResponseType((int) HttpStatusCode.Accepted)]
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequestModel model)
         {
             await _mediator.Send(new UploadFileCommand(model.Id,
@@ -33,6 +34,7 @@ namespace Sher.Api.Files
             return Accepted();
         }
         
+        [HttpGet]
         [ProducesResponseType(typeof(List<FileDto>), (int) HttpStatusCode.OK)]
         public async Task<IActionResult> GetUsersFiles()
         {
