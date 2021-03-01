@@ -8,5 +8,6 @@ namespace Sher.Application.Files.GetUsersFiles
         public string Slug { get; set; }
         public string OriginalFileName { get; set; }
         public int Length { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
