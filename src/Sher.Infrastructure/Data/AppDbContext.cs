@@ -1,10 +1,8 @@
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Sher.Core.Base;
 using Sher.Core.Files;
 
 namespace Sher.Infrastructure.Data
@@ -33,11 +31,7 @@ namespace Sher.Infrastructure.Data
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            var entries = ChangeTracker.Entries<BaseEntity>();
-            foreach (var notification in entries.SelectMany(e => e.Entity.DomainEvents))
-            {
-                _mediator.Publish(notification, cancellationToken);
-            }
+            _mediator.PublishDomainEvents(this, cancellationToken);
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
