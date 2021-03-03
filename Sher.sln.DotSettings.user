@@ -6,5 +6,7 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::9E940C7B-2B78-40D4-B48D-EADD49597012::net5.0::Sher.UnitTests.Api.Mapping.UploadFileRequestProfileTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::9E940C7B-2B78-40D4-B48D-EADD49597012::net5.0::Sher.UnitTests.Core.Files.FileTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::9E940C7B-2B78-40D4-B48D-EADD49597012::net5.0::Sher.UnitTests.Infrastructure.MediatRExtensionsTests.PublishDomainEvents_EntityWithDomainEvent_PublishesDomainEvent&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::9E940C7B-2B78-40D4-B48D-EADD49597012::net5.0::Sher.UnitTests.Infrastructure.MediatRExtensionsTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
