@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Sher.Application.CommandProcessing;
+using Sher.Application.Processing;
 using Sher.Core.Files;
 
 namespace Sher.Application.Files.DeleteFile

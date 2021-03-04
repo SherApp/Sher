@@ -3,7 +3,7 @@ using Autofac;
 using FluentValidation;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
-using Sher.Application.CommandProcessing;
+using Sher.Application.Processing;
 using Module = Autofac.Module;
 
 namespace Sher.Infrastructure
