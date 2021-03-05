@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -11,7 +12,7 @@ namespace Sher.UnitTests.Infrastructure
     public class MediatRExtensionsTests
     {
         [Fact]
-        public void PublishDomainEvents_EntityWithDomainEvent_PublishesDomainEvent()
+        public async Task PublishDomainEvents_EntityWithDomainEvent_PublishesDomainEvent()
         {
             // Arrange
             var dbContext = new FakeDbContext(new DbContextOptionsBuilder().UseInMemoryDatabase("test").Options);
@@ -22,7 +23,7 @@ namespace Sher.UnitTests.Infrastructure
             var mediatRMock = new Mock<IMediator>();
             
             // Act
-            mediatRMock.Object.PublishDomainEvents(dbContext);
+            await mediatRMock.Object.PublishDomainEventsAsync(dbContext);
 
             // Assert
             mediatRMock.Verify(x => x.Publish(entity.DomainEvents[0], default), Times.Once);
