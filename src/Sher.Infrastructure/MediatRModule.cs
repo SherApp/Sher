@@ -17,8 +17,10 @@ namespace Sher.Infrastructure
             builder.RegisterAssemblyTypes(ApplicationAssembly)
                 .AsClosedTypesOf(typeof(IValidator<>))
                 .SingleInstance();
- 
+
             builder.RegisterMediatR(ApplicationAssembly);
+
+            builder.RegisterGenericDecorator(typeof(DomainEventHandlerLoggingDecorator<>), typeof(INotificationHandler<>));
 
             builder.RegisterGeneric(typeof(ValidationPipelineBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>))
