@@ -16,7 +16,7 @@ namespace Sher.Application.Files.DeleteFile
 
         public Task Handle(FileDeletedEvent notification, CancellationToken cancellationToken)
         {
-            _filePersistenceService.DeleteFile(notification.FileSlug);
+            _filePersistenceService.DeleteFileDirectory(notification.FileId.ToString());
 
             return Task.CompletedTask;
         }

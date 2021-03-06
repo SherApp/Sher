@@ -1,19 +1,21 @@
 using System.IO;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Sher.Application.Files;
-using Sher.Infrastructure.FileProcessing.Interfaces;
 using Sher.SharedKernel.Options;
 
 namespace Sher.Infrastructure.FileProcessing
 {
     public class FilePersistenceService : IFilePersistenceService
     {
+        private readonly IFileSystem _fileSystem;
         private readonly FilePersistenceServiceOptions _options;
 
-        public FilePersistenceService(IOptions<FilePersistenceServiceOptions> options)
+        public FilePersistenceService(IOptions<FilePersistenceServiceOptions> options, IFileSystem fileSystem = null)
         {
             _options = options.Value;
+            _fileSystem = fileSystem ?? new FileSystem();
         }
 
         public async Task PersistFileAsync(Stream fileStream, string fileName)
@@ -21,22 +23,22 @@ namespace Sher.Infrastructure.FileProcessing
             var path = GetFilePath(fileName);
             var directory = Path.GetDirectoryName(path);
 
-            if (!Directory.Exists(directory))
+            if (!_fileSystem.Directory.Exists(directory))
             {
-                Directory.CreateDirectory(directory);
+                _fileSystem.Directory.CreateDirectory(directory);
             }
 
             fileStream.Position = 0;
-            await using var stream = new FileStream(path, FileMode.Create);
+            await using var stream = _fileSystem.FileStream.Create(path, FileMode.Create);
             await fileStream.CopyToAsync(stream);
         }
 
-        public bool DeleteFile(string fileName)
+        public bool DeleteFileDirectory(string directoryName)
         {
-            var path = GetFilePath(fileName);
-            if (!File.Exists(path)) return false;
+            var path = GetFilePath(directoryName);
+            if (!_fileSystem.Directory.Exists(path)) return false;
             
-            File.Delete(path);
+            _fileSystem.Directory.Delete(path, true);
 
             return true;
         }

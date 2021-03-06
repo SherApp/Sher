@@ -37,7 +37,7 @@ namespace Sher.UnitTests.Application.Files
 
             Assert.Equal(command.Id, file.Id);
             Assert.Equal(command.UploaderId, file.UploaderId);
-            Assert.Equal(command.OriginalFileName, file.OriginalFileName);
+            Assert.Equal(command.FileName, file.FileName);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -19,10 +20,11 @@ namespace Sher.Application.Files.UploadFile
         
         protected override async Task Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            var file = new File(request.Id, request.UploaderId, request.OriginalFileName, request.FileStream.Length);
+            var file = new File(request.Id, request.UploaderId, request.FileName, request.FileStream.Length);
             await _fileRepository.AddAsync(file);
 
-            _fileProcessingQueue.QueueFile(request.FileStream, file.Slug, new FileProcessingContext(request.Id));
+            var fullFileName = Path.Combine(file.Id.ToString(), file.FileName);
+            _fileProcessingQueue.QueueFile(request.FileStream, fullFileName, new FileProcessingContext(request.Id));
         }
     }
 }

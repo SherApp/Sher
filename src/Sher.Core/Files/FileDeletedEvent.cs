@@ -6,12 +6,12 @@ namespace Sher.Core.Files
     public class FileDeletedEvent : BaseDomainEvent
     {
         public Guid FileId { get; }
-        public string FileSlug { get; }
+        public string FileName { get; }
 
-        public FileDeletedEvent(Guid fileId, string fileSlug)
+        public FileDeletedEvent(Guid fileId, string fileName)
         {
             FileId = fileId;
-            FileSlug = fileSlug;
+            FileName = fileName;
         }
     }
 }
