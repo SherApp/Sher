@@ -16,7 +16,7 @@ namespace Sher.UnitTests.Application.Files
         {
             // Arrange
             var file = new File(Guid.NewGuid(), "123", "123", 1);
-            var repoMock = Mock.Of<IFileRepository>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+            var repoMock = Mock.Of<IRepository<File>>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
 
             IRequestHandler<DeleteFileCommand> handler = new DeleteFileCommandHandler(repoMock);
             
@@ -32,7 +32,7 @@ namespace Sher.UnitTests.Application.Files
         {
             // Arrange
             var file = new File(Guid.NewGuid(), "123", "123", 1);
-            var repoMock = Mock.Of<IFileRepository>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+            var repoMock = Mock.Of<IRepository<File>>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
 
             IRequestHandler<DeleteFileCommand> handler = new DeleteFileCommandHandler(repoMock);
             
