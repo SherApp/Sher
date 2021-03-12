@@ -19,7 +19,7 @@ namespace Sher.UnitTests.Application.Files
             // Arrange
             File file = null;
 
-            var repoMock = new Mock<IFileRepository>();
+            var repoMock = new Mock<IRepository<File>>();
             repoMock.Setup(r => r.AddAsync(It.IsAny<File>()))
                 .Callback<File>(f => Task.FromResult(file = f));
 

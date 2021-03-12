@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Sher.Core.Base;
+using Sher.Core.Files;
 
 namespace Sher.Application.Files.GetUsersFiles
 {
     public class GetUserFilesQueryHandler : IRequestHandler<GetUserFilesQuery, List<FileDto>>
     {
-        private readonly IFileRepository _repository;
+        private readonly IRepository<File> _repository;
         private readonly IMapper _mapper;
 
-        public GetUserFilesQueryHandler(IFileRepository repository, IMapper mapper)
+        public GetUserFilesQueryHandler(IRepository<File> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -21,7 +22,13 @@ namespace Sher.Application.Files.GetUsersFiles
 
         public async Task<List<FileDto>> Handle(GetUserFilesQuery request, CancellationToken cancellationToken)
         {
-            var files = await _repository.GetFilesByUploaderId(request.UserId);
+            var (userId, requiredFileNamePart) = request;
+            var criteria = new FileSearchCriteria
+            {
+                UploaderId = userId,
+                RequiredFileNamePart = requiredFileNamePart
+            };
+            var files = await _repository.ListAsync(criteria);
             return files.Select(f => _mapper.Map<FileDto>(f)).ToList();
         }
     }

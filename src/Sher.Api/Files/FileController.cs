@@ -38,10 +38,10 @@ namespace Sher.Api.Files
         
         [HttpGet]
         [ProducesResponseType(typeof(List<FileDto>), (int) HttpStatusCode.OK)]
-        public async Task<IActionResult> GetUsersFiles()
+        public async Task<IActionResult> GetUsersFiles([FromQuery] string requiredFileNamePart = null)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var files = await _mediator.Send(new GetUserFilesQuery(userId));
+            var files = await _mediator.Send(new GetUserFilesQuery(userId, requiredFileNamePart));
             return Ok(files);
         }
 

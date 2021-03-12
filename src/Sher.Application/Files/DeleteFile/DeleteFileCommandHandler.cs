@@ -3,14 +3,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sher.Core.Base;
+using Sher.Core.Files;
 
 namespace Sher.Application.Files.DeleteFile
 {
     public class DeleteFileCommandHandler : AsyncRequestHandler<DeleteFileCommand>
     {
-        private readonly IFileRepository _fileRepository;
+        private readonly IRepository<File> _fileRepository;
 
-        public DeleteFileCommandHandler(IFileRepository fileRepository)
+        public DeleteFileCommandHandler(IRepository<File> fileRepository)
         {
             _fileRepository = fileRepository;
         }
