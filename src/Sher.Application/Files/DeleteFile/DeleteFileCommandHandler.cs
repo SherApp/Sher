@@ -9,9 +9,9 @@ namespace Sher.Application.Files.DeleteFile
 {
     public class DeleteFileCommandHandler : AsyncRequestHandler<DeleteFileCommand>
     {
-        private readonly IRepository<File> _fileRepository;
+        private readonly IFileRepository _fileRepository;
 
-        public DeleteFileCommandHandler(IRepository<File> fileRepository)
+        public DeleteFileCommandHandler(IFileRepository fileRepository)
         {
             _fileRepository = fileRepository;
         }
@@ -21,11 +21,7 @@ namespace Sher.Application.Files.DeleteFile
             var (fileId, userId) = request;
             var file = await _fileRepository.GetByIdAsync(fileId);
 
-            if (file.UploaderId != userId)
-                throw new ArgumentException("File can only be deleted by its uploader.");
-
-            file.Delete();
-            await _fileRepository.UpdateAsync(file);
+            file.Delete(userId);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Sher.Core.Files;
+using Sher.Core.Files.Events;
 using Xunit;
 using File = Sher.Core.Files.File;
 

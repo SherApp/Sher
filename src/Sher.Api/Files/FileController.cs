@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sher.Application.Files.DeleteFile;
-using Sher.Application.Files.GetUsersFiles;
+using Sher.Application.Files.GetUploaderFiles;
 using Sher.Application.Files.UploadFile;
 
 namespace Sher.Api.Files
@@ -41,7 +41,7 @@ namespace Sher.Api.Files
         public async Task<IActionResult> GetUsersFiles([FromQuery] string requiredFileNamePart = null)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var files = await _mediator.Send(new GetUserFilesQuery(userId, requiredFileNamePart));
+            var files = await _mediator.Send(new GetUploaderFilesQuery(userId, requiredFileNamePart));
             return Ok(files);
         }
 

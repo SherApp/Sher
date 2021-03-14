@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sher.Core.Files;
 
-namespace Sher.Infrastructure.Data
+namespace Sher.Infrastructure.Data.Configuration
 {
     public class FileEntityTypeConfiguration : IEntityTypeConfiguration<File>
     {

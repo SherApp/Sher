@@ -8,9 +8,9 @@ namespace Sher.Application.Files.UploadFile
 {
     public class FileProcessedNotificationHandler : INotificationHandler<FileProcessedNotification>
     {
-        private readonly IRepository<File> _repository;
+        private readonly IFileRepository _repository;
 
-        public FileProcessedNotificationHandler(IRepository<File> repository)
+        public FileProcessedNotificationHandler(IFileRepository repository)
         {
             _repository = repository;
         }
@@ -19,8 +19,6 @@ namespace Sher.Application.Files.UploadFile
         {
             var file = await _repository.GetByIdAsync(notification.Context.FileId);
             file.MarkAsProcessed();
-
-            await _repository.UpdateAsync(file);
         }
     }
 }

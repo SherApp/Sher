@@ -1,6 +1,6 @@
 using AutoMapper;
 using Moq;
-using Sher.Application.Files.GetUsersFiles;
+using Sher.Application.Files.GetUploaderFiles;
 using Sher.Core.Base;
 using Sher.Core.Files;
 using Xunit;
@@ -17,10 +17,10 @@ namespace Sher.UnitTests.Application.Files
             const string uploaderId = "clients@client";
 
             var mockRepository = new Mock<IRepository<File>>();
-            var handler = new GetUserFilesQueryHandler(mockRepository.Object, Mock.Of<IMapper>());
+            var handler = new GetUploaderFilesQueryHandler(mockRepository.Object, Mock.Of<IMapper>());
 
             // Act
-            handler.Handle(new GetUserFilesQuery(uploaderId, requiredFileNamePart), default);
+            handler.Handle(new GetUploaderFilesQuery(uploaderId, requiredFileNamePart), default);
 
             // Assert
             mockRepository.Verify(

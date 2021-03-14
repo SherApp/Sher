@@ -2,29 +2,28 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sher.Application.Processing;
 using Sher.Core.Base;
+using Sher.Core.Files;
 using File = Sher.Core.Files.File;
 
 namespace Sher.Application.Files.UploadFile
 {
-    public class UploadFileCommandHandler : AsyncRequestHandler<UploadFileCommand>
+    public class UploadFileCommandHandler : ICommandHandler<UploadFileCommand>
     {
-        private readonly IFileProcessingQueue _fileProcessingQueue;
-        private readonly IRepository<File> _fileRepository;
+        private readonly IUploaderRepository _uploaderRepository;
 
-        public UploadFileCommandHandler(IFileProcessingQueue fileProcessingQueue, IRepository<File> fileRepository)
+        public UploadFileCommandHandler(IUploaderRepository uploaderRepository)
         {
-            _fileProcessingQueue = fileProcessingQueue;
-            _fileRepository = fileRepository;
+            _uploaderRepository = uploaderRepository;
         }
         
-        protected override async Task Handle(UploadFileCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            var file = new File(request.Id, request.UploaderId, request.FileName, request.FileStream.Length);
-            await _fileRepository.AddAsync(file);
+            var uploader = await _uploaderRepository.GetByIdAsync(request.UploaderId);
+            uploader.UploadFile(request.Id, request.FileName, request.FileStream.Length, request.FileStream);
 
-            var fullFileName = Path.Combine(file.Id.ToString(), file.FileName);
-            _fileProcessingQueue.QueueFile(request.FileStream, fullFileName, new FileProcessingContext(request.Id));
+            return Unit.Value;
         }
     }
 }

@@ -6,6 +6,7 @@ using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using Sher.Application.Files;
 using Sher.Core.Base;
+using Sher.Core.Files;
 using Sher.Infrastructure.FileProcessing.Interfaces;
 
 namespace Sher.Infrastructure
@@ -18,16 +19,19 @@ namespace Sher.Infrastructure
         public InfrastructureAutofacModule(Assembly callingAssembly = null)
         {
             _callingAssembly = callingAssembly;
-            _serviceAssemblies = new[] { typeof(FileProcessingContext).Assembly, typeof(AppDbContext).Assembly, typeof(IRepository<>).Assembly, typeof(IFileQueue).Assembly };
+            _serviceAssemblies = new[]
+            {
+                typeof(FileProcessingContext).Assembly,
+                typeof(AppDbContext).Assembly,
+                typeof(IFileRepository).Assembly,
+                typeof(IFileQueue).Assembly
+            };
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>))
-                .InstancePerLifetimeScope();
-
             builder.RegisterAssemblyTypes(_serviceAssemblies)
-                .Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Repository"))
+                .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();
 
             builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);

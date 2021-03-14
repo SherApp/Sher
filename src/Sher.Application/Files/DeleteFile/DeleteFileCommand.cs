@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Sher.Application.Files.DeleteFile
 {
-    public record DeleteFileCommand(Guid FileId, string UserId) : IRequest;
+    public record DeleteFileCommand(Guid FileId, Guid UserId) : IRequest;
 }
