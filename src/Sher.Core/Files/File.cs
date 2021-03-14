@@ -1,6 +1,5 @@
 using System;
 using Sher.Core.Base;
-using Sher.Core.Files.Events;
 
 namespace Sher.Core.Files
 {
@@ -34,20 +33,9 @@ namespace Sher.Core.Files
             Status = FileStatus.Processed;
         }
 
-        public void Delete(Guid uploaderId)
+        internal void Delete()
         {
-            if (IsDeleted)
-            {
-                throw new BusinessRuleViolationException("The file has already been deleted.");
-            }
-
-            if (uploaderId != Id)
-            {
-                throw new BusinessRuleViolationException("File can only be deleted by its owner.");
-            }
-
             IsDeleted = true;
-            AddDomainEvent(new FileDeletedEvent(Id, FileName));
         }
     }
 
