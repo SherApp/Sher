@@ -19,7 +19,7 @@ namespace Sher.Application.Files.DeleteFile
         protected override async Task Handle(DeleteFileCommand request, CancellationToken cancellationToken)
         {
             var (fileId, uploaderId) = request;
-            var uploader = await _uploaderRepository.GetByIdAsync(uploaderId);
+            var uploader = await _uploaderRepository.GetByIdAsync(new UploaderId(uploaderId));
             var file = await _fileRepository.GetByIdAsync(fileId);
 
             uploader.DeleteFile(file);

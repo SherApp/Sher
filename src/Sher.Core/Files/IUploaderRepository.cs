@@ -5,6 +5,6 @@ namespace Sher.Core.Files
 {
     public interface IUploaderRepository
     {
-        Task<Uploader> GetByIdAsync(Guid id);
+        Task<Uploader> GetByIdAsync(UploaderId id);
     }
 }

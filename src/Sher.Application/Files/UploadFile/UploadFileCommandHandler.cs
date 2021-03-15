@@ -20,7 +20,7 @@ namespace Sher.Application.Files.UploadFile
         
         public async Task<Unit> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            var uploader = await _uploaderRepository.GetByIdAsync(request.UploaderId);
+            var uploader = await _uploaderRepository.GetByIdAsync(new UploaderId(request.UploaderId));
             uploader.UploadFile(request.Id, request.FileName, request.FileStream.Length, request.FileStream);
 
             return Unit.Value;

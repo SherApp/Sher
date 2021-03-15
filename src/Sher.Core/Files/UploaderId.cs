@@ -2,11 +2,11 @@ using System;
 
 namespace Sher.Core.Files
 {
-    public abstract class UploaderId : IComparable<UploaderId>
+    public class UploaderId : IComparable<UploaderId>
     {
         public Guid Value { get; }
 
-        protected UploaderId(Guid value)
+        public UploaderId(Guid value)
         {
             Value = value;
         }
