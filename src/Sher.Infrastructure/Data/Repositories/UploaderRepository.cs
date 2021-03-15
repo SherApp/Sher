@@ -14,7 +14,7 @@ namespace Sher.Infrastructure.Data.Repositories
             _uploaders = dbContext.Set<Uploader>();
         }
 
-        public Task<Uploader> GetByIdAsync(UploaderId id)
+        public Task<Uploader> GetByIdAsync(Guid id)
         {
             return _uploaders.FirstOrDefaultAsync(u => u.Id == id);
         }

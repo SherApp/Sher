@@ -8,8 +8,8 @@ namespace Sher.Core.Access
     public class User : BaseEntity
     {
         public Guid Id { get; }
-        public string EmailAddress { get; }
-        public string Password { get; }
+        public string EmailAddress { get; private set; }
+        public string Password { get; private set; }
         public IReadOnlyList<UserRole> Roles => _roles.AsReadOnly();
         private List<UserRole> _roles = new();
 
@@ -18,6 +18,11 @@ namespace Sher.Core.Access
             Id = id;
             EmailAddress = emailAddress;
             Password = password;
+        }
+
+        // EF Core constructor
+        private User()
+        {
         }
 
         public void AssignRole(UserRole role)

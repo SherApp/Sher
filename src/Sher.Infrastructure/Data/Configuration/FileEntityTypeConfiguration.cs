@@ -8,6 +8,7 @@ namespace Sher.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<File> builder)
         {
+            builder.HasOne<Uploader>().WithMany().HasForeignKey(u => u.UploaderId);
             builder.HasIndex(f => f.FileName);
         }
     }

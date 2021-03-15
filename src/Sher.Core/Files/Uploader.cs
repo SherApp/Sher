@@ -7,9 +7,9 @@ namespace Sher.Core.Files
 {
     public class Uploader : BaseEntity
     {
-        public UploaderId Id { get; }
+        public Guid Id { get; }
 
-        public Uploader(UploaderId id)
+        public Uploader(Guid id)
         {
             Id = id;
         }

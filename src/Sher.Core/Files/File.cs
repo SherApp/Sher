@@ -6,15 +6,15 @@ namespace Sher.Core.Files
     public class File : BaseEntity
     {
         public Guid Id { get; private set; }
-        public UploaderId UploaderId { get; private set; }
+        public Guid UploaderId { get; private set; }
         public string FileName { get; private set; }
         public long Length { get; private set; }
         public FileStatus Status { get; private set; } = FileStatus.Uploaded;
 
-        internal File(Guid id, UploaderId uploaderId, string fileName, long length)
+        internal File(Guid id, Guid uploaderId, string fileName, long length)
         {
             Id = id;
-            UploaderId = uploaderId ?? throw new ArgumentNullException(nameof(uploaderId));
+            UploaderId = uploaderId;
             FileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
             if (length <= 0)
             {

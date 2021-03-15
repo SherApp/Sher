@@ -12,6 +12,6 @@ namespace Sher.Application.Files.GetUploaderFiles
 
         public override Expression<Func<File, bool>> Expression => file =>
             (RequiredFileNamePart == null || file.FileName.ToLower().Contains(RequiredFileNamePart.ToLower())) &&
-            (UploaderId == null || file.UploaderId.Value == UploaderId);
+            (UploaderId == null || file.UploaderId == UploaderId);
     }
 }

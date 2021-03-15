@@ -8,6 +8,7 @@ namespace Sher.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<PlatformInstance> builder)
         {
+            builder.HasKey("_id");
             builder.OwnsOne(p => p.Settings);
         }
     }

@@ -3,12 +3,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Sher.Core.Access;
 using Sher.Core.Files;
 
 namespace Sher.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<Uploader> Uploaders { get; private set; }
+        public DbSet<User> Users { get; private set; }
         public DbSet<File> Files { get; private set; }
 
         private readonly IMediator _mediator;
