@@ -10,12 +10,12 @@ using Sher.Application.Files.DeleteFile;
 using Sher.Application.Files.GetUploaderFiles;
 using Sher.Application.Files.UploadFile;
 
-namespace Sher.Api.Files
+namespace Sher.Api.Controllers.Files
 {
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class FileController : ControllerBase
+    public class FileController : ApiController
     {
         private readonly IMediator _mediator;
 
@@ -29,7 +29,7 @@ namespace Sher.Api.Files
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequestModel model)
         {
             await _mediator.Send(new UploadFileCommand(model.Id,
-                User.FindFirstValue(ClaimTypes.NameIdentifier),
+                UserId,
                 model.File.FileName,
                 model.File.OpenReadStream()));
 
@@ -40,8 +40,7 @@ namespace Sher.Api.Files
         [ProducesResponseType(typeof(List<FileDto>), (int) HttpStatusCode.OK)]
         public async Task<IActionResult> GetUsersFiles([FromQuery] string requiredFileNamePart = null)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var files = await _mediator.Send(new GetUploaderFilesQuery(userId, requiredFileNamePart));
+            var files = await _mediator.Send(new GetUploaderFilesQuery(UserId, requiredFileNamePart));
             return Ok(files);
         }
 
@@ -49,8 +48,7 @@ namespace Sher.Api.Files
         [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteFile(Guid fileId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await _mediator.Send(new DeleteFileCommand(fileId, userId));
+            await _mediator.Send(new DeleteFileCommand(fileId, UserId));
             return Ok();
         }
     }

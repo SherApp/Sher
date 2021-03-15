@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Http;
 
-namespace Sher.Api.Files
+namespace Sher.Api.Controllers.Files
 {
     public class UploadFileRequestModel
     {
