@@ -2,7 +2,12 @@ using MediatR;
 
 namespace Sher.Application.Processing
 {
-    public interface ICommand : IRequest
+    public interface ICommand<out T> : IRequest<T>
+    {
+        
+    }
+
+    public interface ICommand : ICommand<Unit>
     {
         
     }

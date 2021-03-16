@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using MediatR;
 using Moq;
 using Sher.Application.Files.DeleteFile;
-using Sher.Core.Base;
 using Sher.Core.Files;
+using Sher.UnitTests.Builders;
 using Xunit;
 
 namespace Sher.UnitTests.Application.Files
@@ -15,32 +14,37 @@ namespace Sher.UnitTests.Application.Files
         public async Task DeleteFileHandle_FileUploadedByUser_DeletesFile()
         {
             // Arrange
-            var file = new File(Guid.NewGuid(), "123", "123", 1);
-            var repoMock = Mock.Of<IRepository<File>>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+            var uploader = new UploaderBuilder().Build();
+            var file = new FileBuilder().WithUploaderId(uploader.Id).Build();
 
-            IRequestHandler<DeleteFileCommand> handler = new DeleteFileCommandHandler(repoMock);
+            var uploaderRepoMock =
+                Mock.Of<IUploaderRepository>(u => u.GetByIdAsync(file.UploaderId) == Task.FromResult(uploader));
+            var fileRepoMock = Mock.Of<IFileRepository>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+
+            var handler = new DeleteFileCommandHandler(fileRepoMock, uploaderRepoMock);
             
             // Act
-            await handler.Handle(new DeleteFileCommand(file.Id, file.UploaderId), default);
+            var result = await handler.Handle(new DeleteFileCommand(file.Id, file.UploaderId), default);
             
             // Assert
             Assert.True(file.IsDeleted);
+            Assert.True(result);
         }
 
         [Fact]
-        public async Task DeleteFileHandle_FileNotUploadedByUser_ThrowsException()
+        public async Task DeleteFileHandle_FileNotUploadedByUser_ReturnsFalse()
         {
             // Arrange
-            var file = new File(Guid.NewGuid(), "123", "123", 1);
-            var repoMock = Mock.Of<IRepository<File>>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+            var file = new FileBuilder().Build();
+            var repoMock = Mock.Of<IFileRepository>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
 
-            IRequestHandler<DeleteFileCommand> handler = new DeleteFileCommandHandler(repoMock);
+            var handler = new DeleteFileCommandHandler(repoMock, Mock.Of<IUploaderRepository>());
             
             // Act
-            var func = new Func<Task>(async () => await handler.Handle(new DeleteFileCommand(file.Id, "other"), default));
+            var result = await handler.Handle(new DeleteFileCommand(file.Id, Guid.Empty), default);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentException>(func);
+            Assert.False(result);
         }
     }
 }

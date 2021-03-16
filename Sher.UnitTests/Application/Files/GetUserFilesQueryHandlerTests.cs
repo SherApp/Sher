@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Moq;
 using Sher.Application.Files.GetUploaderFiles;
@@ -14,9 +15,9 @@ namespace Sher.UnitTests.Application.Files
         {
             // Arrange
             const string requiredFileNamePart = "image";
-            const string uploaderId = "clients@client";
+            var uploaderId = Guid.NewGuid();
 
-            var mockRepository = new Mock<IRepository<File>>();
+            var mockRepository = new Mock<IFileRepository>();
             var handler = new GetUploaderFilesQueryHandler(mockRepository.Object, Mock.Of<IMapper>());
 
             // Act
@@ -24,7 +25,7 @@ namespace Sher.UnitTests.Application.Files
 
             // Assert
             mockRepository.Verify(
-                e => e.ListAsync(It.Is<FileSearchCriteria>(
+                e => e.SearchAsync(It.Is<FileSearchCriteria>(
                     c => c.RequiredFileNamePart == requiredFileNamePart && c.UploaderId == uploaderId)),
                 Times.Once);
         }

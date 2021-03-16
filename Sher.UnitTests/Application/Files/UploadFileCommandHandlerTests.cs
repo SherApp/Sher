@@ -1,11 +1,10 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using MediatR;
 using Moq;
-using Sher.Application.Files;
 using Sher.Application.Files.UploadFile;
-using Sher.Core.Base;
+using Sher.Core.Files;
+using Sher.UnitTests.Builders;
 using Xunit;
 using File = Sher.Core.Files.File;
 
@@ -17,23 +16,25 @@ namespace Sher.UnitTests.Application.Files
         public async Task UploadFileHandler_ValidCommand_CreatesAndAddsFileToRepository()
         {
             // Arrange
+            var uploader = new UploaderBuilder().Build();
             File file = null;
 
-            var repoMock = new Mock<IRepository<File>>();
-            repoMock.Setup(r => r.AddAsync(It.IsAny<File>()))
+            var uploaderRepoMock =
+                Mock.Of<IUploaderRepository>(u => u.GetByIdAsync(uploader.Id) == Task.FromResult(uploader));
+            var fileRepoMock = new Mock<IFileRepository>();
+            fileRepoMock.Setup(r => r.AddAsync(It.IsAny<File>()))
                 .Callback<File>(f => Task.FromResult(file = f));
 
             await using var ms = new MemoryStream(new byte[1]);
-            var command = new UploadFileCommand(Guid.NewGuid(), "123", "123", ms);
+            var command = new UploadFileCommand(Guid.NewGuid(), uploader.Id, "123", ms);
 
-            IRequestHandler<UploadFileCommand> handler =
-                new UploadFileCommandHandler(Mock.Of<IFileProcessingQueue>(), repoMock.Object);
+            var handler = new UploadFileCommandHandler(uploaderRepoMock, fileRepoMock.Object);
 
             // Act
             await handler.Handle(command, default);
 
             // Assert
-            repoMock.Verify(r => r.AddAsync(file), Times.Once);
+            fileRepoMock.Verify(r => r.AddAsync(file), Times.Once);
 
             Assert.Equal(command.Id, file.Id);
             Assert.Equal(command.UploaderId, file.UploaderId);

@@ -9,5 +9,6 @@ namespace Sher.Core.Files
     {
         public Task<File> GetByIdAsync(Guid id);
         public Task<IReadOnlyList<File>> SearchAsync(ISpecification<File> criteria);
+        public Task AddAsync(File file);
     }
 }

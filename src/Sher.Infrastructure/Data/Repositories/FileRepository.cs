@@ -25,5 +25,10 @@ namespace Sher.Infrastructure.Data.Repositories
         {
             return (await _set.Where(criteria.Expression).ToListAsync()).AsReadOnly();
         }
+
+        public async Task AddAsync(File file)
+        {
+            await _set.AddAsync(file);
+        }
     }
 }

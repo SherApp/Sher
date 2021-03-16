@@ -1,7 +1,7 @@
 using System;
-using MediatR;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Files.DeleteFile
 {
-    public record DeleteFileCommand(Guid FileId, Guid UploaderId) : IRequest;
+    public record DeleteFileCommand(Guid FileId, Guid UploaderId) : ICommand<bool>;
 }

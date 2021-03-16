@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +44,9 @@ namespace Sher.UnitTests.Infrastructure
 
         private class StubEntity : BaseEntity
         {
-            public StubEntity() : base(Guid.NewGuid())
+            public int Id { get; private set; }
+
+            public StubEntity()
             {
                 AddDomainEvent(new DummyDomainEvent());
             }
