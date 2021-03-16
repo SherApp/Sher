@@ -9,11 +9,11 @@ namespace Sher.Core.Access
     {
         public Guid Id { get; }
         public string EmailAddress { get; private set; }
-        public string Password { get; private set; }
+        public Password Password { get; private set; }
         public IReadOnlyList<UserRole> Roles => _roles.AsReadOnly();
         private List<UserRole> _roles = new();
 
-        public User(Guid id, string emailAddress, string password)
+        public User(Guid id, string emailAddress, Password password)
         {
             Id = id;
             EmailAddress = emailAddress;

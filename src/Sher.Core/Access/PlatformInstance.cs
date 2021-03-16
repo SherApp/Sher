@@ -18,7 +18,7 @@ namespace Sher.Core.Access
         {
         }
 
-        public User RegisterUser(string invitationCode, Guid id, string emailAddress, string password)
+        public User RegisterUser(string invitationCode, Guid id, string emailAddress, Password password)
         {
             if (invitationCode != Settings.InvitationCode)
             {

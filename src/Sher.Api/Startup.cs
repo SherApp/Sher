@@ -37,6 +37,7 @@ namespace Sher.Api
             });
 
             services.Configure<FilePersistenceServiceOptions>(Configuration.GetSection("FilePersistenceServiceOptions"));
+            services.Configure<PasswordHashingOptions>(Configuration.GetSection("PasswordHashingOptions"));
 
             services.AddAuthentication(options =>
                 {
