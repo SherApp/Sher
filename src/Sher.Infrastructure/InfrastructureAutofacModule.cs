@@ -8,6 +8,7 @@ using Sher.Application.Files;
 using Sher.Core.Base;
 using Sher.Core.Files;
 using Sher.Infrastructure.FileProcessing.Interfaces;
+using Sher.Infrastructure.Processing;
 
 namespace Sher.Infrastructure
 {
@@ -31,12 +32,13 @@ namespace Sher.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(_serviceAssemblies)
-                .Where(t => t.Name.EndsWith("Service"))
+                .Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
 
             builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);
 
             builder.RegisterModule<MediatRModule>();
+            builder.RegisterModule<DataModule>();
 
             base.Load(builder);
         }
