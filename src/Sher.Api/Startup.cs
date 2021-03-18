@@ -1,13 +1,14 @@
 using System.Reflection;
 using Autofac;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Okta.AspNetCore;
 using Sher.Infrastructure;
 using Sher.Infrastructure.FileProcessing;
 using Sher.SharedKernel.Options;
@@ -41,8 +42,6 @@ namespace Sher.Api
             services.Configure<JwtOptions>(Configuration.GetSection("JwtOptions"));
 
             services.AddJwt(Configuration);
-
-            services.AddAuthorization();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             

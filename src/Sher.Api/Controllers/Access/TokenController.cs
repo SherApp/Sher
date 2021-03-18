@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sher.Application.Access.AuthenticateUser;
@@ -34,6 +35,13 @@ namespace Sher.Api.Controllers.Access
             };
             Response.Cookies.Append("JwtToken", token, cookieOptions);
 
+            return Ok();
+        }
+
+        [HttpGet]
+        [Authorize("TokenRefresh")]
+        public async Task<IActionResult> RefreshTokenAsync()
+        {
             return Ok();
         }
     }

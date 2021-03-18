@@ -25,27 +25,43 @@ namespace Sher.Infrastructure
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecurityKey)),
-                        ValidateLifetime = true,
-                        ValidateIssuer = true,
-                        ValidIssuer = options.Issuer,
-                        ValidateAudience = true,
-                        ValidAudience = options.Audience
-                    };
-                    opt.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            context.Token = context.Request.Cookies["JwtToken"];
-                            return Task.CompletedTask;
-                        }
-                    };
+                    ApplyDefaultJwtOptions(opt, options);
+                })
+                .AddJwtBearer("BearerAllowExpired", opt =>
+                {
+                    ApplyDefaultJwtOptions(opt, options);
+                    opt.TokenValidationParameters.ValidateLifetime = false;
                 });
+            
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("TokenRefresh",
+                    cfg => cfg.AddAuthenticationSchemes("BearerAllowExpired").RequireAuthenticatedUser());
+            });
 
             return services;
+        }
+
+        private static void ApplyDefaultJwtOptions(JwtBearerOptions bearerOptions, JwtOptions jwtValidationOptions)
+        {
+            bearerOptions.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtValidationOptions.SecurityKey)),
+                ValidateLifetime = true,
+                ValidateIssuer = true,
+                ValidIssuer = jwtValidationOptions.Issuer,
+                ValidateAudience = true,
+                ValidAudience = jwtValidationOptions.Audience
+            };
+            bearerOptions.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    context.Token = context.Request.Cookies["JwtToken"];
+                    return Task.CompletedTask;
+                }
+            };
         }
     }
 }
