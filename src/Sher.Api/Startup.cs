@@ -38,17 +38,9 @@ namespace Sher.Api
 
             services.Configure<FilePersistenceServiceOptions>(Configuration.GetSection("FilePersistenceServiceOptions"));
             services.Configure<PasswordHashingOptions>(Configuration.GetSection("PasswordHashingOptions"));
+            services.Configure<JwtOptions>(Configuration.GetSection("JwtOptions"));
 
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-                    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-                    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-                })
-                .AddOktaWebApi(new OktaWebApiOptions
-                {
-                    OktaDomain = Configuration["Okta:OktaDomain"],
-                });
+            services.AddJwt(Configuration);
 
             services.AddAuthorization();
 
