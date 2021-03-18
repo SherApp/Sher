@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sher.Core.Access;
+using Sher.Core.Access.Users;
 using Sher.Core.Files;
 
 namespace Sher.Infrastructure.Data.Configuration

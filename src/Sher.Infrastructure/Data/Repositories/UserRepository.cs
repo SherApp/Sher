@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Sher.Core.Access;
+using Sher.Core.Access.Users;
 
 namespace Sher.Infrastructure.Data.Repositories
 {

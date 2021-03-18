@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Sher.Core.Access;
+using Sher.Core.Access.Users;
 using Sher.Core.Files;
 
 namespace Sher.Infrastructure.Data

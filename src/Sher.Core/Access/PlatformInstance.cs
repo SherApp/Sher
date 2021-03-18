@@ -1,4 +1,5 @@
 using System;
+using Sher.Core.Access.Users;
 using Sher.Core.Base;
 
 namespace Sher.Core.Access
@@ -18,14 +19,14 @@ namespace Sher.Core.Access
         {
         }
 
-        public User RegisterUser(string invitationCode, Guid id, string emailAddress, Password password)
+        public Users.User RegisterUser(string invitationCode, Guid id, string emailAddress, Password password)
         {
             if (invitationCode != Settings.InvitationCode)
             {
                 throw new BusinessRuleViolationException("Invalid invitation code.");
             }
 
-            return new User(id, emailAddress, password);
+            return new Users.User(id, emailAddress, password);
         }
     }
 }

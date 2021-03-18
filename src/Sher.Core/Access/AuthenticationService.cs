@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Sher.Core.Access.Users;
 
 namespace Sher.Core.Access
 {
