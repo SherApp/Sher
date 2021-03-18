@@ -1,28 +1,27 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using Sher.Application.Processing;
 using Sher.Core.Base;
 
 namespace Sher.Infrastructure.Processing
 {
-    public class CommandHandlerUnitOfWorkDecorator<T> : ICommandHandler<T> where T : ICommand, IRequest
+    public class CommandHandlerUnitOfWorkDecorator<TRequest, TResponse> : ICommandHandler<TRequest, TResponse> where TRequest : ICommand<TResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ICommandHandler<T> _handler;
+        private readonly ICommandHandler<TRequest, TResponse> _handler;
 
-        public CommandHandlerUnitOfWorkDecorator(IUnitOfWork unitOfWork, ICommandHandler<T> handler)
+        public CommandHandlerUnitOfWorkDecorator(IUnitOfWork unitOfWork, ICommandHandler<TRequest, TResponse> handler)
         {
             _unitOfWork = unitOfWork;
             _handler = handler;
         }
 
-        public async Task<Unit> Handle(T request, CancellationToken cancellationToken)
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
-            await _handler.Handle(request, cancellationToken);
+            var result = await _handler.Handle(request, cancellationToken);
             await _unitOfWork.CommitChangesAsync();
 
-            return Unit.Value;
+            return result;
         }
     }
 }

@@ -7,5 +7,6 @@ namespace Sher.Core.Access
     {
         Task<User> GetUserByIdAsync(Guid id);
         Task<User> GetByEmailAddressAsync(string emailAddress);
+        Task AddUserAsync(User user);
     }
 }

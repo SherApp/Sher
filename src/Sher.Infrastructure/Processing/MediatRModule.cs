@@ -6,7 +6,7 @@ using MediatR.Extensions.Autofac.DependencyInjection;
 using Sher.Application.Processing;
 using Module = Autofac.Module;
 
-namespace Sher.Infrastructure
+namespace Sher.Infrastructure.Processing
 {
     public class MediatRModule : Module
     {
@@ -21,6 +21,8 @@ namespace Sher.Infrastructure
             builder.RegisterMediatR(ApplicationAssembly);
 
             builder.RegisterGenericDecorator(typeof(DomainEventHandlerLoggingDecorator<>), typeof(INotificationHandler<>));
+
+            builder.RegisterGenericDecorator(typeof(CommandHandlerUnitOfWorkDecorator<,>), typeof(IRequestHandler<,>));
 
             builder.RegisterGeneric(typeof(ValidationPipelineBehavior<,>))
                 .As(typeof(IPipelineBehavior<,>))

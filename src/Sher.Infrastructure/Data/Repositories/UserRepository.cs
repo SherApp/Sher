@@ -23,5 +23,10 @@ namespace Sher.Infrastructure.Data.Repositories
         {
             return _users.FirstOrDefaultAsync(u => u.EmailAddress == emailAddress);
         }
+
+        public async Task AddUserAsync(User user)
+        {
+            await _users.AddAsync(user);
+        }
     }
 }
