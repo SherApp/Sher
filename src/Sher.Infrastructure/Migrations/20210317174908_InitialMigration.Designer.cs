@@ -10,7 +10,7 @@ using Sher.Infrastructure.Data;
 namespace Sher.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210315162517_InitialMigration")]
+    [Migration("20210317174908_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,10 +46,10 @@ namespace Sher.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("EmailAddress")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -123,6 +123,25 @@ namespace Sher.Infrastructure.Migrations
 
             modelBuilder.Entity("Sher.Core.Access.User", b =>
                 {
+                    b.OwnsOne("Sher.Core.Access.Password", "Password", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Hash")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Salt")
+                                .HasColumnType("text");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
                     b.OwnsMany("Sher.Core.Access.UserRole", "Roles", b1 =>
                         {
                             b1.Property<Guid>("UserId")
@@ -143,6 +162,8 @@ namespace Sher.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
                         });
+
+                    b.Navigation("Password");
 
                     b.Navigation("Roles");
                 });

@@ -27,7 +27,8 @@ namespace Sher.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     EmailAddress = table.Column<string>(type: "text", nullable: true),
-                    Password = table.Column<string>(type: "text", nullable: true),
+                    Password_Hash = table.Column<string>(type: "text", nullable: true),
+                    Password_Salt = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -86,6 +87,12 @@ namespace Sher.Infrastructure.Migrations
                 name: "IX_Files_UploaderId",
                 table: "Files",
                 column: "UploaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_EmailAddress",
+                table: "Users",
+                column: "EmailAddress",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
