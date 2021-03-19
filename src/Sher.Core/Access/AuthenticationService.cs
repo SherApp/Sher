@@ -41,9 +41,34 @@ namespace Sher.Core.Access
 
             if (!isValidPassword) return null;
 
+            user.SetRefreshToken(_passwordHashingService.GetRandomToken(512 / 8));
+
             return new UserDescriptor
             {
-                NameIdentifier = user.Id.ToString()
+                NameIdentifier = user.Id.ToString(),
+                RefreshToken = user.RefreshToken
+            };
+        }
+
+        public async Task<UserDescriptor> RefreshUserTokenAsync(Guid userId, string refreshToken)
+        {
+            if (refreshToken is null)
+            {
+                throw new ArgumentNullException(nameof(refreshToken));
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user.IsDeleted || user.RefreshToken != refreshToken)
+            {
+                return null;
+            }
+
+            user.SetRefreshToken(_passwordHashingService.GetRandomToken(512 / 8));
+
+            return new UserDescriptor
+            {
+                NameIdentifier = user.Id.ToString(),
+                RefreshToken = user.RefreshToken
             };
         }
         
@@ -77,5 +102,6 @@ namespace Sher.Core.Access
     public class UserDescriptor
     {
         public string NameIdentifier { get; init; }
+        public string RefreshToken { get; init; }
     }
 }

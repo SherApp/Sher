@@ -20,7 +20,7 @@ namespace Sher.Infrastructure.Crypto
 
         public async Task<HashResult> HashPasswordAsync(string password)
         {
-            var saltBytes = GetSalt();
+            var saltBytes = GetRandomBytes(64 / 8);
             return await HashPasswordWithSaltAsync(password, saltBytes);
         }
 
@@ -65,9 +65,14 @@ namespace Sher.Infrastructure.Crypto
             return result.Hash == hashedPassword;
         }
 
-        private static byte[] GetSalt()
+        public string GetRandomToken(int size)
         {
-            var salt = new byte[64 / 8];
+            return Convert.ToBase64String(GetRandomBytes(size));
+        }
+
+        private static byte[] GetRandomBytes(int size)
+        {
+            var salt = new byte[size];
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(salt);
 

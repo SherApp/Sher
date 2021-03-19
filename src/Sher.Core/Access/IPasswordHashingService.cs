@@ -6,5 +6,6 @@ namespace Sher.Core.Access
     {
         Task<HashResult> HashPasswordAsync(string password);
         Task<bool> VerifyPasswordAsync(string hashedPassword, string password, string salt);
+        string GetRandomToken(int size);
     }
 }
