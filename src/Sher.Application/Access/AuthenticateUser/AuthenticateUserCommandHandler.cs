@@ -12,20 +12,20 @@ using Sher.SharedKernel.Options;
 
 namespace Sher.Application.Access.AuthenticateUser
 {
-    public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCommand, string>
+    public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCommand, AuthenticationResult>
     {
         private readonly IAuthenticationService _authenticationService;
-        private readonly JwtOptions _options;
+        private readonly JwtIssuer _jwtIssuer;
 
         public AuthenticateUserCommandHandler(
             IAuthenticationService authenticationService,
-            IOptions<JwtOptions> options)
+            JwtIssuer jwtIssuer)
         {
             _authenticationService = authenticationService;
-            _options = options.Value;
+            _jwtIssuer = jwtIssuer;
         }
 
-        public async Task<string> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
+        public async Task<AuthenticationResult> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
         {
             var (emailAddress, password) = request;
 
@@ -35,23 +35,12 @@ namespace Sher.Application.Access.AuthenticateUser
                 return null;
             }
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecurityKey));
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var token = _jwtIssuer.IssueToken(authenticationResult.NameIdentifier);
+            return new AuthenticationResult
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, authenticationResult.NameIdentifier)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                Issuer = _options.Issuer,
-                Audience = _options.Audience,
-                SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512)
+                JwtToken = token,
+                RefreshToken = authenticationResult.RefreshToken
             };
-
-            var token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
         }
     }
 }
