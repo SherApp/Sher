@@ -10,6 +10,7 @@ namespace Sher.Core.Access.Users
         public Guid Id { get; }
         public string EmailAddress { get; private set; }
         public Password Password { get; private set; }
+        public string RefreshToken { get; private set; }
         public IReadOnlyList<UserRole> Roles => _roles.AsReadOnly();
         private List<UserRole> _roles = new();
 
@@ -32,6 +33,11 @@ namespace Sher.Core.Access.Users
                 throw new BusinessRuleViolationException("User cannot have two same roles");
             }
             _roles.Add(role);
+        }
+
+        public void SetRefreshToken(string refreshToken)
+        {
+            RefreshToken = refreshToken;
         }
     }
 }
