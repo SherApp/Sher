@@ -8,6 +8,7 @@ namespace Sher.UnitTests.Builders
         private Guid _id = Guid.NewGuid();
         private Password _password = new("somehash", "somesalt");
         private string _emailAddress = "test@example.com";
+        private string _refreshToken = "token";
 
         public UserBuilder WithId(Guid userId)
         {
@@ -27,9 +28,18 @@ namespace Sher.UnitTests.Builders
             return this;
         }
 
+        public UserBuilder WithRefreshToken(string refreshToken)
+        {
+            _refreshToken = refreshToken;
+            return this;
+        }
+
         public User Build()
         {
-            return new(_id, _emailAddress, _password);
+            var user = new User(_id, _emailAddress, _password);
+            user.SetRefreshToken(_refreshToken);
+
+            return user;
         }
     }
 }
