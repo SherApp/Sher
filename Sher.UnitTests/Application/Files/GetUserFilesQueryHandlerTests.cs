@@ -2,7 +2,6 @@ using System;
 using AutoMapper;
 using Moq;
 using Sher.Application.Files.GetUploaderFiles;
-using Sher.Core.Base;
 using Sher.Core.Files;
 using Xunit;
 

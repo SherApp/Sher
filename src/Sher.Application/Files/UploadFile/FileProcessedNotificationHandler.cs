@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sher.Core.Base;
 using Sher.Core.Files;
 
 namespace Sher.Application.Files.UploadFile

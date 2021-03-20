@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

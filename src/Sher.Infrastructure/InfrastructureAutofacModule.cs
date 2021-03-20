@@ -1,12 +1,10 @@
 using System.Reflection;
 using Autofac;
 using Sher.Infrastructure.Data;
-using Sher.Infrastructure.Data.Repositories;
 using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using Sher.Application.Access;
 using Sher.Application.Files;
-using Sher.Core.Base;
 using Sher.Core.Files;
 using Sher.Infrastructure.FileProcessing.Interfaces;
 using Sher.Infrastructure.Processing;

@@ -1,14 +1,7 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Sher.Application.Processing;
 using Sher.Core.Access;
-using Sher.SharedKernel.Options;
 
 namespace Sher.Application.Access.AuthenticateUser
 {
