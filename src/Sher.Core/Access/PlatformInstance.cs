@@ -19,14 +19,19 @@ namespace Sher.Core.Access
         {
         }
 
-        public Users.User RegisterUser(string invitationCode, Guid id, string emailAddress, Password password)
+        public User RegisterUser(Guid id, string emailAddress, Password password, string invitationCode = null)
         {
             if (invitationCode != Settings.InvitationCode)
             {
                 throw new BusinessRuleViolationException("Invalid invitation code.");
             }
 
-            return new Users.User(id, emailAddress, password);
+            return new User(id, emailAddress, password);
+        }
+
+        public void SetInvitationCode(string invitationCode)
+        {
+            Settings = new PlatformSettings(invitationCode);
         }
     }
 }

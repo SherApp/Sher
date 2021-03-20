@@ -1,12 +1,15 @@
+using System;
 using System.Reflection;
 using Autofac;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Sher.Application.Access.InitializePlatform;
 using Sher.Infrastructure;
 using Sher.Infrastructure.FileProcessing;
 using Sher.SharedKernel.Options;
@@ -73,6 +76,10 @@ namespace Sher.Api
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            var mediator = app.ApplicationServices.GetRequiredService<IMediator>();
+            mediator.Send(new InitializePlatformCommand(Guid.NewGuid(), Configuration["Admin:EmailAddress"],
+                Configuration["Admin:Password"])).Wait();
         }
     }
 }

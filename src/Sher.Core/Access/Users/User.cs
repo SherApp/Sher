@@ -28,7 +28,7 @@ namespace Sher.Core.Access.Users
 
         public void AssignRole(UserRole role)
         {
-            if (_roles.First(r => r.Name == role.Name) is not null)
+            if (_roles.FirstOrDefault(r => r.Name == role.Name) is not null)
             {
                 throw new BusinessRuleViolationException("User cannot have two same roles");
             }

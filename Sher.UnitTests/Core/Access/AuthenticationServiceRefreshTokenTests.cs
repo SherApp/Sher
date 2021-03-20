@@ -23,8 +23,7 @@ namespace Sher.UnitTests.Core.Access
             var passwordHashingServiceMock = Mock.Of<IPasswordHashingService>(
                 x => x.GetRandomToken(It.IsAny<int>()) == newRefreshToken);
 
-            var authService = new AuthenticationService(passwordHashingServiceMock, repoMock,
-                Mock.Of<IPlatformInstanceRepository>());
+            var authService = new AuthenticationService(passwordHashingServiceMock, repoMock);
 
             // Act
             var result = await authService.RefreshUserTokenAsync(user.Id, oldRefreshToken);
@@ -43,8 +42,7 @@ namespace Sher.UnitTests.Core.Access
             var repoMock =
                 Mock.Of<IUserRepository>(f => f.GetUserByIdAsync(user.Id) == Task.FromResult(user));
             
-            var authService = new AuthenticationService(Mock.Of<IPasswordHashingService>(), repoMock,
-                Mock.Of<IPlatformInstanceRepository>());
+            var authService = new AuthenticationService(Mock.Of<IPasswordHashingService>(), repoMock);
 
             // Act
             var result = await authService.RefreshUserTokenAsync(user.Id, "invalid_token");

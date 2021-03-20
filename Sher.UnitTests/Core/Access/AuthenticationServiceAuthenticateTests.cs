@@ -29,8 +29,7 @@ namespace Sher.UnitTests.Core.Access
 
             var authService = new AuthenticationService(
                 passwordHashingServiceMock.Object,
-                repoMock,
-                Mock.Of<IPlatformInstanceRepository>());
+                repoMock);
 
             var result = await authService.AuthenticateUserAsync(user.EmailAddress, plainTextPass);
             
@@ -53,8 +52,7 @@ namespace Sher.UnitTests.Core.Access
 
             var authService = new AuthenticationService(
                 passwordHashingServiceMock.Object,
-                repoMock,
-                Mock.Of<IPlatformInstanceRepository>());
+                repoMock);
 
             var result = await authService.AuthenticateUserAsync(user.EmailAddress, "wrong_password");
 
