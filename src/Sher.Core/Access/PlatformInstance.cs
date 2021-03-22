@@ -1,10 +1,12 @@
 using System;
+using System.Threading.Tasks;
+using Sher.Core.Access.Rules;
 using Sher.Core.Access.Users;
 using Sher.Core.Base;
 
 namespace Sher.Core.Access
 {
-    public class PlatformInstance
+    public class PlatformInstance : BaseEntity
     {
         private int _id;
         public PlatformSettings Settings { get; private set; }
@@ -19,14 +21,22 @@ namespace Sher.Core.Access
         {
         }
 
-        public User RegisterUser(Guid id, string emailAddress, Password password, string invitationCode = null)
+        public async Task<User> RegisterUser(
+            Guid id,
+            string emailAddress,
+            string password,
+            IPasswordHashingService hashingService,
+            string invitationCode = null)
         {
             if (invitationCode != Settings.InvitationCode)
             {
                 throw new BusinessRuleViolationException("Invalid invitation code.");
             }
 
-            return new User(id, emailAddress, password);
+            CheckRule(new PasswordSecurityRule(password));
+
+            var hashResult = await hashingService.HashPasswordAsync(password);
+            return new User(id, emailAddress, new Password(hashResult.Hash, hashResult.Salt));
         }
 
         public void SetInvitationCode(string invitationCode)

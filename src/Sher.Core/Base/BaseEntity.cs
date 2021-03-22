@@ -15,5 +15,14 @@ namespace Sher.Core.Base
         {
             _domainEvents.Add(@event);
         }
+
+        protected void CheckRule(IBusinessRule rule)
+        {
+            var error = rule.Check();
+            if (error is not null)
+            {
+                throw new BusinessRuleViolationException(error);
+            }
+        }
     }
 }

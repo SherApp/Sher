@@ -31,11 +31,8 @@ namespace Sher.Application.Access.InitializePlatform
 
             var (adminId, adminEmailAddress, adminPassword) = request;
 
-            var hashingResult = await _passwordHashingService.HashPasswordAsync(adminPassword);
-
             instance = new PlatformInstance(new PlatformSettings(null));
-            var user = instance.RegisterUser(adminId, adminEmailAddress,
-                new Password(hashingResult.Hash, hashingResult.Salt));
+            var user = await instance.RegisterUser(adminId, adminEmailAddress, adminPassword, _passwordHashingService);
             
             user.AssignRole(new UserRole(UserRole.Admin));
 
