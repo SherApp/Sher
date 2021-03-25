@@ -4,7 +4,7 @@ namespace Sher.Core.Access.Users
 {
     public class UserRole : ValueObject
     {
-        public string Name { get; }
+        public string Name { get; private set; }
 
         public UserRole(string name)
         {
