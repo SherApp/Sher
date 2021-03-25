@@ -30,14 +30,6 @@ namespace Sher.Api
         {
             services.AddDbContext(Configuration.GetConnectionString("Default"));
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                    builder.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .WithOrigins(Configuration["CORS:Origin"] ?? "http://localhost:3000"));
-            });
-
             services.Configure<FilePersistenceServiceOptions>(Configuration.GetSection("FilePersistenceServiceOptions"));
             services.Configure<PasswordHashingOptions>(Configuration.GetSection("PasswordHashingOptions"));
             services.Configure<JwtOptions>(Configuration.GetSection("JwtOptions"));
