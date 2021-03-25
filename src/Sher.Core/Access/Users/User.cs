@@ -13,6 +13,7 @@ namespace Sher.Core.Access.Users
         public string RefreshToken { get; private set; }
         public IReadOnlyList<UserRole> Roles => _roles.AsReadOnly();
         private List<UserRole> _roles = new();
+        public bool IsDeleted { get; private set; }
 
         public User(Guid id, string emailAddress, Password password)
         {

@@ -10,6 +10,7 @@ namespace Sher.Core.Files
         public string FileName { get; private set; }
         public long Length { get; private set; }
         public FileStatus Status { get; private set; } = FileStatus.Uploaded;
+        public bool IsDeleted { get; private set; }
 
         internal File(Guid id, Guid uploaderId, string fileName, long length)
         {
