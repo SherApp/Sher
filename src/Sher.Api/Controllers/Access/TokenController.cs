@@ -18,7 +18,7 @@ namespace Sher.Api.Controllers.Access
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("new")]
         public async Task<IActionResult> IssueTokenAsync([FromBody] IssueTokenRequestModel model)
         {
             var result = await _mediator.Send(new AuthenticateUserCommand(model.EmailAddress, model.Password));
@@ -28,19 +28,12 @@ namespace Sher.Api.Controllers.Access
                 return Unauthorized();
             }
 
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.None
-            };
-            Response.Cookies.Append("JwtToken", result.JwtToken, cookieOptions);
-            Response.Cookies.Append("RefreshToken", result.RefreshToken, cookieOptions);
+            AppendAuthCookies(result.JwtToken, result.RefreshToken);
 
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize("TokenRefresh")]
         public async Task<IActionResult> RefreshTokenAsync()
         {
