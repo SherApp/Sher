@@ -11,6 +11,9 @@ namespace Sher.Api.Controllers.Access
     [Route("[controller]")]
     public class TokenController : ApiController
     {
+        private const string JwtCookieName = "JwtToken";
+        private const string RefreshCookieName = "RefreshToken";
+
         private readonly IMediator _mediator;
 
         public TokenController(IMediator mediator)
@@ -53,6 +56,15 @@ namespace Sher.Api.Controllers.Access
             return Ok();
         }
 
+        [HttpDelete]
+        public IActionResult DeleteAuthCookies()
+        {
+            Response.Cookies.Delete(JwtCookieName);
+            Response.Cookies.Delete(RefreshCookieName);
+
+            return Ok();
+        }
+
         private void AppendAuthCookies(string jwtToken, string refreshToken)
         {
             var cookieOptions = new CookieOptions
@@ -62,8 +74,8 @@ namespace Sher.Api.Controllers.Access
                 SameSite = SameSiteMode.None
             };
 
-            Response.Cookies.Append("JwtToken", jwtToken, cookieOptions);
-            Response.Cookies.Append("RefreshToken", refreshToken, cookieOptions);
+            Response.Cookies.Append(JwtCookieName, jwtToken, cookieOptions);
+            Response.Cookies.Append(RefreshCookieName, refreshToken, cookieOptions);
         }
     }
 }
