@@ -28,7 +28,7 @@ namespace Sher.Application.Access.AuthenticateUser
                 return null;
             }
 
-            var token = _jwtIssuer.IssueToken(authenticationResult.NameIdentifier);
+            var token = _jwtIssuer.IssueToken(authenticationResult.NameIdentifier, authenticationResult.Role);
             return new AuthenticationResult
             {
                 JwtToken = token,

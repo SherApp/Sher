@@ -29,7 +29,7 @@ namespace Sher.Application.Access.RefreshAuthToken
                 return null;
             }
 
-            var token = _jwtIssuer.IssueToken(result.NameIdentifier);
+            var token = _jwtIssuer.IssueToken(result.NameIdentifier, result.Role);
 
             return new AuthenticationResult
             {

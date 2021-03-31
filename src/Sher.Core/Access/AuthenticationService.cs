@@ -43,7 +43,8 @@ namespace Sher.Core.Access
             return new UserDescriptor
             {
                 NameIdentifier = user.Id.ToString(),
-                RefreshToken = user.RefreshToken
+                RefreshToken = user.RefreshToken,
+                Role = user.Roles[^1]?.Name
             };
         }
 
@@ -65,7 +66,8 @@ namespace Sher.Core.Access
             return new UserDescriptor
             {
                 NameIdentifier = user.Id.ToString(),
-                RefreshToken = user.RefreshToken
+                RefreshToken = user.RefreshToken,
+                Role = user.Roles[^1]?.Name
             };
         }
     }
@@ -74,5 +76,6 @@ namespace Sher.Core.Access
     {
         public string NameIdentifier { get; init; }
         public string RefreshToken { get; init; }
+        public string Role { get; init; }
     }
 }

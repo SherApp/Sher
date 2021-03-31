@@ -17,7 +17,7 @@ namespace Sher.Application.Access
             _options = options.Value;
         }
 
-        public string IssueToken(string nameIdentifier)
+        public string IssueToken(string nameIdentifier, string role = "")
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecurityKey));
 
@@ -26,7 +26,8 @@ namespace Sher.Application.Access
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, nameIdentifier)
+                    new Claim(ClaimTypes.NameIdentifier, nameIdentifier),
+                    new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 Issuer = _options.Issuer,
