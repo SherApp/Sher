@@ -39,7 +39,7 @@ namespace Sher.Core.Access
             return new User(id, emailAddress, new Password(hashResult.Hash, hashResult.Salt));
         }
 
-        public void SetInvitationCode(string invitationCode)
+        public void UpdateSettings(string invitationCode)
         {
             Settings = new PlatformSettings(invitationCode);
         }

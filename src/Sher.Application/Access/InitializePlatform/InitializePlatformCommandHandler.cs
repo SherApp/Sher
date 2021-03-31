@@ -38,7 +38,7 @@ namespace Sher.Application.Access.InitializePlatform
 
             await _userRepository.AddUserAsync(user);
 
-            instance.SetInvitationCode(Guid.NewGuid().ToString());
+            instance.UpdateSettings(Guid.NewGuid().ToString());
             await _platformRepository.SetupInstance(instance);
 
             return Unit.Value;
