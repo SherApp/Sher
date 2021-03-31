@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Sher.Core.Access.Users;
 
@@ -44,7 +45,7 @@ namespace Sher.Core.Access
             {
                 NameIdentifier = user.Id.ToString(),
                 RefreshToken = user.RefreshToken,
-                Role = user.Roles[^1]?.Name
+                Role = user.Roles.LastOrDefault()?.Name
             };
         }
 
@@ -67,7 +68,7 @@ namespace Sher.Core.Access
             {
                 NameIdentifier = user.Id.ToString(),
                 RefreshToken = user.RefreshToken,
-                Role = user.Roles[^1]?.Name
+                Role = user.Roles.LastOrDefault()?.Name
             };
         }
     }
