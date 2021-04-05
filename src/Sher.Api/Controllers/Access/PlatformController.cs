@@ -8,7 +8,7 @@ using Sher.Application.Access.SetPlatformSettings;
 
 namespace Sher.Api.Controllers.Access
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Authorize(Roles = "Admin")]
     public class PlatformController : ApiController
     {

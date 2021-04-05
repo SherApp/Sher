@@ -9,7 +9,7 @@ namespace Sher.Api.Controllers.Access
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ApiController
     {
         private readonly IMediator _mediator;

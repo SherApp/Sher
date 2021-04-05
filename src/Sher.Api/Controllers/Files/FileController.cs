@@ -13,7 +13,7 @@ namespace Sher.Api.Controllers.Files
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FileController : ApiController
     {
         private readonly IMediator _mediator;

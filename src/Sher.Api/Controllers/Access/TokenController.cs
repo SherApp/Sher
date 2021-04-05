@@ -8,7 +8,7 @@ using Sher.Application.Access.RefreshAuthToken;
 
 namespace Sher.Api.Controllers.Access
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TokenController : ApiController
     {
         private const string JwtCookieName = "JwtToken";
