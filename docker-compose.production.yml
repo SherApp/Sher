@@ -3,9 +3,15 @@ services:
   api:
     environment:
       - FilePersistenceServiceOptions__UploadsDirectory=/static/u
-      - CORS__Origin
-      - Okta__OktaDomain
+      - JwtOptions__SecurityKey
+      - JwtOptions__Audience
+      - JwtOptions__Issuer
+      - PasswordHashingOptions__Iterations=1
+      - PasswordHashingOptions__DegreeOfParallelism=2
+      - PasswordHashingOptions__MemorySize=131072
       - ConnectionStrings__Default
+      - Admin__EmailAddress
+      - Admin__Password
     container_name: sher
     build: .
     ports:
