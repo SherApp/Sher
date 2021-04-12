@@ -22,7 +22,9 @@ namespace Sher.Api.Controllers.Access
         }
 
         [HttpPost("new")]
-        public async Task<IActionResult> IssueTokenAsync([FromBody] IssueTokenRequestModel model)
+        public async Task<IActionResult> IssueTokenAsync(
+            [FromBody] IssueTokenRequestModel model,
+            [FromQuery] bool asCookie = true)
         {
             var result = await _mediator.Send(new AuthenticateUserCommand(model.EmailAddress, model.Password));
 
@@ -31,16 +33,22 @@ namespace Sher.Api.Controllers.Access
                 return Unauthorized();
             }
 
-            AppendAuthCookies(result.JwtToken, result.RefreshToken);
+            if (!asCookie) return Ok(result);
 
+            AppendAuthCookies(result.JwtToken, result.RefreshToken);
             return Ok();
         }
 
         [HttpPost]
         [Authorize("TokenRefresh")]
-        public async Task<IActionResult> RefreshTokenAsync()
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequestModel model = null)
         {
             if (!Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
+            {
+                refreshToken = model?.RefreshToken;
+            }
+
+            if (refreshToken is null)
             {
                 return Unauthorized();
             }
@@ -49,6 +57,11 @@ namespace Sher.Api.Controllers.Access
             if (result is null)
             {
                 return Unauthorized();
+            }
+
+            if (model is not null)
+            {
+                return Ok(result);
             }
 
             AppendAuthCookies(result.JwtToken, result.RefreshToken);

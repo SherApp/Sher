@@ -38,7 +38,7 @@ namespace Sher.Api
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
-            services.AddControllers();
+            services.AddControllers(cfg => cfg.AllowEmptyInputInBodyModelBinding = true);
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Sher.Api", Version = "v1"}); });
         }
 
