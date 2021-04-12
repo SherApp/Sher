@@ -23,7 +23,7 @@ namespace Sher.Infrastructure
             var options = configuration.GetSection("JwtOptions").Get<JwtOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
                 {
                     ApplyDefaultJwtOptions(opt, options);
                 })
