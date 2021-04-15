@@ -29,10 +29,14 @@ namespace Sher.Application.Access.AuthenticateUser
             }
 
             var token = _jwtIssuer.IssueToken(authenticationResult.NameIdentifier, authenticationResult.Role);
+            
+            var embeddedToken =
+                new EmbeddedRefreshToken(authenticationResult.ClientId, authenticationResult.RefreshToken);
+
             return new AuthenticationResult
             {
                 JwtToken = token,
-                RefreshToken = authenticationResult.RefreshToken
+                RefreshToken = embeddedToken.ToString()
             };
         }
     }

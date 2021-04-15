@@ -22,7 +22,8 @@ namespace Sher.Application.Access.RefreshAuthToken
         public async Task<AuthenticationResult> Handle(RefreshAuthTokenCommand request, CancellationToken cancellationToken)
         {
             var (userId, refreshToken) = request;
-            var result = await _authenticationService.RefreshUserTokenAsync(userId, refreshToken);
+            var embeddedToken = EmbeddedRefreshToken.Parse(refreshToken);
+            var result = await _authenticationService.RefreshUserTokenAsync(userId, embeddedToken.ClientId, embeddedToken.Token);
 
             if (result is null)
             {
@@ -30,11 +31,12 @@ namespace Sher.Application.Access.RefreshAuthToken
             }
 
             var token = _jwtIssuer.IssueToken(result.NameIdentifier, result.Role);
+            embeddedToken = new EmbeddedRefreshToken(result.ClientId, result.RefreshToken);
 
             return new AuthenticationResult
             {
                 JwtToken = token,
-                RefreshToken = result.RefreshToken
+                RefreshToken = embeddedToken.ToString()
             };
         }
     }

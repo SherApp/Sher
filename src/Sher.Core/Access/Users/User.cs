@@ -10,9 +10,10 @@ namespace Sher.Core.Access.Users
         public Guid Id { get; }
         public string EmailAddress { get; private set; }
         public Password Password { get; private set; }
-        public string RefreshToken { get; private set; }
         public IReadOnlyList<UserRole> Roles => _roles.AsReadOnly();
         private List<UserRole> _roles = new();
+        public IReadOnlyList<UserClient> Clients => _clients.AsReadOnly();
+        private List<UserClient> _clients = new();
         public bool IsDeleted { get; private set; }
 
         public User(Guid id, string emailAddress, Password password)
@@ -36,9 +37,29 @@ namespace Sher.Core.Access.Users
             _roles.Add(role);
         }
 
-        public void SetRefreshToken(string refreshToken)
+        public UserClient CreateClient(string refreshToken)
         {
-            RefreshToken = refreshToken;
+            var client = new UserClient(Guid.NewGuid(), refreshToken);
+            _clients.Add(client);
+
+            return client;
+        }
+
+        public void DeleteClient(Guid clientId)
+        {
+            _clients.RemoveAll(c => c.Id == clientId);
+        }
+
+        public bool UpdateClientRefreshToken(Guid clientId, string previousRefreshToken, string newRefreshToken)
+        {
+            var client = _clients.FirstOrDefault(c => c.Id == clientId);
+
+            if (client is null) return false;
+            if (client.RefreshToken != previousRefreshToken) return false;
+            
+            client.UpdateRefreshToken(newRefreshToken);
+
+            return true;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Sher.Infrastructure.Data.Configuration
             builder.ToTable("Users");
             builder.HasIndex(u => u.EmailAddress).IsUnique();
             builder.Navigation(u => u.Roles).HasField("_roles");
+            builder.Navigation(u => u.Clients).HasField("_clients");
             builder.OwnsMany(u => u.Roles);
             builder.OwnsOne(u => u.Password);
         }

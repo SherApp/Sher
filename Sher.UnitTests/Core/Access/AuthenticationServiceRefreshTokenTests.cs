@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using Sher.Core.Access;
@@ -16,7 +18,9 @@ namespace Sher.UnitTests.Core.Access
             const string oldRefreshToken = "old_token";
             const string newRefreshToken = "new_token";
 
-            var user = new UserBuilder().WithRefreshToken(oldRefreshToken).Build();
+            var user = new UserBuilder().WithDefaultClient(oldRefreshToken).Build();
+            var client = user.Clients[0];
+
             var repoMock =
                 Mock.Of<IUserRepository>(f => f.GetUserByIdAsync(user.Id) == Task.FromResult(user));
             
@@ -26,26 +30,26 @@ namespace Sher.UnitTests.Core.Access
             var authService = new AuthenticationService(passwordHashingServiceMock, repoMock);
 
             // Act
-            var result = await authService.RefreshUserTokenAsync(user.Id, oldRefreshToken);
+            var result = await authService.RefreshUserTokenAsync(user.Id, client.Id, oldRefreshToken);
             
             // Assert
             Assert.Equal(user.Id.ToString(), result.NameIdentifier);
             Assert.Equal(newRefreshToken, result.RefreshToken);
-            Assert.Equal(newRefreshToken, user.RefreshToken);
+            Assert.Equal(newRefreshToken, client.RefreshToken);
         }
 
         [Fact]
         public async Task RefreshUserTokenAsync_InvalidRefreshToken_ReturnsNull()
         {
             // Arrange
-            var user = new UserBuilder().Build();
+            var user = new UserBuilder().WithDefaultClient("valid_token").Build();
             var repoMock =
                 Mock.Of<IUserRepository>(f => f.GetUserByIdAsync(user.Id) == Task.FromResult(user));
             
             var authService = new AuthenticationService(Mock.Of<IPasswordHashingService>(), repoMock);
 
             // Act
-            var result = await authService.RefreshUserTokenAsync(user.Id, "invalid_token");
+            var result = await authService.RefreshUserTokenAsync(user.Id, user.Clients[0].Id, "invalid_token");
             
             // Assert
             Assert.Null(result);

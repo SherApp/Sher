@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using Sher.Core.Access;
@@ -32,10 +33,10 @@ namespace Sher.UnitTests.Core.Access
                 repoMock);
 
             var result = await authService.AuthenticateUserAsync(user.EmailAddress, plainTextPass);
-            
+
             Assert.Equal(user.Id.ToString(), result.NameIdentifier);
             Assert.Equal(refreshToken, result.RefreshToken);
-            Assert.Equal(refreshToken, user.RefreshToken);
+            Assert.Equal(refreshToken, user.Clients[0].RefreshToken);
         }
         
         [Fact]

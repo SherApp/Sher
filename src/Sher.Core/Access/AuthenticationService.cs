@@ -39,17 +39,18 @@ namespace Sher.Core.Access
 
             if (!isValidPassword) return null;
 
-            user.SetRefreshToken(_passwordHashingService.GetRandomToken(512 / 8));
+            var client = user.CreateClient(_passwordHashingService.GetRandomToken(512 / 8));
 
             return new UserDescriptor
             {
                 NameIdentifier = user.Id.ToString(),
-                RefreshToken = user.RefreshToken,
+                RefreshToken = client.RefreshToken,
+                ClientId = client.Id,
                 Role = user.Roles.LastOrDefault()?.Name
             };
         }
 
-        public async Task<UserDescriptor> RefreshUserTokenAsync(Guid userId, string refreshToken)
+        public async Task<UserDescriptor> RefreshUserTokenAsync(Guid userId, Guid clientId, string refreshToken)
         {
             if (refreshToken is null)
             {
@@ -57,17 +58,23 @@ namespace Sher.Core.Access
             }
 
             var user = await _userRepository.GetUserByIdAsync(userId);
-            if (user.IsDeleted || user.RefreshToken != refreshToken)
+            if (user.IsDeleted)
             {
                 return null;
             }
 
-            user.SetRefreshToken(_passwordHashingService.GetRandomToken(512 / 8));
+            var newRefreshToken = _passwordHashingService.GetRandomToken(512 / 8);
+
+            if (!user.UpdateClientRefreshToken(clientId, refreshToken, newRefreshToken))
+            {
+                return null;
+            }
 
             return new UserDescriptor
             {
                 NameIdentifier = user.Id.ToString(),
-                RefreshToken = user.RefreshToken,
+                RefreshToken = newRefreshToken,
+                ClientId = clientId,
                 Role = user.Roles.LastOrDefault()?.Name
             };
         }
@@ -77,6 +84,7 @@ namespace Sher.Core.Access
     {
         public string NameIdentifier { get; init; }
         public string RefreshToken { get; init; }
+        public Guid ClientId { get; set; }
         public string Role { get; init; }
     }
 }
