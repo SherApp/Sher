@@ -4,7 +4,7 @@ using Sher.Core.Access.Rules;
 using Sher.Core.Access.Users;
 using Sher.Core.Base;
 
-namespace Sher.Core.Access
+namespace Sher.Core.Access.Platform
 {
     public class PlatformInstance : BaseEntity
     {

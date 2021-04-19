@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sher.Application.Processing;
 using Sher.Core.Access;
+using Sher.Core.Access.Platform;
 
 namespace Sher.Application.Access.SetPlatformSettings
 {

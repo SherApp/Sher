@@ -1,7 +1,7 @@
 using System;
 using Sher.Core.Base;
 
-namespace Sher.Core.Files.Events
+namespace Sher.Core.Files
 {
     public class FileDeletedEvent : BaseDomainEvent
     {

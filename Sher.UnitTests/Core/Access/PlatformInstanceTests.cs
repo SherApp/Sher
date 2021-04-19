@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Moq;
 using Sher.Core.Access;
+using Sher.Core.Access.Platform;
 using Sher.Core.Base;
 using Xunit;
 

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sher.Application.Processing;
 using Sher.Core.Files;
+using Sher.Core.Files.Directories;
 
 namespace Sher.Application.Files.UploadFile
 {

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Sher.Core.Access
+namespace Sher.Core.Access.Platform
 {
     public interface IPlatformInstanceRepository
     {

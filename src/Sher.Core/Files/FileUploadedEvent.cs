@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Sher.Core.Base;
 
-namespace Sher.Core.Files.Events
+namespace Sher.Core.Files
 {
     public class FileUploadedEvent : BaseDomainEvent
     {

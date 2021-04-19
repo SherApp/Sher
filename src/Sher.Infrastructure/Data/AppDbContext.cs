@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sher.Core.Access.Users;
 using Sher.Core.Files;
+using Sher.Core.Files.Uploaders;
 
 namespace Sher.Infrastructure.Data
 {

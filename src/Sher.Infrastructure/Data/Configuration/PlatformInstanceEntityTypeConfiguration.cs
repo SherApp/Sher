@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sher.Core.Access;
+using Sher.Core.Access.Platform;
 
 namespace Sher.Infrastructure.Data.Configuration
 {

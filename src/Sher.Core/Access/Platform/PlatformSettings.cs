@@ -1,6 +1,6 @@
 using Sher.Core.Base;
 
-namespace Sher.Core.Access
+namespace Sher.Core.Access.Platform
 {
     public class PlatformSettings : ValueObject
     {

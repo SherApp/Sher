@@ -1,5 +1,6 @@
 using System;
 using Sher.Core.Files;
+using Sher.Core.Files.Uploaders;
 
 namespace Sher.UnitTests.Builders
 {

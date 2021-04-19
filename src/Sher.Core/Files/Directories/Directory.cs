@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using Sher.Core.Base;
-using Sher.Core.Files.Events;
 
-namespace Sher.Core.Files
+namespace Sher.Core.Files.Directories
 {
     public class Directory : BaseEntity
     {

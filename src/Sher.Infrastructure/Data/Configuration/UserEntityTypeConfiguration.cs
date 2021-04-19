@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sher.Core.Access.Users;
 using Sher.Core.Files;
+using Sher.Core.Files.Uploaders;
 
 namespace Sher.Infrastructure.Data.Configuration
 {

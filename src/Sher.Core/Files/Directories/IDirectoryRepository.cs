@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Sher.Core.Files
+namespace Sher.Core.Files.Directories
 {
     public interface IDirectoryRepository
     {

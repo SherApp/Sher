@@ -1,7 +1,7 @@
 using System;
 using Sher.Core.Base;
 
-namespace Sher.Core.Files
+namespace Sher.Core.Files.Directories
 {
     public class DirectoryCreatedEvent : BaseDomainEvent
     {

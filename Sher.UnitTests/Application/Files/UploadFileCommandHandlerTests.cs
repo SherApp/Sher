@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Moq;
 using Sher.Application.Files.UploadFile;
 using Sher.Core.Files;
+using Sher.Core.Files.Uploaders;
 using Sher.UnitTests.Builders;
 using Xunit;
 using File = Sher.Core.Files.File;

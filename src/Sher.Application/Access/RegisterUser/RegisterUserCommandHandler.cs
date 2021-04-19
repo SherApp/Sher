@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sher.Application.Processing;
 using Sher.Core.Access;
+using Sher.Core.Access.Platform;
 using Sher.Core.Access.Users;
 
 namespace Sher.Application.Access.RegisterUser

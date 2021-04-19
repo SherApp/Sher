@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Sher.Application.Processing;
 using Sher.Core.Files;
+using Sher.Core.Files.Uploaders;
 
 namespace Sher.Application.Files.DeleteFile
 {

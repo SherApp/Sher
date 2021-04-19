@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sher.Core.Files;
+using Sher.Core.Files.Uploaders;
 
 namespace Sher.Infrastructure.Data.Repositories
 {
