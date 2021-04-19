@@ -8,22 +8,22 @@ namespace Sher.Application.Files.UploadFile
 {
     public class UploadFileCommandHandler : ICommandHandler<UploadFileCommand>
     {
-        private readonly IUploaderRepository _uploaderRepository;
+        private readonly IDirectoryRepository _directoryRepository;
         private readonly IFileRepository _fileRepository;
 
         public UploadFileCommandHandler(
-            IUploaderRepository uploaderRepository,
+            IDirectoryRepository directoryRepository,
             IFileRepository fileRepository)
         {
-            _uploaderRepository = uploaderRepository;
+            _directoryRepository = directoryRepository;
             _fileRepository = fileRepository;
         }
         
         public async Task<Unit> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            var uploader = await _uploaderRepository.GetByIdAsync(request.UploaderId);
+            var directory = await _directoryRepository.GetWithAsync(request.DirectoryId, request.UploaderId);
 
-            var file = uploader.UploadFile(
+            var file = directory.UploadFile(
                 request.Id,
                 request.FileName,
                 request.FileStream.Length,

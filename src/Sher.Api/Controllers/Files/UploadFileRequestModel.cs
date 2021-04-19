@@ -6,6 +6,7 @@ namespace Sher.Api.Controllers.Files
     public class UploadFileRequestModel
     {
         public Guid Id { get; set; }
+        public Guid DirectoryId { get; set; }
         public IFormFile File { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace Sher.Api.Controllers.Files
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequestModel model)
         {
             await _mediator.Send(new UploadFileCommand(model.Id,
+                model.DirectoryId,
                 UserId,
                 model.File.FileName,
                 model.File.OpenReadStream()));

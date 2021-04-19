@@ -14,10 +14,10 @@ namespace Sher.Core.Files
             Id = id;
         }
 
-        public File UploadFile(Guid id, string fileName, long length, Stream fileStream)
+        public Directory CreateDirectory(Guid directoryId, Guid? parentDirectoryId, string name)
         {
-            AddDomainEvent(new FileUploadedEvent(id, fileName, fileStream));
-            return new File(id, this.Id, fileName, length);
+            AddDomainEvent(new DirectoryCreatedEvent(directoryId, parentDirectoryId, this.Id, name));
+            return new Directory(directoryId, parentDirectoryId, this.Id, name);
         }
 
         public void DeleteFile(File file)
