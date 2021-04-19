@@ -7,14 +7,16 @@ namespace Sher.Core.Files
     {
         public Guid Id { get; private set; }
         public Guid UploaderId { get; private set; }
+        public Guid DirectoryId { get; private set; }
         public string FileName { get; private set; }
         public long Length { get; private set; }
         public FileStatus Status { get; private set; } = FileStatus.Uploaded;
         public bool IsDeleted { get; private set; }
 
-        internal File(Guid id, Guid uploaderId, string fileName, long length)
+        internal File(Guid id, Guid directoryId, Guid uploaderId, string fileName, long length)
         {
             Id = id;
+            DirectoryId = directoryId;
             UploaderId = uploaderId;
             FileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
             if (length <= 0)
