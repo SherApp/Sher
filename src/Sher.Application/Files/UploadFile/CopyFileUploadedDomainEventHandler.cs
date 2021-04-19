@@ -6,11 +6,11 @@ using Sher.Core.Files.Events;
 
 namespace Sher.Application.Files.UploadFile
 {
-    public class FileUploadedDomainEventHandler : IDomainEventHandler<FileUploadedEvent>
+    public class CopyFileUploadedDomainEventHandler : IDomainEventHandler<FileUploadedEvent>
     {
         private readonly IFileProcessingQueue _fileProcessingQueue;
 
-        public FileUploadedDomainEventHandler(IFileProcessingQueue fileProcessingQueue)
+        public CopyFileUploadedDomainEventHandler(IFileProcessingQueue fileProcessingQueue)
         {
             _fileProcessingQueue = fileProcessingQueue;
         }
