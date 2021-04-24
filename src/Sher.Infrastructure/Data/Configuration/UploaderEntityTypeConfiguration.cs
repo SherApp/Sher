@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sher.Core.Files;
+using Sher.Core.Access.Users;
 using Sher.Core.Files.Uploaders;
 
 namespace Sher.Infrastructure.Data.Configuration
@@ -9,7 +9,7 @@ namespace Sher.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Uploader> builder)
         {
-            builder.ToTable("Users");
+            builder.HasOne<User>().WithMany().HasForeignKey(u => u.UserId);
         }
     }
 }

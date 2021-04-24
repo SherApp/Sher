@@ -6,17 +6,18 @@ namespace Sher.UnitTests.Builders
 {
     public class UploaderBuilder
     {
-        private Guid _guid = Guid.NewGuid();
+        private Guid _id = Guid.NewGuid();
+        private Guid _userId = Guid.NewGuid();
 
-        public UploaderBuilder WithId(Guid uploaderId)
+        public UploaderBuilder WithUserId(Guid userId)
         {
-            _guid = uploaderId;
+            _userId = userId;
             return this;
         }
 
         public Uploader Build()
         {
-            return new(_guid);
+            return new(_id, _userId);
         }
     }
 }

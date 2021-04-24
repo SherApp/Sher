@@ -10,6 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Sher.Application.Access.InitializePlatform;
+using Sher.Application.Files.ListDirectory;
+using Sher.Core.Base;
+using Sher.Core.Files;
 using Sher.Infrastructure;
 using Sher.Infrastructure.FileProcessing;
 using Sher.SharedKernel.Options;
@@ -44,7 +47,10 @@ namespace Sher.Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new InfrastructureAutofacModule(Assembly.GetExecutingAssembly()));
+            builder.RegisterModule(new InfrastructureAutofacModule(
+                Configuration.GetConnectionString("Default"),
+                Assembly.GetExecutingAssembly()));
+
             builder.RegisterModule(new FileProcessingModule());
         }
 
@@ -70,6 +76,8 @@ namespace Sher.Api
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             var mediator = app.ApplicationServices.GetRequiredService<IMediator>();
+
+            mediator.Send(new ListDirectoryQuery(null, Guid.Parse("036e4ca7-9f81-47d1-a733-c3ce573dbec8")));
             mediator.Send(new InitializePlatformCommand(Guid.NewGuid(), Configuration["Admin:EmailAddress"],
                 Configuration["Admin:Password"])).Wait();
         }

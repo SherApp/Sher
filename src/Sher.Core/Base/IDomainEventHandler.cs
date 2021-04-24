@@ -1,7 +1,6 @@
 using MediatR;
-using Sher.Core.Base;
 
-namespace Sher.Application.Processing
+namespace Sher.Core.Base
 {
     public interface IDomainEventHandler<in TEvent> : INotificationHandler<TEvent> where TEvent : IDomainEvent
     {

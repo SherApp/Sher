@@ -1,5 +1,5 @@
 using System;
-using System.IO;
+using NSpecifications;
 using Sher.Core.Base;
 
 namespace Sher.Core.Files.Directories
@@ -23,10 +23,10 @@ namespace Sher.Core.Files.Directories
             Name = name;
         }
         
-        public File UploadFile(Guid id, string fileName, long length, Stream fileStream)
+        public static ISpecification<Directory> IsRootFor(Guid uploaderId)
         {
-            AddDomainEvent(new FileUploadedEvent(id, this.Id, UploaderId, fileName, fileStream));
-            return new File(id, this.Id, UploaderId, fileName, length);
+            return new Spec<Directory>(d =>
+                d.ParentDirectoryId == null && d.UploaderId == uploaderId);
         }
     }
 }

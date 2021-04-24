@@ -20,6 +20,16 @@ namespace Sher.Infrastructure.Data.Repositories
             return _dbSet.FirstOrDefaultAsync(d => d.Id == directoryId && d.UploaderId == uploaderId);
         }
 
+        public Task<Directory> GetWithOrRootAsync(Guid? directoryId, Guid uploaderId)
+        {
+            if (directoryId is null)
+            {
+                return _dbSet.FirstOrDefaultAsync(Directory.IsRootFor(uploaderId).Expression);
+            }
+
+            return GetWithAsync(directoryId.Value, uploaderId);
+        }
+
         public async Task AddAsync(Directory directory)
         {
             await _dbSet.AddAsync(directory);

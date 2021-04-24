@@ -6,6 +6,7 @@ namespace Sher.UnitTests.Builders
     public class FileBuilder
     {
         private Guid _id = Guid.NewGuid();
+        private Guid _directoryId = Guid.NewGuid();
         private string _fileName = "image.jpg";
         private Guid _uploaderId = Guid.NewGuid();
         private long _length = 1024;
@@ -21,9 +22,15 @@ namespace Sher.UnitTests.Builders
             return this;
         }
 
+        public FileBuilder WithDirectoryId(Guid directoryId)
+        {
+            _directoryId = directoryId;
+            return this;
+        }
+
         public File Build()
         {
-            return new(_id, _uploaderId, _fileName, _length);
+            return new(_id, _directoryId, _uploaderId, _fileName, _length);
         }
     }
 }

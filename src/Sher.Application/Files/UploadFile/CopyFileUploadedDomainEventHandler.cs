@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Sher.Application.Processing;
+using Sher.Core.Base;
 using Sher.Core.Files;
 
 namespace Sher.Application.Files.UploadFile

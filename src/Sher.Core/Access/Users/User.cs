@@ -21,6 +21,8 @@ namespace Sher.Core.Access.Users
             Id = id;
             EmailAddress = emailAddress;
             Password = password;
+
+            AddDomainEvent(new UserRegisteredEvent(this.Id));
         }
 
         // EF Core constructor

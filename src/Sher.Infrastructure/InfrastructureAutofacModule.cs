@@ -15,9 +15,11 @@ namespace Sher.Infrastructure
     {
         private readonly Assembly _callingAssembly;
         private readonly Assembly[] _serviceAssemblies;
+        private readonly string _connectionString;
 
-        public InfrastructureAutofacModule(Assembly callingAssembly = null)
+        public InfrastructureAutofacModule(string connectionString, Assembly callingAssembly = null)
         {
+            _connectionString = connectionString;
             _callingAssembly = callingAssembly;
             _serviceAssemblies = new[]
             {
@@ -39,7 +41,7 @@ namespace Sher.Infrastructure
             builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);
 
             builder.RegisterModule<MediatRModule>();
-            builder.RegisterModule<DataModule>();
+            builder.RegisterModule(new DataModule(_connectionString));
 
             base.Load(builder);
         }
