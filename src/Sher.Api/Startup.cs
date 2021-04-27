@@ -77,7 +77,6 @@ namespace Sher.Api
 
             var mediator = app.ApplicationServices.GetRequiredService<IMediator>();
 
-            mediator.Send(new ListDirectoryQuery(null, Guid.Parse("036e4ca7-9f81-47d1-a733-c3ce573dbec8")));
             mediator.Send(new InitializePlatformCommand(Guid.NewGuid(), Configuration["Admin:EmailAddress"],
                 Configuration["Admin:Password"])).Wait();
         }
