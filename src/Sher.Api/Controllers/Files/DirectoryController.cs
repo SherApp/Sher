@@ -19,8 +19,7 @@ namespace Sher.Api.Controllers.Files
             _mediator = mediator;
         }
 
-        [HttpGet("{directoryId:guid?}")]
-        public async Task<IActionResult> ListDirectory(Guid? directoryId)
+        public async Task<IActionResult> ListDirectory([FromQuery] Guid? directoryId)
         {
             var result = await _mediator.Send(new ListDirectoryQuery(directoryId, UserId));
             return Ok(result);
