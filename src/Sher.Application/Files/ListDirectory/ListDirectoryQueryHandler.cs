@@ -33,8 +33,10 @@ namespace Sher.Application.Files.ListDirectory
                   INNER JOIN ""Users"" U on U.""Id"" = UP.""UserId""
                   INNER JOIN ""Directory"" D on D.""UploaderId"" = UP.""Id""
                   INNER JOIN ""Files"" F on F.""DirectoryId"" = D.""Id""
-                      WHERE U.""Id"" = @UserId
-                      AND ((D.""ParentDirectoryId"" IS NULL OR D.""ParentDirectoryId"" = @DirectoryId) AND D.""UploaderId"" = UP.""Id"")",
+                      WHERE U.""Id"" = @UserId 
+                      AND (D.""Id"" = @DirectoryId 
+                      OR (D.""ParentDirectoryId"" IS NULL AND @DirectoryId IS NULL)
+                      OR D.""ParentDirectoryId"" = @DirectoryId)",
                 (directoryDto, fileDto) =>
                 {
                     files[fileDto.Id] = fileDto;
