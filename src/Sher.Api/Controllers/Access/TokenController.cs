@@ -59,7 +59,7 @@ namespace Sher.Api.Controllers.Access
                 return Unauthorized();
             }
 
-            if (model is not null)
+            if (model?.RefreshToken is not null)
             {
                 return Ok(result);
             }
