@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.SharedKernel", "src\Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.Infrastructure.FileProcessing", "src\Sher.Infrastructure.FileProcessing\Sher.Infrastructure.FileProcessing.csproj", "{6727649A-A50E-42FD-B879-3983E0814256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.UnitTests", "Sher.UnitTests\Sher.UnitTests.csproj", "{9E940C7B-2B78-40D4-B48D-EADD49597012}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sher.UnitTests", "tests\Sher.UnitTests\Sher.UnitTests.csproj", "{9E940C7B-2B78-40D4-B48D-EADD49597012}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
