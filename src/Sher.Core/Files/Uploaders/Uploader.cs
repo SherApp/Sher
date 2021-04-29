@@ -17,12 +17,6 @@ namespace Sher.Core.Files.Uploaders
             UserId = userId;
         }
 
-        public Directory CreateDirectory(Guid directoryId, Guid? parentDirectoryId, string name)
-        {
-            AddDomainEvent(new DirectoryCreatedEvent(directoryId, parentDirectoryId, this.Id, name));
-            return new Directory(directoryId, parentDirectoryId, this.Id, name);
-        }
-
         public void DeleteFile(File file)
         {
             if (file.IsDeleted)

@@ -22,6 +22,12 @@ namespace Sher.Core.Files.Directories
 
             Name = name;
         }
+
+        public Directory CreateChildDirectory(Guid directoryId, string name)
+        {
+            AddDomainEvent(new DirectoryCreatedEvent(directoryId, this.Id, this.UploaderId, name));
+            return new Directory(directoryId, this.Id, this.UploaderId, name);
+        }
         
         public static ISpecification<Directory> IsRootFor(Guid uploaderId)
         {

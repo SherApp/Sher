@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sher.Application.Files.CreateDirectory;
 using Sher.Application.Files.ListDirectory;
 
 namespace Sher.Api.Controllers.Files
@@ -22,6 +23,15 @@ namespace Sher.Api.Controllers.Files
         public async Task<IActionResult> ListDirectory([FromQuery] Guid? directoryId)
         {
             var result = await _mediator.Send(new ListDirectoryQuery(directoryId, UserId));
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateDirectory(CreateDirectoryRequestModel model)
+        {
+            var result =
+                await _mediator.Send(new CreateDirectoryCommand(model.Id, model.ParentDirectoryId, UserId, model.Name));
+
             return Ok(result);
         }
     }
