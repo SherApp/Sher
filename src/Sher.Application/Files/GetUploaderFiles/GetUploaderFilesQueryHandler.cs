@@ -3,32 +3,35 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Dapper;
 using MediatR;
+using Sher.Application.Configuration;
 using Sher.Core.Files;
+using Sher.Core.Files.Uploaders;
 
 namespace Sher.Application.Files.GetUploaderFiles
 {
     public class GetUploaderFilesQueryHandler : IRequestHandler<GetUploaderFilesQuery, List<FileDto>>
     {
-        private readonly IFileRepository _repository;
-        private readonly IMapper _mapper;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public GetUploaderFilesQueryHandler(IFileRepository repository, IMapper mapper)
+        public GetUploaderFilesQueryHandler(IDbConnectionFactory connectionFactory)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _connectionFactory = connectionFactory;
         }
 
-        public async Task<List<FileDto>> Handle(GetUploaderFilesQuery request, CancellationToken cancellationToken)
+        public Task<List<FileDto>> Handle(GetUploaderFilesQuery request, CancellationToken cancellationToken)
         {
-            var (uploaderId, requiredFileNamePart) = request;
-            var criteria = new FileSearchCriteria
-            {
-                UploaderId = uploaderId,
-                RequiredFileNamePart = requiredFileNamePart
-            };
-            var files = await _repository.SearchAsync(criteria);
-            return files.Select(f => _mapper.Map<FileDto>(f)).ToList();
+            using var connection = _connectionFactory.GetOpenConnection();
+            var (userId, requiredFileNamePart) = request;
+
+            var files = connection.Query<FileDto>(@"SELECT F.* FROM ""Uploaders"" UP
+                                INNER JOIN ""Users"" U on U.""Id"" = UP.""UserId""
+                                INNER JOIN ""Files"" F on F.""UploaderId"" = UP.""Id""
+                                WHERE U.""Id"" = @UserId AND POSITION(UPPER(@RequiredFileNamePart) in UPPER(F.""FileName"")) > 0",
+                new { UserId = userId, RequiredFileNamePart = requiredFileNamePart });
+
+            return Task.FromResult(files.ToList());
         }
     }
 }
