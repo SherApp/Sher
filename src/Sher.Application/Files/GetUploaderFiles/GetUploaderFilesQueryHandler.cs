@@ -2,12 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Dapper;
 using MediatR;
 using Sher.Application.Configuration;
-using Sher.Core.Files;
-using Sher.Core.Files.Uploaders;
 
 namespace Sher.Application.Files.GetUploaderFiles
 {
