@@ -28,26 +28,28 @@ namespace Sher.Application.Files.ListDirectory
             var files = new Dictionary<Guid, FileDto>();
 
             var (directoryId, userId) = request;
-            connection.Query<DirectoryDto, FileDto, DirectoryDto>(
-                @"SELECT D.*, F.* FROM ""Uploaders"" UP 
+            connection.Query<DirectoryDto, FileDto, DirectoryDto, DirectoryDto>(
+                @"SELECT D.*, F.*, C.* FROM ""Uploaders"" UP 
                   INNER JOIN ""Users"" U on U.""Id"" = UP.""UserId""
                   INNER JOIN ""Directory"" D on D.""UploaderId"" = UP.""Id""
-                  INNER JOIN ""Files"" F on F.""DirectoryId"" = D.""Id""
+                  LEFT JOIN ""Directory"" C on C.""ParentDirectoryId"" = D.""Id""
+                  LEFT JOIN ""Files"" F on F.""DirectoryId"" = D.""Id""
                       WHERE U.""Id"" = @UserId 
                       AND (D.""Id"" = @DirectoryId 
-                      OR (D.""ParentDirectoryId"" IS NULL AND @DirectoryId IS NULL)
-                      OR D.""ParentDirectoryId"" = @DirectoryId)",
-                (directoryDto, fileDto) =>
+                      OR (D.""ParentDirectoryId"" IS NULL AND @DirectoryId IS NULL))",
+                (directoryDto, fileDto, childDirDto) =>
                 {
-                    files[fileDto.Id] = fileDto;
-                    if (directoryDto.Id == directoryId || directoryDto.ParentDirectoryId is null)
+                    if (fileDto is not null)
                     {
-                        mainDir = directoryDto;
+                        files[fileDto.Id] = fileDto;
                     }
-                    else
+
+                    if (childDirDto is not null)
                     {
-                        descDirs[directoryDto.Id] = directoryDto;
+                        descDirs[childDirDto.Id] = childDirDto;
                     }
+
+                    mainDir = directoryDto;
 
                     return directoryDto;
                 }, new {UserId = userId, DirectoryId = directoryId});
