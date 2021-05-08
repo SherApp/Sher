@@ -23,7 +23,7 @@ namespace Sher.Application.Files.CreateDirectory
         public async Task<Unit> Handle(CreateDirectoryCommand request, CancellationToken cancellationToken)
         {
             var uploader = await _uploaderRepository.GetByUserIdAsync(request.UserId);
-            var parentDirectory = await _directoryRepository.GetWithOrRootAsync(request.DirectoryId, uploader.Id);
+            var parentDirectory = await _directoryRepository.GetWithOrRootAsync(request.ParentDirectoryId, uploader.Id);
 
             var directory = parentDirectory.CreateChildDirectory(request.DirectoryId, request.Name);
 
