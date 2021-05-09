@@ -19,8 +19,8 @@ namespace Sher.Application.Files.DeleteFile
 
         public async Task<bool> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
         {
-            var (fileId, uploaderId) = request;
-            var uploader = await _uploaderRepository.GetByIdAsync(uploaderId);
+            var (fileId, userId) = request;
+            var uploader = await _uploaderRepository.GetByUserIdAsync(userId);
             var file = await _fileRepository.GetByIdAsync(fileId);
 
             if (uploader is null || file is null)

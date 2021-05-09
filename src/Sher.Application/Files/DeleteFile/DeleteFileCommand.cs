@@ -3,5 +3,5 @@ using Sher.Application.Processing;
 
 namespace Sher.Application.Files.DeleteFile
 {
-    public record DeleteFileCommand(Guid FileId, Guid UploaderId) : ICommand<bool>;
+    public record DeleteFileCommand(Guid FileId, Guid UserId) : ICommand<bool>;
 }
