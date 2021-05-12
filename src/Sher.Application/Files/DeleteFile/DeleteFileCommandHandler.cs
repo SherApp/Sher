@@ -21,14 +21,14 @@ namespace Sher.Application.Files.DeleteFile
         {
             var (fileId, userId) = request;
             var uploader = await _uploaderRepository.GetByUserIdAsync(userId);
-            var file = await _fileRepository.GetByIdAsync(fileId);
+            var file = await _fileRepository.GetWithUploaderIdAsync(uploader.Id, fileId);
 
-            if (uploader is null || file is null)
+            if (file is null)
             {
                 return false;
             }
 
-            uploader.DeleteFile(file);
+            file.Delete();
             return true;
         }
     }

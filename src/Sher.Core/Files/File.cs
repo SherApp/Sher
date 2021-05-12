@@ -36,9 +36,10 @@ namespace Sher.Core.Files
             Status = FileStatus.Processed;
         }
 
-        internal void Delete()
+        public void Delete()
         {
             IsDeleted = true;
+            AddDomainEvent(new FileDeletedEvent(this.Id, FileName));
         }
     }
 

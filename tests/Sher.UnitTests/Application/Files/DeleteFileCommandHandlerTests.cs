@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Moq;
 using Sher.Application.Files.DeleteFile;
@@ -19,14 +18,15 @@ namespace Sher.UnitTests.Application.Files
             var file = new FileBuilder().WithUploaderId(uploader.Id).Build();
 
             var uploaderRepoMock =
-                Mock.Of<IUploaderRepository>(u => u.GetByIdAsync(file.UploaderId) == Task.FromResult(uploader));
-            var fileRepoMock = Mock.Of<IFileRepository>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+                Mock.Of<IUploaderRepository>(u => u.GetByUserIdAsync(uploader.UserId) == Task.FromResult(uploader));
+            var fileRepoMock = Mock.Of<IFileRepository>(f =>
+                f.GetWithUploaderIdAsync(uploader.Id, file.Id) == Task.FromResult(file));
 
             var handler = new DeleteFileCommandHandler(fileRepoMock, uploaderRepoMock);
-            
+
             // Act
-            var result = await handler.Handle(new DeleteFileCommand(file.Id, file.UploaderId), default);
-            
+            var result = await handler.Handle(new DeleteFileCommand(file.Id, uploader.UserId), default);
+
             // Assert
             Assert.True(file.IsDeleted);
             Assert.True(result);
@@ -37,12 +37,16 @@ namespace Sher.UnitTests.Application.Files
         {
             // Arrange
             var file = new FileBuilder().Build();
-            var repoMock = Mock.Of<IFileRepository>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+            var uploader = new UploaderBuilder().Build();
 
-            var handler = new DeleteFileCommandHandler(repoMock, Mock.Of<IUploaderRepository>());
-            
+            var fileRepoMock = Mock.Of<IFileRepository>(f => f.GetByIdAsync(file.Id) == Task.FromResult(file));
+            var uploaderRepoMock =
+                Mock.Of<IUploaderRepository>(u => u.GetByUserIdAsync(uploader.UserId) == Task.FromResult(uploader));
+
+            var handler = new DeleteFileCommandHandler(fileRepoMock, uploaderRepoMock);
+
             // Act
-            var result = await handler.Handle(new DeleteFileCommand(file.Id, Guid.Empty), default);
+            var result = await handler.Handle(new DeleteFileCommand(file.Id, uploader.UserId), default);
 
             // Assert
             Assert.False(result);
