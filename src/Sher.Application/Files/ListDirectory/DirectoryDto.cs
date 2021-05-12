@@ -11,5 +11,6 @@ namespace Sher.Application.Files.ListDirectory
         public string Name { get; set; }
         public List<FileDto> Files { get; set; } = new();
         public List<DirectoryDto> Directories { get; set; } = new();
+        public bool IsDeleted { get; set; }
     }
 }

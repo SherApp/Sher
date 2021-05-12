@@ -10,6 +10,7 @@ namespace Sher.Core.Files.Directories
         public Guid? ParentDirectoryId { get; private set; }
         public Guid UploaderId { get; private set; }
         public string Name { get; private set; }
+        public bool IsDeleted { get; private set; }
 
         public Directory(Guid id, Guid? parentDirectoryId, Guid uploaderId, string name)
         {
@@ -28,8 +29,21 @@ namespace Sher.Core.Files.Directories
             AddDomainEvent(new DirectoryCreatedEvent(directoryId, this.Id, this.UploaderId, name));
             return new Directory(directoryId, this.Id, this.UploaderId, name);
         }
+
+        public void Delete()
+        {
+            if (this.Is(RootDirectory))
+            {
+                throw new BusinessRuleViolationException("Cannot delete root directory");
+            }
+
+            IsDeleted = true;
+            AddDomainEvent(new DirectoryDeletedEvent(this.Id));
+        }
+
+        public static ISpecification<Directory> RootDirectory => new Spec<Directory>(d => d.ParentDirectoryId == null);
         
-        public static ISpecification<Directory> IsRootFor(Guid uploaderId)
+        public static ISpecification<Directory> RootDirectoryFor(Guid? uploaderId = null)
         {
             return new Spec<Directory>(d =>
                 d.ParentDirectoryId == null && d.UploaderId == uploaderId);

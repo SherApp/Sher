@@ -16,6 +16,12 @@ namespace Sher.UnitTests.Builders
             return this;
         }
 
+        public DirectoryBuilder WithParentDirectoryId(Guid parentDirectoryId)
+        {
+            _parentDirectoryId = parentDirectoryId;
+            return this;
+        }
+
         public Directory Build()
         {
             return new(_id, _parentDirectoryId, _uploaderId, _name);

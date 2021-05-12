@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Sher.Core.Files;
 using Sher.Core.Files.Directories;
 
 namespace Sher.Infrastructure.Data.Repositories
@@ -24,10 +25,15 @@ namespace Sher.Infrastructure.Data.Repositories
         {
             if (directoryId is null)
             {
-                return _dbSet.FirstOrDefaultAsync(Directory.IsRootFor(uploaderId).Expression);
+                return _dbSet.FirstOrDefaultAsync(Directory.RootDirectoryFor(uploaderId).Expression);
             }
 
             return GetWithAsync(directoryId.Value, uploaderId);
+        }
+
+        public async Task<IReadOnlyList<Directory>> GetWithParentAsync(Guid parentDirectoryId)
+        {
+            return (await _dbSet.Where(d => d.ParentDirectoryId == parentDirectoryId).ToListAsync()).AsReadOnly();
         }
 
         public async Task AddAsync(Directory directory)

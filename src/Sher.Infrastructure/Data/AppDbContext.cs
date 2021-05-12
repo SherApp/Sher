@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Sher.Application.Files.DeleteDirectory;
 using Sher.Core.Access.Users;
 using Sher.Core.Files;
 using Sher.Core.Files.Uploaders;
@@ -11,6 +12,7 @@ namespace Sher.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<DirectoryCleanupTask> DirectoryCleanupTasks { get; private set; }
         public DbSet<Uploader> Uploaders { get; private set; }
         public DbSet<User> Users { get; private set; }
         public DbSet<File> Files { get; private set; }
