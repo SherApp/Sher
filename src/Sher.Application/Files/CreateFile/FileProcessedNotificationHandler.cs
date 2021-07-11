@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sher.Core.Files;
 
-namespace Sher.Application.Files.UploadFile
+namespace Sher.Application.Files.CreateFile
 {
     public class FileProcessedNotificationHandler : INotificationHandler<FileProcessedNotification>
     {
@@ -16,7 +16,7 @@ namespace Sher.Application.Files.UploadFile
 
         public async Task Handle(FileProcessedNotification notification, CancellationToken cancellationToken)
         {
-            var file = await _repository.GetByIdAsync(notification.Context.FileId);
+            var file = await _repository.GetByIdAsync(notification.FileId);
             file.MarkAsProcessed();
         }
     }

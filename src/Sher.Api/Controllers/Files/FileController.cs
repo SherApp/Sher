@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sher.Application.Files.DeleteFile;
 using Sher.Application.Files.GetUploaderFiles;
-using Sher.Application.Files.UploadFile;
 
 namespace Sher.Api.Controllers.Files
 {
@@ -23,19 +22,6 @@ namespace Sher.Api.Controllers.Files
             _mediator = mediator;
         }
 
-        [HttpPost]
-        [ProducesResponseType((int) HttpStatusCode.Accepted)]
-        public async Task<IActionResult> UploadFile([FromForm] UploadFileRequestModel model)
-        {
-            await _mediator.Send(new UploadFileCommand(model.Id,
-                model.DirectoryId,
-                UserId,
-                model.File.FileName,
-                model.File.OpenReadStream()));
-
-            return Accepted();
-        }
-        
         [HttpGet]
         [ProducesResponseType(typeof(List<FileDto>), (int) HttpStatusCode.OK)]
         public async Task<IActionResult> GetUsersFiles([FromQuery] string requiredFileNamePart = null)

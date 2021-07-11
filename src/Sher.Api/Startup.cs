@@ -5,6 +5,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,7 +16,9 @@ using Sher.Core.Base;
 using Sher.Core.Files;
 using Sher.Infrastructure;
 using Sher.Infrastructure.FileProcessing;
+using Sher.Infrastructure.Tus;
 using Sher.SharedKernel.Options;
+using tusdotnet;
 
 namespace Sher.Api
 {
@@ -74,6 +77,8 @@ namespace Sher.Api
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseTus(tusHttpContext => tusHttpContext.SetupTus(Configuration["Tus:DiskStorePath"]));  
 
             var mediator = app.ApplicationServices.GetRequiredService<IMediator>();
 

@@ -1,8 +1,7 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Moq;
-using Sher.Application.Files.UploadFile;
+using Sher.Application.Files.CreateFile;
 using Sher.Core.Files;
 using Sher.Core.Files.Directories;
 using Sher.Core.Files.Uploaders;
@@ -12,10 +11,10 @@ using File = Sher.Core.Files.File;
 
 namespace Sher.UnitTests.Application.Files
 {
-    public class UploadFileCommandHandlerTests
+    public class CreateFileCommandHandlerTests
     {
         [Fact]
-        public async Task UploadFileHandler_ValidCommand_CreatesAndAddsFileToRepository()
+        public async Task CreateFileHandle_ValidCommand_CreatesAndAddsFileToRepository()
         {
             // Arrange
             var uploader = new UploaderBuilder().Build();
@@ -33,11 +32,10 @@ namespace Sher.UnitTests.Application.Files
             var fileRepoMock = new Mock<IFileRepository>();
             fileRepoMock.Setup(r => r.AddAsync(It.IsAny<File>()))
                 .Callback<File>(f => Task.FromResult(file = f));
+            
+            var command = new CreateFileCommand(Guid.NewGuid(), directory.Id, uploader.UserId, "123", 10);
 
-            await using var ms = new MemoryStream(new byte[1]);
-            var command = new UploadFileCommand(Guid.NewGuid(), directory.Id, uploader.UserId, "123", ms);
-
-            var handler = new UploadFileCommandHandler(directoryRepoMock, uploaderRepoMock, fileRepoMock.Object);
+            var handler = new CreateFileCommandHandler(directoryRepoMock, uploaderRepoMock, fileRepoMock.Object);
 
             // Act
             await handler.Handle(command, default);
@@ -49,7 +47,7 @@ namespace Sher.UnitTests.Application.Files
             Assert.Equal(uploader.Id, file.UploaderId);
             Assert.Equal(command.FileName, file.FileName);
             Assert.Equal(directory.Id, file.DirectoryId);
-            Assert.Equal(ms.Length, file.Length);
+            Assert.Equal(command.FileLength, file.Length);
         }
     }
 }
