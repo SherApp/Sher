@@ -5,17 +5,12 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Sher.Application.Access.InitializePlatform;
-using Sher.Application.Files.ListDirectory;
-using Sher.Core.Base;
-using Sher.Core.Files;
 using Sher.Infrastructure;
-using Sher.Infrastructure.FileProcessing;
 using Sher.Infrastructure.Tus;
 using Sher.SharedKernel.Options;
 using tusdotnet;
@@ -53,8 +48,6 @@ namespace Sher.Api
             builder.RegisterModule(new InfrastructureAutofacModule(
                 Configuration.GetConnectionString("Default"),
                 Assembly.GetExecutingAssembly()));
-
-            builder.RegisterModule(new FileProcessingModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,15 +63,15 @@ namespace Sher.Api
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors(opt => opt.AllowAnyMethod());
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
+            app.UseTus(tusHttpContext => tusHttpContext.SetupTus(Configuration["Tus:DiskStorePath"]));
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            app.UseTus(tusHttpContext => tusHttpContext.SetupTus(Configuration["Tus:DiskStorePath"]));  
 
             var mediator = app.ApplicationServices.GetRequiredService<IMediator>();
 

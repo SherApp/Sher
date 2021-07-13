@@ -48,7 +48,6 @@ namespace Sher.Infrastructure.Tus
 
             value = default;
             return false;
-
         }
     }
 }

@@ -6,7 +6,6 @@ using AutoMapper.Contrib.Autofac.DependencyInjection;
 using Sher.Application.Access;
 using Sher.Application.Files;
 using Sher.Core.Files;
-using Sher.Infrastructure.FileProcessing.Interfaces;
 using Sher.Infrastructure.Processing;
 
 namespace Sher.Infrastructure
@@ -25,8 +24,7 @@ namespace Sher.Infrastructure
             {
                 typeof(FileProcessingContext).Assembly,
                 typeof(AppDbContext).Assembly,
-                typeof(IFileRepository).Assembly,
-                typeof(IFileQueue).Assembly
+                typeof(IFileRepository).Assembly
             };
         }
 
