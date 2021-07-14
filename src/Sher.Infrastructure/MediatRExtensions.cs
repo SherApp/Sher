@@ -11,7 +11,7 @@ namespace Sher.Infrastructure
     {
         public static async Task PublishDomainEventsAsync(this IMediator mediator, DbContext ctx, CancellationToken cancellationToken = default)
         {
-            var entries = ctx.ChangeTracker.Entries<BaseEntity>();
+            var entries = ctx.ChangeTracker.Entries<BaseEntity>().ToList();
             foreach (var notification in entries.SelectMany(e => e.Entity.DomainEvents))
             {
                 await mediator.Publish(notification, cancellationToken);

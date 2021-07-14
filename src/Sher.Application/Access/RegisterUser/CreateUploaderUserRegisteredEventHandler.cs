@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using Sher.Core.Access.Users;
 using Sher.Core.Base;
 using Sher.Core.Files.Directories;
+using Sher.Core.Files.Uploaders;
 
-namespace Sher.Core.Files.Uploaders
+namespace Sher.Application.Access.RegisterUser
 {
     public class CreateUploaderUserCreatedEventHandler : IDomainEventHandler<UserRegisteredEvent>
     {
