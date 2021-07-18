@@ -15,10 +15,10 @@ namespace Sher.Core.Files.Uploaders
             UserId = userId;
         }
 
-        public File UploadFile(Guid fileId, Guid directoryId, string fileName, long length)
+        public File UploadFile(Guid fileId, Guid directoryId, string fileName, string contentType, long length)
         {
             AddDomainEvent(new FileUploadedEvent(fileId, directoryId, this.Id, fileName));
-            return new File(fileId, directoryId, this.Id, fileName, length);
+            return new File(fileId, directoryId, this.Id, fileName, contentType, length);
         }
     }
 }

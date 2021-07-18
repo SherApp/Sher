@@ -33,7 +33,7 @@ namespace Sher.UnitTests.Application.Files
             fileRepoMock.Setup(r => r.AddAsync(It.IsAny<File>()))
                 .Callback<File>(f => Task.FromResult(file = f));
             
-            var command = new CreateFileCommand(Guid.NewGuid(), directory.Id, uploader.UserId, "123", 10);
+            var command = new CreateFileCommand(Guid.NewGuid(), directory.Id, uploader.UserId, "123", "image/png", 10);
 
             var handler = new CreateFileCommandHandler(directoryRepoMock, uploaderRepoMock, fileRepoMock.Object);
 
@@ -46,6 +46,7 @@ namespace Sher.UnitTests.Application.Files
             Assert.Equal(command.Id, file.Id);
             Assert.Equal(uploader.Id, file.UploaderId);
             Assert.Equal(command.FileName, file.FileName);
+            Assert.Equal(command.ContentType, file.ContentType);
             Assert.Equal(directory.Id, file.DirectoryId);
             Assert.Equal(command.FileLength, file.Length);
         }

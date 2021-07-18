@@ -33,6 +33,7 @@ namespace Sher.Application.Files.CreateFile
                 request.Id,
                 directory.Id,
                 request.FileName,
+                request.ContentType,
                 request.FileLength);
 
             await _fileRepository.AddAsync(file);

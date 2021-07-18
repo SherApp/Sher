@@ -9,11 +9,18 @@ namespace Sher.Core.Files
         public Guid UploaderId { get; private set; }
         public Guid DirectoryId { get; private set; }
         public string FileName { get; private set; }
+        public string ContentType { get; private set; }
         public long Length { get; private set; }
         public FileStatus Status { get; private set; } = FileStatus.Uploaded;
         public bool IsDeleted { get; private set; }
 
-        internal File(Guid id, Guid directoryId, Guid uploaderId, string fileName, long length)
+        internal File(
+            Guid id,
+            Guid directoryId,
+            Guid uploaderId,
+            string fileName,
+            string contentType,
+            long length)
         {
             Id = id;
             DirectoryId = directoryId;
@@ -23,6 +30,7 @@ namespace Sher.Core.Files
             {
                 throw new ArgumentException("File cannot be empty", nameof(length));
             }
+            ContentType = contentType;
             Length = length;
         }
 

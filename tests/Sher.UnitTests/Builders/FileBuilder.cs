@@ -8,6 +8,7 @@ namespace Sher.UnitTests.Builders
         private Guid _id = Guid.NewGuid();
         private Guid _directoryId = Guid.NewGuid();
         private string _fileName = "image.jpg";
+        private string _contentType = "image/jpeg";
         private Guid _uploaderId = Guid.NewGuid();
         private long _length = 1024;
 
@@ -30,7 +31,7 @@ namespace Sher.UnitTests.Builders
 
         public File Build()
         {
-            return new(_id, _directoryId, _uploaderId, _fileName, _length);
+            return new(_id, _directoryId, _uploaderId, _fileName, _contentType, _length);
         }
     }
 }

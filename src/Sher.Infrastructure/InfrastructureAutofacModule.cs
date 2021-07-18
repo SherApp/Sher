@@ -3,10 +3,12 @@ using Autofac;
 using Sher.Infrastructure.Data;
 using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Sher.Application.Access;
 using Sher.Application.Files;
 using Sher.Core.Files;
 using Sher.Infrastructure.Processing;
+using Sher.Infrastructure.Tus;
 
 namespace Sher.Infrastructure
 {
@@ -14,11 +16,11 @@ namespace Sher.Infrastructure
     {
         private readonly Assembly _callingAssembly;
         private readonly Assembly[] _serviceAssemblies;
-        private readonly string _connectionString;
+        private readonly IConfiguration _configuration;
 
-        public InfrastructureAutofacModule(string connectionString, Assembly callingAssembly = null)
+        public InfrastructureAutofacModule(IConfiguration configuration, Assembly callingAssembly = null)
         {
-            _connectionString = connectionString;
+            _configuration = configuration;
             _callingAssembly = callingAssembly;
             _serviceAssemblies = new[]
             {
@@ -39,7 +41,8 @@ namespace Sher.Infrastructure
             builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);
 
             builder.RegisterModule<MediatRModule>();
-            builder.RegisterModule(new DataModule(_connectionString));
+            builder.RegisterModule(new DataModule(_configuration.GetConnectionString("Default")));
+            builder.RegisterModule(new TusModule(_configuration["Tus:DiskStorePath"]));
 
             base.Load(builder);
         }

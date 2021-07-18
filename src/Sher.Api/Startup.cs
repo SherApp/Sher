@@ -46,7 +46,7 @@ namespace Sher.Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new InfrastructureAutofacModule(
-                Configuration.GetConnectionString("Default"),
+                Configuration,
                 Assembly.GetExecutingAssembly()));
         }
 
@@ -69,7 +69,7 @@ namespace Sher.Api
 
             app.UseAuthorization();
 
-            app.UseTus(tusHttpContext => tusHttpContext.SetupTus(Configuration["Tus:DiskStorePath"]));
+            app.UseTus(tusHttpContext => tusHttpContext.SetupTus());
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
