@@ -20,7 +20,7 @@ namespace Sher.Application.Files.ListDirectory
         
         public Task<DirectoryDto> Handle(ListDirectoryQuery request, CancellationToken cancellationToken)
         {
-            using var connection = _dbConnectionFactory.GetOpenConnection();
+            var connection = _dbConnectionFactory.GetOpenConnection();
 
             DirectoryDto mainDir = null;
 

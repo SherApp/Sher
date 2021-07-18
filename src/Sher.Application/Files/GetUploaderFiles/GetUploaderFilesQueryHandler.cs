@@ -19,7 +19,7 @@ namespace Sher.Application.Files.GetUploaderFiles
 
         public Task<List<FileDto>> Handle(GetUploaderFilesQuery request, CancellationToken cancellationToken)
         {
-            using var connection = _connectionFactory.GetOpenConnection();
+            var connection = _connectionFactory.GetOpenConnection();
             var (userId, requiredFileNamePart) = request;
 
             var files = connection.Query<FileDto>(@"SELECT F.* FROM ""Uploaders"" UP
