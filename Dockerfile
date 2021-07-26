@@ -25,7 +25,7 @@ RUN dotnet publish -c release -o /app --no-restore
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS tests
 WORKDIR /app
 COPY --from=build /source ./
-ENTRYPOINT ["dotnet", "test", "/p:CollectCoverage=true", "/p:CoverletOutputFormat=opencover"]
+ENTRYPOINT ["dotnet", "test", "/p:CollectCoverage=true", "/p:CoverletOutputFormat=opencover", "/p:CoverletOutput=/shared/"]
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS api
 WORKDIR /app

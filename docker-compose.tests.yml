@@ -16,6 +16,8 @@ services:
       context: .
     depends_on:
       - db
+    volumes:
+      - ./shared:/shared
   db:
     container_name: postgres
     image: postgres
