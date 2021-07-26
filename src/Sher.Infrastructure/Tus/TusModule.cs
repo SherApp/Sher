@@ -1,4 +1,5 @@
 using Autofac;
+using Sher.Application.Files;
 
 namespace Sher.Infrastructure.Tus
 {
@@ -14,7 +15,9 @@ namespace Sher.Infrastructure.Tus
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<TusDiskStorePathProvider>()
-                .WithParameter("basePath", _baseDiskStorePath);
+                .WithParameter("basePath", _baseDiskStorePath)
+                .AsSelf()
+                .As<IUploaderFileStorePathProvider>();
         }
     }
 }

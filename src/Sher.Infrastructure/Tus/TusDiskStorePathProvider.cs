@@ -2,11 +2,12 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using MediatR;
+using Sher.Application.Files;
 using Sher.Application.Files.GetUploader;
 
 namespace Sher.Infrastructure.Tus
 {
-    public class TusDiskStorePathProvider
+    public class TusDiskStorePathProvider : IUploaderFileStorePathProvider
     {
         private const string DefaultBaseTusDiskStorePath = "wwwroot/u/";
 
@@ -21,7 +22,7 @@ namespace Sher.Infrastructure.Tus
             _basePath = basePath ?? DefaultBaseTusDiskStorePath;
         }
 
-        public async Task<string> GetPathForUserOfId(string userId)
+        public async Task<string> GetOrCreateFileStorePathForUserOfId(string userId)
         {
             if (userId is null)
             {
@@ -31,7 +32,14 @@ namespace Sher.Infrastructure.Tus
             var guidUserId = Guid.Parse(userId);
 
             var uploader = await _mediator.Send(new GetUploaderQuery(guidUserId));
-            var path = Path.Combine(_basePath, uploader.Id.ToString());
+            var path = await GetOrCreateFileStorePathForUploaderOfId(uploader.Id.ToString());
+
+            return path;
+        }
+
+        public async Task<string> GetOrCreateFileStorePathForUploaderOfId(string uploaderId)
+        {
+            var path = Path.Combine(_basePath, uploaderId);
 
             if (!Directory.Exists(path))
             {

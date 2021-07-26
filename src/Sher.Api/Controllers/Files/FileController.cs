@@ -45,8 +45,14 @@ namespace Sher.Api.Controllers.Files
         public async Task<IActionResult> GetFile(Guid fileId)
         {
             var file = await _mediator.Send(new GetFileQuery(fileId));
-            var filePath = Path.Combine("wwwroot/u", file.UploaderId.ToString(), file.Id.ToString("N"));
+
+            if (file.IsDeleted)
+            {
+                return NotFound();
+            }
             
+            var filePath = Path.Combine("wwwroot/u", file.UploaderId.ToString(), file.Id.ToString("N"));
+
             var stream = new FileStream(filePath, FileMode.Open);
             
             return File(stream, file.ContentType, file.FileName);

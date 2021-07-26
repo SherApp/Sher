@@ -47,7 +47,7 @@ namespace Sher.Core.Files
         public void Delete()
         {
             IsDeleted = true;
-            AddDomainEvent(new FileDeletedEvent(this.Id, FileName));
+            AddDomainEvent(new FileDeletedEvent(UploaderId, this.Id, FileName));
         }
     }
 

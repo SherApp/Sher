@@ -17,7 +17,7 @@ namespace Sher.Infrastructure.Tus
             var storePathProvider = httpContext.RequestServices.GetRequiredService<TusDiskStorePathProvider>();
             var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var storePath = storePathProvider.GetPathForUserOfId(userId).Result;
+            var storePath = storePathProvider.GetOrCreateFileStorePathForUserOfId(userId).Result;
 
             return new DefaultTusConfiguration
             {
