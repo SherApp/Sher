@@ -8,7 +8,6 @@ COPY src/Sher.Api/*.csproj ./src/Sher.Api/
 COPY src/Sher.Application/*.csproj ./src/Sher.Application/
 COPY src/Sher.Core/*.csproj ./src/Sher.Core/
 COPY src/Sher.Infrastructure/*.csproj ./src/Sher.Infrastructure/
-COPY src/Sher.Infrastructure.FileProcessing/*.csproj ./src/Sher.Infrastructure.FileProcessing/
 COPY src/Sher.SharedKernel/*.csproj ./src/Sher.SharedKernel/
 
 COPY tests/Sher.UnitTests/*.csproj ./tests/Sher.UnitTests/
