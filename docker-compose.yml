@@ -3,9 +3,8 @@ services:
   api:
     container_name: sher
     build:
-      args:
-        APP_ENTRYPOINT: api
       context: .
+      dockerfile: src/Sher.Api/Dockerfile
     ports:
       - "8000:80"
     depends_on:

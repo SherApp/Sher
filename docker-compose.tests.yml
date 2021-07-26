@@ -11,9 +11,8 @@ services:
       - Admin__Password=TestingAdmin1234
     container_name: tests
     build:
-      args:
-        APP_ENTRYPOINT: tests
       context: .
+      dockerfile: tests/Dockerfile
     depends_on:
       - db
     volumes:
