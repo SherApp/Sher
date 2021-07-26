@@ -16,4 +16,4 @@ jobs:
     - name: Build and test
       run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml -f docker-compose.tests.yml up --build tests
     - name: Codecov
-    - uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v1
