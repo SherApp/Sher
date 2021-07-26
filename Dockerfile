@@ -1,3 +1,5 @@
+ARG APP_ENTRYPOINT=tests
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /source
 
@@ -8,13 +10,26 @@ COPY src/Sher.Core/*.csproj ./src/Sher.Core/
 COPY src/Sher.Infrastructure/*.csproj ./src/Sher.Infrastructure/
 COPY src/Sher.Infrastructure.FileProcessing/*.csproj ./src/Sher.Infrastructure.FileProcessing/
 COPY src/Sher.SharedKernel/*.csproj ./src/Sher.SharedKernel/
-RUN dotnet restore ./src/Sher.Api
+
+COPY tests/Sher.UnitTests/*.csproj ./tests/Sher.UnitTests/
+COPY tests/Sher.IntegrationTests/*.csproj ./tests/Sher.IntegrationTests/
+
+RUN dotnet restore
 
 COPY src ./src/
+COPY tests ./tests/
+
 WORKDIR /source/src/Sher.Api
 RUN dotnet publish -c release -o /app --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS tests
+WORKDIR /app
+COPY --from=build /source ./
+ENTRYPOINT ["dotnet", "test", "/p:CollectCoverage=true", "/p:CoverletOutputFormat=opencover"]
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS api
 WORKDIR /app
 COPY --from=build /app ./
 ENTRYPOINT ["dotnet", "Sher.Api.dll"]
+
+FROM ${APP_ENTRYPOINT}

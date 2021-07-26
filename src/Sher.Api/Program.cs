@@ -1,8 +1,11 @@
+using System.Reflection;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sher.Infrastructure;
 using Sher.Infrastructure.Data;
 
 namespace Sher.Api
@@ -23,6 +26,12 @@ namespace Sher.Api
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>((ctx, b) =>
+                {
+                    b.RegisterModule(new InfrastructureAutofacModule(
+                        ctx.Configuration,
+                        Assembly.GetExecutingAssembly()));
+                })
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

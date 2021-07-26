@@ -1,0 +1,24 @@
+version: "3.3"
+services:
+  tests:  
+    environment:
+      - PasswordHashingOptions__Iterations=1
+      - JwtOptions__SecurityKey=URH87VJGBTWkPY3rehadvyERnR9HtPz44rPf2TJ5TU4n7Ty2jPgASNtjuMSdwGJ3bGvpRzKLArZUpbfExtK6UWBDRtPXbt7y7JvNamvHsMHDm97V6dqfF8UMPnXUSGqt
+      - JwtOptions__Audience=test
+      - JwtOptions__Issuer=test
+      - ConnectionStrings__Default=Username=integration_tests;Password=testing1234;Server=postgres;Database=sher_testing
+      - Admin__EmailAddress=admin@example.com
+      - Admin__Password=TestingAdmin1234
+    container_name: tests
+    build:
+      args:
+        APP_ENTRYPOINT: tests
+      context: .
+    depends_on:
+      - db
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_USER=integration_tests
+      - POSTGRES_PASSWORD=testing1234

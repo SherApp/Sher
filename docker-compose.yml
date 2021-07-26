@@ -1,16 +1,15 @@
 version: "3.3"
 services:
   api:
-    env_file:
-      - api.env
     container_name: sher
-    build: .
+    build:
+      args:
+        APP_ENTRYPOINT: api
+      context: .
     ports:
       - "8000:80"
     depends_on:
       - db
   db:
-    env_file:
-      - db.env
     container_name: postgres
     image: postgres
