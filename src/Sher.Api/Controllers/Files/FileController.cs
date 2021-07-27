@@ -36,7 +36,13 @@ namespace Sher.Api.Controllers.Files
         [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteFile(Guid fileId)
         {
-            await _mediator.Send(new DeleteFileCommand(fileId, UserId));
+            var deleted = await _mediator.Send(new DeleteFileCommand(fileId, UserId));
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
             return Ok();
         }
 

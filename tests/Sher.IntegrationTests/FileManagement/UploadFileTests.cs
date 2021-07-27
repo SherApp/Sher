@@ -5,19 +5,19 @@ using Xunit;
 
 namespace Sher.IntegrationTests.FileManagement
 {
-    public class UploadFileTests : IClassFixture<RegisteredUserFixture>
+    public class UploadFileTests : IClassFixture<TestBaseFixture>
     {
-        private readonly RegisteredUserFixture _fixture;
+        private readonly RegisteredUserFixture _registeredUserFixture;
 
-        public UploadFileTests(RegisteredUserFixture fixture)
+        public UploadFileTests(TestBaseFixture fixture)
         {
-            _fixture = fixture;
+            _registeredUserFixture = fixture.RegisteredUserFixture;
         }
 
         [Fact]
-        public async Task ShouldSaveFile()
+        public async Task UploadFile_ValidRequest_UploadAndServeFile()
         {
-            var client = await _fixture.GetOrCreateAuthorizedClient("upload@example.com");
+            var client = await _registeredUserFixture.GetOrCreateAuthorizedClient("upload@example.com");
 
             const string fileContents = "123";
 
