@@ -23,26 +23,23 @@ namespace Sher.IntegrationTests.Fixtures
             TestServerFactory = new TestServerFactory<Startup>();
         }
 
-        public async Task<HttpClient> GetOrCreateAuthorizedClient()
+        public async Task<HttpClient> GetOrCreateAuthorizedClient(string email = "email@example.com", string password = "Testing1234")
         {
             if (_authorizedClient is not null)
             {
                 return _authorizedClient;
             }
 
-            const string userEmail = "email@example.com";
-            const string userPassword = "Testing1234";
-
             await TestServerFactory.Services.DispatchCommand(new SetPlatformSettingsCommand(new PlatformSettingsDto
                 {InvitationCode = null}));
-            await TestServerFactory.Services.DispatchCommand(new RegisterUserCommand(Guid.NewGuid(), userEmail, userPassword, null));
+            await TestServerFactory.Services.DispatchCommand(new RegisterUserCommand(Guid.NewGuid(), email, password, null));
 
             var client = TestServerFactory.CreateClient();
 
             var newTokenResponse = await client.PostAsJsonAsync("/api/token/new?asCookie=false", new IssueTokenRequestModel
             {
-                EmailAddress = userEmail,
-                Password = userPassword
+                EmailAddress = email,
+                Password = password
             });
             
             var authResult = await newTokenResponse.Content.ReadFromJsonAsync<AuthenticationResult>();

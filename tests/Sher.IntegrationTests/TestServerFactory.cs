@@ -16,8 +16,7 @@ namespace Sher.IntegrationTests
                 using var scope = sp.CreateScope();
 
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-                db.Database.EnsureDeleted();
+                
                 db.Database.EnsureCreated();
             });
         }
