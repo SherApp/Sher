@@ -43,7 +43,7 @@ namespace Sher.Api.Controllers.Access
         [Authorize("TokenRefresh")]
         public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequestModel model = null)
         {
-            if (!Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
+            if (!Request.Cookies.TryGetValue(RefreshCookieName, out var refreshToken))
             {
                 refreshToken = model?.RefreshToken;
             }
