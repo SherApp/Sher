@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sher.Api.Common;
 using Sher.Application.Access.AuthenticateUser;
 using Sher.Application.Access.RefreshAuthToken;
 
@@ -30,7 +31,7 @@ namespace Sher.Api.Controllers.Access
 
             if (result is null)
             {
-                return Unauthorized();
+                return Unauthorized(new ErrorModel("Wrong login details"));
             }
 
             if (!asCookie) return Ok(result);
