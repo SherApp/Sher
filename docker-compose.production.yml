@@ -26,12 +26,6 @@ services:
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
-  nginx:
-    image: nginx
-    volumes:
-      - static:/usr/share/nginx/html
-    ports:
-      - "9091:80"
 
 volumes:
   static:
