@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Sher.Api.Utils;
 using Sher.Application.Access.InitializePlatform;
 using Sher.Infrastructure;
 using Sher.Infrastructure.Tus;
@@ -61,6 +62,11 @@ namespace Sher.Api
             app.UseAuthentication();
 
             app.UseAuthorization();
+            
+            app.UseExceptionHandler(new ExceptionHandlerOptions
+            {
+                ExceptionHandler = GlobalExceptionHandler.Delegate
+            });
 
             app.UseTus(tusHttpContext => tusHttpContext.SetupTus());
             
