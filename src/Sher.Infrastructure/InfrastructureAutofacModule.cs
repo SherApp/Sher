@@ -24,7 +24,7 @@ namespace Sher.Infrastructure
             _callingAssembly = callingAssembly;
             _serviceAssemblies = new[]
             {
-                typeof(FileProcessingContext).Assembly,
+                typeof(IUploaderFileStorePathProvider).Assembly,
                 typeof(AppDbContext).Assembly,
                 typeof(IFileRepository).Assembly
             };
@@ -38,7 +38,7 @@ namespace Sher.Infrastructure
 
             builder.RegisterType<JwtIssuer>();
 
-            builder.RegisterAutoMapper(_callingAssembly, typeof(FileProcessingContext).Assembly);
+            builder.RegisterAutoMapper(_callingAssembly, typeof(IUploaderFileStorePathProvider).Assembly);
 
             builder.RegisterModule<MediatRModule>();
             builder.RegisterModule(new DataModule(_configuration.GetConnectionString("Default")));
