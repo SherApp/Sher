@@ -16,14 +16,16 @@ namespace Sher.Application.Files.DeleteFile
             _fileStorePathProvider = fileStorePathProvider;
         }
 
-        public async Task Handle(FileDeletedEvent notification, CancellationToken cancellationToken)
+        public Task Handle(FileDeletedEvent notification, CancellationToken cancellationToken)
         {
-            var storePath = await _fileStorePathProvider
+            var storePath = _fileStorePathProvider
                 .GetOrCreateFileStorePathForUploaderOfId(notification.UploaderId.ToString());
 
             var filePath = Path.Combine(storePath, notification.FileId.ToString("N"));
 
             File.Delete(filePath);
+            
+            return Task.CompletedTask;
         }
     }
 }

@@ -32,12 +32,12 @@ namespace Sher.Infrastructure.Tus
             var guidUserId = Guid.Parse(userId);
 
             var uploader = await _mediator.Send(new GetUploaderQuery(guidUserId));
-            var path = await GetOrCreateFileStorePathForUploaderOfId(uploader.Id.ToString());
+            var path = GetOrCreateFileStorePathForUploaderOfId(uploader.Id.ToString());
 
             return path;
         }
 
-        public async Task<string> GetOrCreateFileStorePathForUploaderOfId(string uploaderId)
+        public string GetOrCreateFileStorePathForUploaderOfId(string uploaderId)
         {
             var path = Path.Combine(_basePath, uploaderId);
 
