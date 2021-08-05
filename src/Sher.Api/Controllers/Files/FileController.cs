@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sher.Application.Files;
 using Sher.Application.Files.DeleteFile;
 using Sher.Application.Files.GetFile;
 using Sher.Application.Files.GetUploaderFiles;
@@ -18,10 +19,14 @@ namespace Sher.Api.Controllers.Files
     public class FileController : ApiController
     {
         private readonly IMediator _mediator;
+        private readonly IUploaderFileStorePathProvider _uploaderFileStorePathProvider;
 
-        public FileController(IMediator mediator)
+        public FileController(
+            IMediator mediator,
+            IUploaderFileStorePathProvider uploaderFileStorePathProvider)
         {
             _mediator = mediator;
+            _uploaderFileStorePathProvider = uploaderFileStorePathProvider;
         }
 
         [HttpGet]
@@ -57,7 +62,9 @@ namespace Sher.Api.Controllers.Files
                 return NotFound();
             }
             
-            var filePath = Path.Combine("wwwroot/u", file.UploaderId.ToString(), file.Id.ToString("N"));
+            var filePath = Path.Combine(
+                _uploaderFileStorePathProvider.GetOrCreateFileStorePathForUploaderOfId(file.UploaderId.ToString()),
+                file.Id.ToString("N"));
 
             var stream = new FileStream(filePath, FileMode.Open);
             
