@@ -2,7 +2,7 @@ version: "3.3"
 services:
   api:
     environment:
-      - FilePersistenceServiceOptions__UploadsDirectory=/static/u
+      - Tus__DiskStorePath=/static/u
       - JwtOptions__SecurityKey
       - JwtOptions__Audience
       - JwtOptions__Issuer
@@ -12,17 +12,11 @@ services:
       - ConnectionStrings__Default
       - Admin__EmailAddress
       - Admin__Password
-    container_name: sher
-    build: .
     ports:
       - "9090:80"
-    depends_on:
-      - db
     volumes:
       - static:/static
   db:
-    container_name: postgres
-    image: postgres
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD

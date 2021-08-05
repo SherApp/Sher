@@ -5,10 +5,8 @@ services:
     build:
       context: .
       dockerfile: src/Sher.Api/Dockerfile
-    ports:
-      - "8000:80"
     depends_on:
       - db
   db:
     container_name: postgres
-    image: postgres
+    build: .docker/postgres
