@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Respawn;
@@ -44,9 +46,17 @@ namespace Sher.IntegrationTests.Fixtures
                 };
                 checkpoint.Reset(dbConnection).Wait();
             }
-            catch (PostgresException e) when (e.ErrorCode.ToString() == PostgresErrorCodes.InvalidCatalogName)
+            catch (Exception e)
             {
-                // this is expected to throw when the db hasn't been created yet
+                switch (e)
+                {
+                    // this is expected to throw when the db hasn't been created yet
+                    case PostgresException pgEx when pgEx.ToString() == PostgresErrorCodes.InvalidCatalogName:
+                    case AggregateException agEx when agEx.InnerExceptions.Any(ex => ex is InvalidOperationException):
+                        break;
+                    default:
+                        throw;
+                }
             }
         }
     }
