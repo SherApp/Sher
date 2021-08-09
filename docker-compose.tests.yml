@@ -6,7 +6,7 @@ services:
       - JwtOptions__SecurityKey=URH87VJGBTWkPY3rehadvyERnR9HtPz44rPf2TJ5TU4n7Ty2jPgASNtjuMSdwGJ3bGvpRzKLArZUpbfExtK6UWBDRtPXbt7y7JvNamvHsMHDm97V6dqfF8UMPnXUSGqt
       - JwtOptions__Audience=test
       - JwtOptions__Issuer=test
-      - ConnectionStrings__Default=Username=integration_tests;Password=testing1234;Server=postgres;Database=sher_testing
+      - ConnectionStrings__Default=Username=integration_tests;Password=testing1234;Server=postgres;Database=integration_tests
       - Admin__EmailAddress=admin@example.com
       - Admin__Password=TestingAdmin1234
     container_name: tests
