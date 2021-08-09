@@ -22,16 +22,16 @@ namespace Sher.Application.Access.AuthenticateUser
         {
             var (emailAddress, password) = request;
 
-            var authenticationResult = await _authenticationService.AuthenticateUserAsync(emailAddress, password);
-            if (authenticationResult is null)
+            var userDescriptor = await _authenticationService.AuthenticateUserAsync(emailAddress, password);
+            if (userDescriptor is null)
             {
                 return null;
             }
 
-            var token = _jwtIssuer.IssueToken(authenticationResult.NameIdentifier, authenticationResult.Role);
+            var token = _jwtIssuer.IssueToken(userDescriptor.NameIdentifier, userDescriptor.Role);
             
             var embeddedToken =
-                new EmbeddedRefreshToken(authenticationResult.ClientId, authenticationResult.RefreshToken);
+                new EmbeddedRefreshToken(userDescriptor.ClientId, userDescriptor.RefreshToken);
 
             return new AuthenticationResult
             {
