@@ -21,7 +21,7 @@ namespace Sher.Application.Files.GetFile
             var connection = _dbConnectionFactory.GetOpenConnection();
 
             var file = connection.QuerySingle<FileDto>(
-                @"SELECT * FROM ""Files"" WHERE ""Id"" = @FileId", 
+                @"SELECT * FROM ""Files"" WHERE ""Id"" = @FileId AND ""IsDeleted"" = FALSE", 
                 new {request.FileId});
 
             return Task.FromResult(file);

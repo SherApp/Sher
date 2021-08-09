@@ -32,9 +32,9 @@ namespace Sher.Application.Files.ListDirectory
                 @"SELECT D.*, F.*, C.* FROM ""Uploaders"" UP 
                   INNER JOIN ""Users"" U on U.""Id"" = UP.""UserId""
                   INNER JOIN ""Directory"" D on D.""UploaderId"" = UP.""Id""
-                  LEFT JOIN ""Directory"" C on C.""ParentDirectoryId"" = D.""Id""
-                  LEFT JOIN ""Files"" F on F.""DirectoryId"" = D.""Id""
-                      WHERE U.""Id"" = @UserId 
+                  LEFT JOIN ""Directory"" C on C.""ParentDirectoryId"" = D.""Id"" AND C.""IsDeleted"" = FALSE
+                  LEFT JOIN ""Files"" F on F.""DirectoryId"" = D.""Id"" AND F.""IsDeleted"" = FALSE
+                      WHERE U.""Id"" = @UserId
                       AND (D.""Id"" = @DirectoryId 
                       OR (D.""ParentDirectoryId"" IS NULL AND @DirectoryId IS NULL))",
                 (directoryDto, fileDto, childDirDto) =>

@@ -25,7 +25,9 @@ namespace Sher.Application.Files.GetUploaderFiles
             var files = connection.Query<FileDto>(@"SELECT F.* FROM ""Uploaders"" UP
                                 INNER JOIN ""Users"" U on U.""Id"" = UP.""UserId""
                                 INNER JOIN ""Files"" F on F.""UploaderId"" = UP.""Id""
-                                WHERE U.""Id"" = @UserId AND POSITION(UPPER(@RequiredFileNamePart) in UPPER(F.""FileName"")) > 0",
+                                WHERE U.""Id"" = @UserId
+                                AND F.""IsDeleted"" = FALSE
+                                AND POSITION(UPPER(@RequiredFileNamePart) in UPPER(F.""FileName"")) > 0",
                 new { UserId = userId, RequiredFileNamePart = requiredFileNamePart });
 
             return Task.FromResult(files.ToList());
