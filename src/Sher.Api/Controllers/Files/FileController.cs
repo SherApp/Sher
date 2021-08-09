@@ -57,7 +57,7 @@ namespace Sher.Api.Controllers.Files
         {
             var file = await _mediator.Send(new GetFileQuery(fileId));
 
-            if (file.IsDeleted)
+            if (file is null or { IsDeleted: true })
             {
                 return NotFound();
             }
