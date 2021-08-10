@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Sher.Application.Access.Jwt;
 using Sher.Infrastructure.Data;
-using Sher.SharedKernel.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Sher.Infrastructure

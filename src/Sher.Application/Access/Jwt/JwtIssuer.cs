@@ -4,9 +4,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Sher.SharedKernel.Options;
 
-namespace Sher.Application.Access
+namespace Sher.Application.Access.Jwt
 {
     public class JwtIssuer
     {

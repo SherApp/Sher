@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Sher.Application.Access;
-using Sher.SharedKernel.Options;
+using Sher.Application.Access.Jwt;
 using Xunit;
 
 namespace Sher.UnitTests.Application.Access

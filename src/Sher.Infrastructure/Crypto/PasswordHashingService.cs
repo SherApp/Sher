@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Konscious.Security.Cryptography;
 using Microsoft.Extensions.Options;
 using Sher.Core.Access;
-using Sher.SharedKernel.Options;
 
 namespace Sher.Infrastructure.Crypto
 {

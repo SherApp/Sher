@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Moq;
 using Sher.Infrastructure.Crypto;
-using Sher.SharedKernel.Options;
 using Xunit;
 
 namespace Sher.UnitTests.Infrastructure.Crypto

@@ -11,9 +11,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Sher.Api.Utils;
 using Sher.Application.Access.InitializePlatform;
+using Sher.Application.Access.Jwt;
 using Sher.Infrastructure;
+using Sher.Infrastructure.Crypto;
 using Sher.Infrastructure.Tus;
-using Sher.SharedKernel.Options;
 using tusdotnet;
 
 namespace Sher.Api
@@ -31,8 +32,7 @@ namespace Sher.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext(Configuration.GetConnectionString("Default"));
-
-            services.Configure<FilePersistenceServiceOptions>(Configuration.GetSection("FilePersistenceServiceOptions"));
+            
             services.Configure<PasswordHashingOptions>(Configuration.GetSection("PasswordHashingOptions"));
             services.Configure<JwtOptions>(Configuration.GetSection("JwtOptions"));
 

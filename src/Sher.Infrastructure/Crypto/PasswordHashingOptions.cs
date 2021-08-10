@@ -1,4 +1,4 @@
-namespace Sher.SharedKernel.Options
+namespace Sher.Infrastructure.Crypto
 {
     public class PasswordHashingOptions
     {

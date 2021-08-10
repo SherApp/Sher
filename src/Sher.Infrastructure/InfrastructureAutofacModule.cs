@@ -5,6 +5,7 @@ using Module = Autofac.Module;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Sher.Application.Access;
+using Sher.Application.Access.Jwt;
 using Sher.Application.Files;
 using Sher.Core.Files;
 using Sher.Infrastructure.Processing;

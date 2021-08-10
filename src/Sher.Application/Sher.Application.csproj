@@ -14,7 +14,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Sher.Core\Sher.Core.csproj" />
-      <ProjectReference Include="..\Sher.SharedKernel\Sher.SharedKernel.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace Sher.SharedKernel.Options
+namespace Sher.Application.Access.Jwt
 {
     public class JwtOptions
     {
