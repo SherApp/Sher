@@ -6,7 +6,6 @@ COPY ["src/Sher.Api/*.csproj", "./Sher.Api/"]
 COPY ["src/Sher.Application/*.csproj", "./Sher.Application/"]
 COPY ["src/Sher.Core/*.csproj", "./Sher.Core/"]
 COPY ["src/Sher.Infrastructure/*.csproj", "./Sher.Infrastructure/"]
-COPY ["src/Sher.SharedKernel/*.csproj", "./Sher.SharedKernel/"]
 
 RUN dotnet restore "/src/Sher.Api/Sher.Api.csproj"
 COPY src .
