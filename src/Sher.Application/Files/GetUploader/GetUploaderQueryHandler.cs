@@ -1,12 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
-using MediatR;
 using Sher.Application.Configuration;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Files.GetUploader
 {
-    public class GetUploaderQueryHandler : IRequestHandler<GetUploaderQuery, UploaderDto>
+    public class GetUploaderQueryHandler : IQueryHandler<GetUploaderQuery, UploaderDto>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 

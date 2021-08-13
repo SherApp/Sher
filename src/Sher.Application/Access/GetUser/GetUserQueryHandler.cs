@@ -1,12 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using MediatR;
+using Sher.Application.Processing;
 using Sher.Core.Access.Users;
 
 namespace Sher.Application.Access.GetUser
 {
-    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
+    public class GetUserQueryHandler : IQueryHandler<GetUserQuery, UserDto>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;

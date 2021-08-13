@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
-using MediatR;
 using Sher.Application.Configuration;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Files.GetUploaderFiles
 {
-    public class GetUploaderFilesQueryHandler : IRequestHandler<GetUploaderFilesQuery, List<FileDto>>
+    public class GetUploaderFilesQueryHandler : IQueryHandler<GetUploaderFilesQuery, List<FileDto>>
     {
         private readonly IDbConnectionFactory _connectionFactory;
 

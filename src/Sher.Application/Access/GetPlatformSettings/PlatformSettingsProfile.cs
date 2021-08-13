@@ -1,5 +1,4 @@
 using AutoMapper;
-using Sher.Core.Access;
 using Sher.Core.Access.Platform;
 
 namespace Sher.Application.Access.GetPlatformSettings

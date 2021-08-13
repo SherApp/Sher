@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using MediatR;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Files.GetUploaderFiles
 {
-    public record GetUploaderFilesQuery(Guid UserId, string RequiredFileNamePart) : IRequest<List<FileDto>>;
+    public record GetUploaderFilesQuery(Guid UserId, string RequiredFileNamePart) : IQuery<List<FileDto>>;
 }

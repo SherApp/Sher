@@ -1,7 +1,7 @@
 using System;
-using MediatR;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Access.GetUser
 {
-    public record GetUserQuery(Guid UserId) : IRequest<UserDto>;
+    public record GetUserQuery(Guid UserId) : IQuery<UserDto>;
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
-using MediatR;
 using Sher.Application.Configuration;
 using Sher.Application.Files.GetUploaderFiles;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Files.ListDirectory
 {
-    public class ListDirectoryQueryHandler : IRequestHandler<ListDirectoryQuery, DirectoryDto>
+    public class ListDirectoryQueryHandler : IQueryHandler<ListDirectoryQuery, DirectoryDto>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 

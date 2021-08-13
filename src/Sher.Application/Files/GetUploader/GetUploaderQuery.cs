@@ -1,7 +1,7 @@
 using System;
-using MediatR;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Files.GetUploader
 {
-    public record GetUploaderQuery(Guid UserId) : IRequest<UploaderDto>;
+    public record GetUploaderQuery(Guid UserId) : IQuery<UploaderDto>;
 }

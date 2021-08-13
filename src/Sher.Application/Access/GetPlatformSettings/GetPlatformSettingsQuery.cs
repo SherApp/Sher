@@ -1,6 +1,6 @@
-using MediatR;
+using Sher.Application.Processing;
 
 namespace Sher.Application.Access.GetPlatformSettings
 {
-    public record GetPlatformSettingsQuery : IRequest<PlatformSettingsDto>;
+    public record GetPlatformSettingsQuery : IQuery<PlatformSettingsDto>;
 }

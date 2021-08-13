@@ -1,13 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using MediatR;
-using Sher.Core.Access;
+using Sher.Application.Processing;
 using Sher.Core.Access.Platform;
 
 namespace Sher.Application.Access.GetPlatformSettings
 {
-    public class GetPlatformSettingsQueryHandler : IRequestHandler<GetPlatformSettingsQuery, PlatformSettingsDto>
+    public class GetPlatformSettingsQueryHandler : IQueryHandler<GetPlatformSettingsQuery, PlatformSettingsDto>
     {
         private readonly IPlatformInstanceRepository _platformInstanceRepository;
         private readonly IMapper _mapper;
