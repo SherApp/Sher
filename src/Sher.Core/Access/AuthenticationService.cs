@@ -7,6 +7,8 @@ namespace Sher.Core.Access
 {
     public class AuthenticationService : IAuthenticationService
     {
+        private const int RefreshTokenSize = 512 / 8;
+
         private readonly IPasswordHashingService _passwordHashingService;
         private readonly IUserRepository _userRepository;
 
@@ -39,7 +41,7 @@ namespace Sher.Core.Access
 
             if (!isValidPassword) return null;
 
-            var client = user.CreateClient(_passwordHashingService.GetRandomToken(512 / 8));
+            var client = user.CreateClient(_passwordHashingService.GetRandomToken(RefreshTokenSize));
 
             return new UserDescriptor
             {
@@ -63,7 +65,7 @@ namespace Sher.Core.Access
                 return null;
             }
 
-            var newRefreshToken = _passwordHashingService.GetRandomToken(512 / 8);
+            var newRefreshToken = _passwordHashingService.GetRandomToken(RefreshTokenSize);
 
             if (!user.UpdateClientRefreshToken(clientId, refreshToken, newRefreshToken))
             {
