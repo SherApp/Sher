@@ -32,7 +32,7 @@ Simple file sharing system made with a clean architecture in mind
 4. `DOCKER_HOST=ssh://name@server docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d --build`
 5. Install nginx on your remote host
 6. Setup reverse proxy to forward API requests to the deployed docker container listening at :9090
-```
+```nginx
 location /api/ {
    proxy_pass http://127.0.0.1:9090/api/;
 }
