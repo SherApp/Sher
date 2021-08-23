@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Sher.Application.Access.Jwt;
 using Sher.Infrastructure.Data;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -58,7 +59,10 @@ namespace Sher.Infrastructure
             {
                 OnMessageReceived = context =>
                 {
-                    context.Token = context.Request.Cookies["JwtToken"];
+                    if (!context.Request.Headers.ContainsKey(HeaderNames.Authorization))
+                    {
+                        context.Token = context.Request.Cookies["JwtToken"];
+                    }
                     return Task.CompletedTask;
                 }
             };
