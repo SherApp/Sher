@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using Autofac;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -71,9 +70,11 @@ namespace Sher.Api
             app.UseTus(tusHttpContext => tusHttpContext.SetupTus());
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            var mediator = app.ApplicationServices.GetRequiredService<IMediator>();
-
+            
+            using var scope = app.ApplicationServices.CreateScope();
+            
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            
             mediator.Send(new InitializePlatformCommand(Guid.NewGuid(), Configuration["Admin:EmailAddress"],
                 Configuration["Admin:Password"])).Wait();
         }
