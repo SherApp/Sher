@@ -17,7 +17,7 @@ namespace Sher.Infrastructure.Data
         {
             builder.RegisterType<UnitOfWork>()
                 .As<IUnitOfWork>()
-                .InstancePerDependency();
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<NpgsqlConnectionFactory>()
                 .As<IDbConnectionFactory>()
