@@ -36,7 +36,11 @@ namespace Sher.Core.Access.Platform
             CheckRule(new PasswordSecurityRule(password));
 
             var hashResult = await hashingService.HashPasswordAsync(password);
-            return new User(id, emailAddress, new Password(hashResult.Hash, hashResult.Salt));
+            var user = new User(id, emailAddress, new Password(hashResult.Hash, hashResult.Salt));
+            
+            AddDomainEvent(new UserRegisteredEvent(user.Id));
+
+            return user;
         }
 
         public void UpdateSettings(string invitationCode)

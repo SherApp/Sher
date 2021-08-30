@@ -16,13 +16,11 @@ namespace Sher.Core.Access.Users
         private List<UserClient> _clients = new();
         public bool IsDeleted { get; private set; }
 
-        public User(Guid id, string emailAddress, Password password)
+        internal User(Guid id, string emailAddress, Password password)
         {
             Id = id;
             EmailAddress = emailAddress;
             Password = password;
-
-            AddDomainEvent(new UserRegisteredEvent(this.Id));
         }
 
         // EF Core constructor
