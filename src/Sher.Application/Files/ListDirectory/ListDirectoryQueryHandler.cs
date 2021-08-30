@@ -53,9 +53,29 @@ namespace Sher.Application.Files.ListDirectory
 
                     return directoryDto;
                 }, new {UserId = userId, DirectoryId = directoryId});
+            
+            if (mainDir is null)
+            {
+                return Task.FromResult(mainDir);
+            }
 
-            mainDir?.Directories.AddRange(descDirs.Values);
-            mainDir?.Files.AddRange(files.Values);
+            mainDir.Files.AddRange(files.Values);
+            mainDir.Directories.AddRange(descDirs.Values);
+
+            var parents = connection.Query<ParentDirectoryDto>(
+                @"WITH RECURSIVE parents AS
+                  (
+                      SELECT ""Id"", ""ParentDirectoryId"", ""Name""
+                      FROM ""Directory""
+                      WHERE ""Id"" = @DirectoryId
+                      UNION
+                      SELECT d.""Id"", d.""ParentDirectoryId"", d.""Name""
+                      FROM ""Directory"" d
+                               INNER JOIN parents p ON p.""ParentDirectoryId"" = d.""Id""
+                  )
+                  SELECT * FROM parents OFFSET 1;", new { DirectoryId = mainDir.Id });
+            
+            mainDir.ParentDirectories.AddRange(parents);
 
             return Task.FromResult(mainDir);
         }

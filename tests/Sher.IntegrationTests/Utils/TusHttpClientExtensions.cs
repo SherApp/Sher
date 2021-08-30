@@ -8,7 +8,11 @@ namespace Sher.IntegrationTests.Utils
 {
     public static class TusHelper
     {
-        public static async Task<string> SendTusFileAsync(this HttpClient httpClient, string fileContents)
+        public static async Task<string> SendTusFileAsync(
+            this HttpClient httpClient,
+            string fileContents,
+            string fileName = "file.txt",
+            string parentDirectoryId = null)
         {
             var byteContent = Encoding.UTF8.GetBytes(fileContents);
             using var message = new HttpRequestMessage(HttpMethod.Post, "/api/file")
@@ -17,7 +21,14 @@ namespace Sher.IntegrationTests.Utils
             };
             message.Content.Headers.ContentType = new MediaTypeHeaderValue("application/offset+octet-stream");
 
-            message.Headers.Add("Upload-Metadata", $"fileName {Convert.ToBase64String(Encoding.UTF8.GetBytes("file.txt"))}");
+            var metadata = $"fileName {Convert.ToBase64String(Encoding.UTF8.GetBytes("file.txt"))}";
+
+            if (parentDirectoryId is not null)
+            {
+                metadata += $",parentDirectoryId {Convert.ToBase64String(Encoding.UTF8.GetBytes(parentDirectoryId))}";
+            }
+
+            message.Headers.Add("Upload-Metadata", metadata);
             message.Headers.Add("Tus-Resumable", "1.0.0");
             message.Headers.Add("Upload-Length", byteContent.Length.ToString());
 
