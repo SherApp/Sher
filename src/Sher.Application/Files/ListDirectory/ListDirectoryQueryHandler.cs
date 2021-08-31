@@ -62,7 +62,7 @@ namespace Sher.Application.Files.ListDirectory
             mainDir.Files.AddRange(files.Values);
             mainDir.Directories.AddRange(descDirs.Values);
 
-            var parents = connection.Query<ParentDirectoryDto>(
+            var parents = connection.Query<DirectorySummaryDto>(
                 @"WITH RECURSIVE parents AS
                   (
                       SELECT ""Id"", ""ParentDirectoryId"", ""Name""
@@ -73,9 +73,9 @@ namespace Sher.Application.Files.ListDirectory
                       FROM ""Directory"" d
                                INNER JOIN parents p ON p.""ParentDirectoryId"" = d.""Id""
                   )
-                  SELECT * FROM parents OFFSET 1;", new { DirectoryId = mainDir.Id });
+                  SELECT * FROM parents;", new { DirectoryId = mainDir.Id });
             
-            mainDir.ParentDirectories.AddRange(parents);
+            mainDir.Path.AddRange(parents);
 
             return Task.FromResult(mainDir);
         }

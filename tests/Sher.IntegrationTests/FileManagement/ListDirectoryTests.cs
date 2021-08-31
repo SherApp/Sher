@@ -48,7 +48,7 @@ namespace Sher.IntegrationTests.FileManagement
             
             Assert.NotNull(dir);
             Assert.Contains(dir.Files, file => file.FileName is fileName);
-            Assert.Equal(dir.ParentDirectories[0].Id, firstDirId);
+            Assert.Equal(dir.Path[1].Id, firstDirId);
         }
     }
 }
